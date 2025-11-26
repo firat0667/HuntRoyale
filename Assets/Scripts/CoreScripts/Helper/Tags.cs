@@ -1,0 +1,55 @@
+
+using System;
+
+public static class Tags
+{
+    public static string Player_Tag = "Player";
+    public static string Enemy_Tag = "Enemy";
+    public static string Ground_Tag = "Ground";
+    public static string Bullet_Tag = "Bullet";
+    public static string EnemyBullet_Tag = "EnemyBullet";
+    public static string Water_Slime_Tag = "Slime";
+
+    public static string SlimeCollectAnim = "Collect";
+    public static string Building_Tag = "Building";
+}
+public static class AnimTag
+{
+    public static string PlayerRun_Anim = "Run";
+    public static string PlayerDash_Anim = "Dash";
+    public static string PlayerJump_Anim = "Jump";
+    public static string PlayerShot_Anim = "Shot";
+    public static string PlayerDead_Anim = "Dead";
+    public static string PlayerIdle_Anim = "Idle";
+    public static string PlayerTakeDamage_Anim = "TakeDamage";
+
+    public static string PlayerWalkForwardORBack_Anim = "y";
+    public static string PlayerWalkLeftORRight_Anim = "x";
+
+    public static string EnemyRun_Anim = "EnemyRun";
+    public static string EnemyFly_Anim = "Fly";
+    public static string EnemyJump_Anim = "EnemyJump";
+    public static string EnemyAttack_Anim = "EnemyShot";
+    public static string EnemyDead_Anim = "EnemyDead";
+    public static string EnemyTakeDamage_Anim = "EnemyTakeDamage";
+
+    public static string BossRun_Anim = "BossRun";
+    public static string BossDead_Anim = "BossDead";
+    public static string BossIdle_Anim = "BossIdle";
+    public static string BossShot_Anim = "BossShot";
+    public static string BossTakeDamage_Anim = "BossTakeDamage";
+
+
+
+}
+public static class Layout
+{ 
+    public static string Player_Layer = "Player";
+    public static string Enemy_Layer = "Enemy";
+    public static string Boss_Layer = "Boss";
+    public static string Ground_Layer = "Ground";
+}
+public static class PlayerPrefsTag
+{
+    public static string TutorialCheck_Prefs = "Tutorial";
+}
