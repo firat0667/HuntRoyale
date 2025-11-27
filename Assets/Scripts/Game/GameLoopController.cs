@@ -22,32 +22,19 @@ public class GameLoopController : MonoBehaviour
     private GameObject m_playerInstance;
     private readonly List<Spawner> m_spawners = new List<Spawner>();
 
-    #region Keys
+ 
 
-    private const string KEY_PLAYER="Player";
-    private const string KEY_GAME_LOOP_CONTROLLER="GameLoopController";
-
-    #endregion
-
-    #region Event Handlers
-    private const string EVENT_PLAYER_DIED = "PlayerDied";
-    private const string EVENT_GAME_WIN = "GameWin";
-    private const string EVENT_GAME_LOSE = "GameLose";
-    private const string EVENT_GAME_STARTED = "GameStarted";
-    private const string EVENT_GAME_RESTARTED = "GameRestarted";
-    private const string EVENT_MATCH_TIME_UPDATED = "MatchTimeUpdated";
-    #endregion
 
     private void Awake()
     {
         // save game loop controller reference
-        GameRegistry.Instance.Register(KEY_GAME_LOOP_CONTROLLER, this);
+        GameRegistry.Instance.Register(KeyTags.KEY_GAME_LOOP_CONTROLLER, this);
 
         // add all spawners in the scene to the list
         m_spawners.AddRange(FindObjectsOfType<Spawner>());
 
         //when player dead trigger game over
-        EventManager.Instance.Subscribe(EVENT_PLAYER_DIED, OnPlayerDied);
+        EventManager.Instance.Subscribe(EventTags.EVENT_PLAYER_DIED, OnPlayerDied);
 
         // game start state
         GameStateManager.Instance.SetState(GameState.MainMenu);
@@ -64,7 +51,7 @@ public class GameLoopController : MonoBehaviour
     {
         if(EventManager.Instance != null)
         {
-            EventManager.Instance.Unsubscribe(EVENT_PLAYER_DIED, OnPlayerDied);
+            EventManager.Instance.Unsubscribe(EventTags.EVENT_PLAYER_DIED, OnPlayerDied);
         }
     }
 
@@ -75,7 +62,7 @@ public class GameLoopController : MonoBehaviour
             return;
 
         m_matchTimer.Tick();
-        EventManager.Instance.Trigger(EVENT_MATCH_TIME_UPDATED, m_matchTimer.Time);
+        EventManager.Instance.Trigger(EventTags.EVENT_MATCH_TIME_UPDATED, m_matchTimer.Time);
 
         if (m_matchTimer.Time >= m_matchDuration)
         {
@@ -95,7 +82,7 @@ public class GameLoopController : MonoBehaviour
         m_matchTimer.RestartClock();
         m_isMatchActive = true;
 
-        EventManager.Instance.Trigger(EVENT_GAME_STARTED);
+        EventManager.Instance.Trigger(EventTags.EVENT_GAME_STARTED);
 
     }
     public void PauseGame()
@@ -134,7 +121,7 @@ public class GameLoopController : MonoBehaviour
         m_matchTimer.RestartClock();
         m_isMatchActive = true;
 
-        EventManager.Instance.Trigger(EVENT_GAME_RESTARTED);
+        EventManager.Instance.Trigger(EventTags.EVENT_GAME_RESTARTED);
     }
     //private void EvaluateMatchResult()
     //{
@@ -154,7 +141,7 @@ public class GameLoopController : MonoBehaviour
             return;
         }
         m_playerInstance = Instantiate(m_playerPrefab, m_playerSpawnPoint.position, Quaternion.identity);
-        GameRegistry.Instance.Register(KEY_PLAYER, m_playerInstance);
+        GameRegistry.Instance.Register(KeyTags.KEY_PLAYER, m_playerInstance);
     }
     private void ActiveSpawners()
     {
@@ -196,7 +183,7 @@ public class GameLoopController : MonoBehaviour
 
         DeactiveAllSpawners();
 
-        EventManager.Instance.Trigger(EVENT_GAME_WIN);
+        EventManager.Instance.Trigger(EventTags.EVENT_GAME_WIN);
     }
     public void GameLose()
     {
@@ -212,7 +199,7 @@ public class GameLoopController : MonoBehaviour
         if (m_playerInstance != null)
             m_playerInstance.SetActive(false);
 
-        EventManager.Instance.Trigger(EVENT_GAME_LOSE);
+        EventManager.Instance.Trigger(EventTags.EVENT_GAME_LOSE);
     }
 
 

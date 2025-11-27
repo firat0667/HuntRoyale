@@ -42,7 +42,22 @@ public static class AnimTag
 
 
 }
-public static class Layout
+public static class KeyTags
+{
+    public static string KEY_PLAYER = "Player";
+    public static string KEY_GAME_LOOP_CONTROLLER = "GameLoopController";
+}
+public static class EventTags
+{
+    public static string EVENT_PLAYER_DIED = "PlayerDied";
+    public static string EVENT_GAME_WIN = "GameWin";
+    public static string EVENT_GAME_LOSE = "GameLose";
+    public static string EVENT_GAME_STARTED = "GameStarted";
+    public static string EVENT_GAME_RESTARTED = "GameRestarted";
+    public static string EVENT_MATCH_TIME_UPDATED = "MatchTimeUpdated";
+
+}
+    public static class Layout
 { 
     public static string Player_Layer = "Player";
     public static string Enemy_Layer = "Enemy";
