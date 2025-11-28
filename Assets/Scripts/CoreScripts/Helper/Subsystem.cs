@@ -14,7 +14,7 @@ public class Subsystem : MonoBehaviour
         Root = Root ? Root : transform.parent.gameObject;
     }
 
-    public void LogicUpdate()
+    public virtual void LogicUpdate()
     {
         foreach (CoreComponent component in CoreComponents)
         {

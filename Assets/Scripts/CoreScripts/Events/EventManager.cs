@@ -7,7 +7,7 @@ public class EventManager : FoundationSingleton<EventManager>, IFoundationSingle
 {
     private Dictionary<string, Action<object>> _eventDictionary = new();
 
-    public bool Initialized { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public bool Initialized { get; set ; }
 
     private void Awake()
     {

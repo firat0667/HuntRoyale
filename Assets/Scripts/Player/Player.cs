@@ -1,23 +1,33 @@
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public MovementSubsystem Movement { get; private set; }
-    public AimSubsystem Aim { get; private set; }
-    public HealthSubsystem Health { get; private set; }
-    public AttackSubsystem Attack { get; private set; }
-    public ScoreSubsystem Score{ get; private set; }
+    private Subsystem[] _subsystems;
+
+    private HealthSubsystem _healthSubsystem;
 
     private void Awake()
     {
-        Movement = GetComponentInChildren<MovementSubsystem>();
-        Aim = GetComponentInChildren<AimSubsystem>();
-        Health = GetComponentInChildren<HealthSubsystem>();
-        Attack = GetComponentInChildren<AttackSubsystem>();
-        Score = GetComponentInChildren<ScoreSubsystem>();
+        _subsystems = GetComponentsInChildren<Subsystem>();
 
-        //if(Health!= null)
-            //Health.OnplayerDied+=OnPlayerDied;
+        _healthSubsystem = GetSubsystem<HealthSubsystem>();
+
+        _healthSubsystem.OnDied?.Connect(OnPlayerDied);
+    }
+    private void OnDisable()
+    {
+       _healthSubsystem.OnDied?.Disconnect(OnPlayerDied);
+    }
+    private void Update()
+    {
+        foreach (var s in _subsystems)
+            s.LogicUpdate();
+    }
+
+    public T GetSubsystem<T>() where T : Subsystem
+    {
+        return _subsystems.OfType<T>().FirstOrDefault();
     }
     private void OnPlayerDied()
     {

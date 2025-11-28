@@ -12,7 +12,7 @@ public enum AudioType
 public class AudioManager : FoundationSingleton<AudioManager>, IFoundationSingleton
 {
     private Dictionary<string, AudioSource> _audioSources = new();
-    public bool Initialized { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public bool Initialized { get ; set; }
 
     private void Awake()
     {
