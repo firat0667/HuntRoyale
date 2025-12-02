@@ -10,7 +10,7 @@ public class PlayerInputCore : CoreComponent
 
     private void Start()
     {
-        //mobileJoystick = HUDManager.Instance.MovementJoyStick;
+        mobileJoystick = HUDManager.Instance.MovementJoyStick;
     }
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -18,17 +18,17 @@ public class PlayerInputCore : CoreComponent
     }
     public override void LogicUpdate()
     {
-        //if (mobileJoystick != null)
-        //{
-        //    Vector2 joy = new Vector2(mobileJoystick.Horizontal, mobileJoystick.Vertical);
-        //    if (joy.sqrMagnitude > 0.01f)
-        //    {
-        //        MoveInput = joy;
-        //        return;
-        //    }
-        //}
+        if (mobileJoystick != null)
+        {
+           Vector2 joy = new Vector2(mobileJoystick.Horizontal, mobileJoystick.Vertical);
+            if (joy.sqrMagnitude > 0.01f)
+            {
+                MoveInput = joy;
+                return;
+            }
+        }
 
-        //MoveInput = actionInput;
+        MoveInput = actionInput;
     }
 
 }
