@@ -7,13 +7,31 @@ public class Player : MonoBehaviour
 
     private HealthSubsystem _healthSubsystem;
 
+    public StateMachine SM { get; private set; }
+
+    public PlayerIdleState IdleState { get; private set; }
+    public PlayerMoveState MoveState { get; private set; }
+    public PlayerAttackState AttackState { get; private set; }
+
     private void Awake()
     {
+
+        SM = new StateMachine();
+
         _subsystems = GetComponentsInChildren<Subsystem>();
 
         _healthSubsystem = GetSubsystem<HealthSubsystem>();
 
         _healthSubsystem.OnDied?.Connect(OnPlayerDied);
+    }
+    private void Start()
+    {
+        IdleState = new PlayerIdleState(this);
+        MoveState = new PlayerMoveState(this);
+        AttackState = new PlayerAttackState(this);
+        SM.ChangeState(IdleState);
+
+
     }
     private void OnDisable()
     {
@@ -23,6 +41,12 @@ public class Player : MonoBehaviour
     {
         foreach (var s in _subsystems)
             s.LogicUpdate();
+
+        SM.LogicUpdate();
+    }
+    private void FixedUpdate()
+    {
+        SM.PhysicsUpdate();
     }
 
     public T GetSubsystem<T>() where T : Subsystem
