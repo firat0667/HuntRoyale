@@ -2,15 +2,15 @@
 
 public class PlayerAttackState : IState
 {
-    private readonly Player _player;
-    private readonly PlayerInputCore _input;
-    private readonly AttackSubsystem _attack;
+    private readonly Player m_player;
+    private readonly PlayerInputCore m_input;
+    private readonly AttackSubsystem m_attack;
 
     public PlayerAttackState(Player player)
     {
-        _player = player;
-        _input = player.GetComponentInChildren<PlayerInputCore>();
-        _attack = player.GetSubsystem<AttackSubsystem>();
+        m_player = player;
+        m_input = player.GetComponentInChildren<PlayerInputCore>();
+        m_attack = player.GetSubsystem<AttackSubsystem>();
     }
 
     public void Enter()
@@ -22,14 +22,14 @@ public class PlayerAttackState : IState
     public void LogicUpdate()
     {
         // 1) Hareket varsa → MoveState'e dön
-        if (_input.MoveInput.sqrMagnitude > 0.1f)
+        if (m_input.MoveInput.sqrMagnitude > 0.1f)
         {
-            _player.SM.ChangeState(_player.MoveState);
+            m_player.SM.ChangeState(m_player.MoveState);
             return;
         }
 
         // 2) Henüz target sistemi yok → sadece attack çalışsın
-        _attack.TryAttack();
+        m_attack.TryAttack();
     }
 
     public void PhysicsUpdate()

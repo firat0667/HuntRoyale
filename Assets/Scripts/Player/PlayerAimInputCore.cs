@@ -8,8 +8,8 @@ public class PlayerAimInputCore : CoreComponent
     private void Awake()
     {
         base.Awake();
-        m_input=core.GetCoreComponent<PlayerInputCore>();
-        m_aim=core.GetCoreComponent<AimCore>();
+        m_input= m_core.GetCoreComponent<PlayerInputCore>();
+        m_aim= m_core.GetCoreComponent<AimCore>();
     }
     public override void LogicUpdate()
     {

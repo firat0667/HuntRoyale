@@ -1,33 +1,22 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class MovementInputCore : CoreComponent
 {
-    public Vector3 InputVector { get; set; }
+    public Vector3 InputVector { get; private set; }
 
-    private PlayerInputCore m_playerInput;
+    private ICharacterInputProvider m_provider;
 
-    public void SetDirection(Vector3 dir)
+    protected override void Awake()
     {
-        InputVector = dir;
-    }
-    private void Awake()
-    {
-        Debug.Log("MovementInputCore Awake — Parent = " + transform.parent.name);
         base.Awake();
-        m_playerInput = transform.root.GetComponentInChildren<PlayerInputCore>();
+        m_provider = transform.root.GetComponentInChildren<ICharacterInputProvider>();
+
+        if (m_provider == null)
+            Debug.LogError($"[MovementInputCore] No InputProvider on {transform.root.name}");
     }
+
     public override void LogicUpdate()
     {
-        if (m_playerInput != null)
-        {
-            Vector2 move = m_playerInput.MoveInput;
-            InputVector = new Vector3(move.x, 0f, move.y);
-        }
-        else
-        {
-            InputVector = Vector3.zero;
-        }
+        InputVector = m_provider != null ? m_provider.MoveWorld : Vector3.zero;
     }
-
 }

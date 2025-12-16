@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerMoveState : IState
 {
-    private Player _player;
-    private PlayerInputSubsystem _input;
+    private Player m_player;
+    private PlayerInputSubsystem m_input;
 
     public PlayerMoveState(Player player)
     {
-        _player = player;
-        _input = player.GetSubsystem<PlayerInputSubsystem>();
+        m_player = player;
+        m_input = player.GetSubsystem<PlayerInputSubsystem>();
     }
 
     public void Enter()
@@ -20,9 +20,9 @@ public class PlayerMoveState : IState
 
     public void LogicUpdate()
     {
-        if (_input.MoveInput.sqrMagnitude < 0.1f)
+        if (m_input.MoveInput.sqrMagnitude < 0.1f)
         {
-            _player.SM.ChangeState(_player.IdleState);
+            m_player.SM.ChangeState(m_player.IdleState);
             return;
         }
     }

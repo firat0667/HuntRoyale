@@ -14,13 +14,18 @@ public class PlayerInputCore : CoreComponent
     }
     public void OnMove(InputAction.CallbackContext ctx)
     {
-        MoveInput = ctx.ReadValue<Vector2>();
+        actionInput = ctx.ReadValue<Vector2>();
     }
+
     public override void LogicUpdate()
     {
         if (mobileJoystick != null)
         {
-           Vector2 joy = new Vector2(mobileJoystick.Horizontal, mobileJoystick.Vertical);
+            Vector2 joy = new Vector2(
+                mobileJoystick.Horizontal,
+                mobileJoystick.Vertical
+            );
+
             if (joy.sqrMagnitude > 0.01f)
             {
                 MoveInput = joy;
@@ -30,5 +35,6 @@ public class PlayerInputCore : CoreComponent
 
         MoveInput = actionInput;
     }
+
 
 }

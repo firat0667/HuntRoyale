@@ -1,20 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class CoreComponent : MonoBehaviour, ILogicUpdate
 {
-    protected Subsystem core;
+    protected Subsystem m_core;
 
     protected virtual void Awake()
     {
-        core = transform.parent.GetComponent<Subsystem>();
+        m_core = GetComponentInParent<Subsystem>();
+        if (m_core == null)
+        {
+            Debug.LogError($"{name} has no Subsystem parent!");
+            return;
+        }
 
-        if (core == null) { Debug.LogError("There is no Core on the parent"); }
-        core.AddComponent(this);
+        m_core.AddComponent(this); 
+    }
+    public virtual void Initialize(Subsystem subsystem)
+    {
+        m_core = subsystem;
     }
 
     public virtual void LogicUpdate() { }
-
 }
