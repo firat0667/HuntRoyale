@@ -5,9 +5,47 @@ public class BotBrain : MonoBehaviour
     [SerializeField] private BotAIBrainProfileSO m_profile;
 
     public Transform CurrentTarget { get; private set; }
-
+    private StatsComponent m_stats;
+    private HealthSubsystem m_health;
+    private Transform m_healZone;
     public bool HasTarget => CurrentTarget != null;
+    private void Awake()
+    {
+        m_stats = GetComponent<StatsComponent>();
+        m_health = GetComponentInChildren<HealthSubsystem>();
 
+        GameObject zone = GameObject.FindGameObjectWithTag(Tags.HealZone_Tag);
+        if (zone != null)
+            m_healZone = zone.transform;
+    }
+    public Vector3 DirectionToHealZone
+    {
+        get
+        {
+            if (m_healZone == null) return Vector3.zero;
+
+            Vector3 dir = m_healZone.position - transform.position;
+            dir.y = 0;
+            return dir.normalized;
+        }
+    }
+
+    public bool ShouldHeal
+    {
+        get
+        {
+            if (m_health == null) return false;
+
+            float hpRatio = (float)m_health.CurrentHP / m_health.MaxHP;
+
+            float healThreshold =
+                0.4f
+                - m_profile.aggressiveness * 0.25f
+                + m_profile.caution * 0.35f;
+
+            return hpRatio <= healThreshold;
+        }
+    }
     public bool InAttackRange
     {
         get
@@ -16,7 +54,7 @@ public class BotBrain : MonoBehaviour
             return Vector3.Distance(
                 transform.position,
                 CurrentTarget.position
-            ) <= m_profile.attackRange;
+            ) <= m_stats.AttackRange;
         }
     }
 
@@ -40,6 +78,7 @@ public class BotBrain : MonoBehaviour
     }
     private void SelectTarget()
     {
+        // we should find all enemies in the scene but on a list from a manager would be better
         var targets = GameObject.FindGameObjectsWithTag(Tags.Enemy_Tag);
 
         float bestScore = float.MinValue;

@@ -12,6 +12,7 @@ public static class Tags
 
     public static string SlimeCollectAnim = "Collect";
     public static string Building_Tag = "Building";
+    public static string HealZone_Tag = "HealZone";
 }
 public static class AnimTag
 {
@@ -38,6 +39,11 @@ public static class AnimTag
     public static string BossIdle_Anim = "BossIdle";
     public static string BossShot_Anim = "BossShot";
     public static string BossTakeDamage_Anim = "BossTakeDamage";
+
+
+    public static string Speed_Param = "Speed";
+    public static string Attack_Param = "Attack";
+    public static string isDead_Param = "isDead";
 
 
 

@@ -11,6 +11,7 @@ public class BotAttackState : IState
     public void Enter()
     {
         m_agent.Input.SetAttack(true);
+        m_agent.Animator.TriggerAttack();
     }
 
     public void Exit()
@@ -19,17 +20,24 @@ public class BotAttackState : IState
 
     public void LogicUpdate()
     {
-        //if (!_agent.Brain.HasTarget)
-        //{
-        //    _agent.SM.ChangeState(_agent.IdleState);
-        //    return;
-        //}
+        if (m_agent.Brain.ShouldHeal)
+        {
+            m_agent.SM.ChangeState(m_agent.HealState);
+            return;
+        }
 
-        //if (!_agent.Brain.InAttackRange)
-        //{
-        //    _agent.SM.ChangeState(_agent.ChaseState);
-        //}
+        if (!m_agent.Brain.HasTarget)
+        {
+            m_agent.SM.ChangeState(m_agent.IdleState);
+            return;
+        }
+
+        if (!m_agent.Brain.InAttackRange)
+        {
+            m_agent.SM.ChangeState(m_agent.ChaseState);
+        }
     }
+
 
 
     public void PhysicsUpdate()

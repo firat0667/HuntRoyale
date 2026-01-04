@@ -21,10 +21,18 @@ public class BotIdleState : IState
 
     public void LogicUpdate()
     {
-        //if (_agent.Brain.HasTarget)
-        //{
-        //    _agent.SM.ChangeState(_agent.ChaseState);
-        //}
+  
+        if (m_agent.Brain.ShouldHeal)
+        {
+            m_agent.SM.ChangeState(m_agent.HealState);
+            return;
+        }
+
+        if (m_agent.Brain.HasTarget)
+        {
+            m_agent.SM.ChangeState(m_agent.ChaseState);
+        }
+
     }
 
     public void PhysicsUpdate()

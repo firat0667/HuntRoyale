@@ -5,7 +5,7 @@ public class HealthCore : CoreComponent
 {
     public BasicSignal OnDeath;
 
-    [SerializeField] private int m_maxHealth = 100;
+    private int m_maxHealth;
     private int m_currentHealth;
 
     public int CurrentHP => m_currentHealth;
@@ -20,7 +20,11 @@ public class HealthCore : CoreComponent
     {
         m_currentHealth = m_maxHealth;
     }
-
+    public void Init(int maxHP)
+    {
+        m_maxHealth = maxHP;
+        m_currentHealth = maxHP;
+    }
     public void ApplyDamage(int amount)
     {
         m_currentHealth -= amount;
@@ -31,4 +35,9 @@ public class HealthCore : CoreComponent
             OnDeath.Emit();
         }
     }
+    public void ApplyHeal(int amount)
+    {
+        m_currentHealth = Mathf.Min(m_currentHealth + amount, m_maxHealth);
+    }
+
 }

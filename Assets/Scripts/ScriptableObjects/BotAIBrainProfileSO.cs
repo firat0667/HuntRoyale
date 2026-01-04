@@ -11,7 +11,6 @@ public class BotAIBrainProfileSO : ScriptableObject
 {
     [Header("Perception")]
     public float viewRadius = 8f;
-    public float attackRange = 1.5f;
 
     public BotTargetingMode targetingMode;
 
