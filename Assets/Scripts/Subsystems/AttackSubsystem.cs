@@ -3,21 +3,20 @@ using UnityEngine;
 public class AttackSubsystem : Subsystem
 {
     private AttackCore m_core;
-    private StatsComponent m_stats;
     private float m_lastAttackTime;
-    void Start()
-    {
-        GetCoreComponent(ref m_core);
-        m_stats = GetComponentInParent<StatsComponent>();
-    }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        GetCoreComponent(ref m_core);
+    }
     public void TryAttack()
     {
-        float cooldown = 1f / m_stats.AttackRate;
+        float cooldown = 1f / StatsComponent.AttackRate;
         if (Time.time < m_lastAttackTime + cooldown)
             return;
 
         m_lastAttackTime = Time.time;
-        m_core.Attack(m_stats.AttackDamage);
+        m_core.Attack(StatsComponent.AttackDamage);
     }
 }

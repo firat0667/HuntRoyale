@@ -28,6 +28,9 @@ public abstract class BaseEntity : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        foreach (var s in _subsystems)
+            s.PhysicsUpdate();
+
         SM.PhysicsUpdate();
     }
 

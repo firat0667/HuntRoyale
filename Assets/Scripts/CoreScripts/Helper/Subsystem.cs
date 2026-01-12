@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class Subsystem : MonoBehaviour
 {
-    [field: SerializeField] public GameObject Root { get; private set; }
+    protected BaseEntity Entity;
 
     private readonly List<CoreComponent> CoreComponents = new List<CoreComponent>();
+    protected StatsComponent StatsComponent { get; private set; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        Root = Root ? Root : transform.parent.gameObject;
+        Entity = GetComponentInParent<BaseEntity>();
+
+        if (Entity == null)
+        {
+            Debug.LogError($"{name} has no BaseEntity parent!");
+        }
+        StatsComponent = Entity.GetComponent<StatsComponent>();
     }
 
     public virtual void LogicUpdate()
@@ -21,7 +28,13 @@ public class Subsystem : MonoBehaviour
             component.LogicUpdate();
         }
     }
-
+    public virtual void PhysicsUpdate()
+    {
+        foreach (CoreComponent component in CoreComponents)
+        {
+            component.PhysicsUpdate();
+        }
+    }
     public void AddComponent(CoreComponent component)
     {
         if (!CoreComponents.Contains(component))

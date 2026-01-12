@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e2d43db2e140a4bbc0881de358b9ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Root>k__BackingField: {fileID: 7048843275994707225}
 --- !u!1 &235138056310265190
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb12ec5a30b0b44094a4aa769e5c73a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Root>k__BackingField: {fileID: 7048843275994707225}
 --- !u!1 &892578173150928397
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a0c9038004d4148b9b39ba99199640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Root>k__BackingField: {fileID: 7048843275994707225}
+  visualRoot: {fileID: 8530761700044536331}
 --- !u!1 &1126502799889946508
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2cb780a33503594b811eaa6676dbc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Root>k__BackingField: {fileID: 7048843275994707225}
 --- !u!1 &2863149420982807826
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a7324c5956de544b31b9d12e2fd829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Root>k__BackingField: {fileID: 7048843275994707225}
 --- !u!1 &4046405644698045394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,6 +1826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc47d4c75347524a9ecac122b5153b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_mesh: {fileID: 0}
+  m_stats: {fileID: 0}
 --- !u!136 &6614328356072766753
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2023,7 +2021,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89cc37419210bc44ab96dbfa29725a4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_animator: {fileID: 1876915756228817068}
 --- !u!1 &7091165570240055925
 GameObject:
   m_ObjectHideFlags: 0
@@ -2630,7 +2627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b10012fa5ae2934583770c13410123c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Root>k__BackingField: {fileID: 7048843275994707225}
 --- !u!1 &8257135397707495931
 GameObject:
   m_ObjectHideFlags: 0

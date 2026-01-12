@@ -5,12 +5,14 @@ public class PlayerAttackState : IState
     private readonly Player m_player;
     private readonly PlayerInputCore m_input;
     private readonly AttackSubsystem m_attack;
+    private readonly MovementSubsystem m_movement;
 
     public PlayerAttackState(Player player)
     {
         m_player = player;
         m_input = player.GetComponentInChildren<PlayerInputCore>();
         m_attack = player.GetSubsystem<AttackSubsystem>();
+        m_movement= player.GetSubsystem<MovementSubsystem>();
     }
 
     public void Enter()
@@ -30,12 +32,15 @@ public class PlayerAttackState : IState
 
         // 2) Henüz target sistemi yok → sadece attack çalışsın
         m_attack.TryAttack();
+
     }
 
     public void PhysicsUpdate()
     {
-        // Bu state'te fiziksel hareket yapmıyoruz.
-        // Hareket işini MovementSubsystem zaten hallediyor.
+        //if (target == null) return;
+
+        //Vector3 dir = target.position - m_player.transform.position;
+        //m_movement.RotateTowards(dir);
     }
 
     public void Exit()

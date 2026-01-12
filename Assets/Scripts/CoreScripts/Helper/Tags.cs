@@ -44,6 +44,9 @@ public static class AnimTag
     public static string Speed_Param = "Speed";
     public static string Attack_Param = "Attack";
     public static string isDead_Param = "isDead";
+    public static string MoveX_Param="MoveX";
+    public static string MoveY_Param="MoveY";
+    public static string IsMoving_Param="IsMoving";
 
 
 
