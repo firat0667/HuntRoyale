@@ -15,8 +15,8 @@ public class PlayerAttackState : IState
 
     public void Enter()
     {
-        // İstersen burada attack animasyon trigger’ı atarsın
-        // Örn: _animator.SetBool("IsAttacking", true);
+        Debug.Log("Entering Player Attack State");
+        m_player.AnimatorBridge.TriggerAttack();
     }
 
     public void LogicUpdate()

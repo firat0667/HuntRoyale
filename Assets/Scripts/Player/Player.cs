@@ -4,6 +4,20 @@ public class Player : BaseEntity
     public PlayerMoveState MoveState { get; private set; }
     public PlayerAttackState AttackState { get; private set; }
 
+    private AnimatorBridge m_animatorBridge;
+
+    public AnimatorBridge AnimatorBridge
+    {
+        get
+        {
+            if (m_animatorBridge == null)
+            {
+                m_animatorBridge = GetComponent<AnimatorBridge>();
+            }
+            return m_animatorBridge;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();

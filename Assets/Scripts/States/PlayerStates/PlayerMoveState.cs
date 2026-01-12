@@ -15,7 +15,7 @@ public class PlayerMoveState : IState
 
     public void Enter()
     {
-      Debug.Log("Entered Move State");
+        m_player.AnimatorBridge.SetSpeed(1f);
     }
 
     public void LogicUpdate()

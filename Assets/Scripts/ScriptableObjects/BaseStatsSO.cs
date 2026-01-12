@@ -13,4 +13,7 @@ public class BaseStatsSO : ScriptableObject
 
     [Header("Movement")]
     public float moveSpeed;
+
+    [Header("Rotation")]
+    public float rotationSpeed;
 }

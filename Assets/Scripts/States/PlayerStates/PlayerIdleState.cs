@@ -13,7 +13,7 @@ public class PlayerIdleState : IState
 
     public void Enter()
     {
-        Debug.Log("Entered Idle State");
+        m_player.AnimatorBridge.SetSpeed(0f);
     }
 
     public void LogicUpdate()

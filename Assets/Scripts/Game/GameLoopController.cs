@@ -142,6 +142,7 @@ public class GameLoopController : MonoBehaviour
         }
         m_playerInstance = Instantiate(m_playerPrefab, m_playerSpawnPoint.position, Quaternion.identity);
         GameRegistry.Instance.Register(KeyTags.KEY_PLAYER, m_playerInstance);
+        CameraController.Instance.SetCamera(m_playerInstance.transform);
     }
     private void ActiveSpawners()
     {
