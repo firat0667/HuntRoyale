@@ -12,23 +12,25 @@ public class Player : BaseEntity
     #region Subsystems
     private MovementSubsystem m_movement;
     #endregion
-
-
     #region Animator
     private AnimatorBridge m_animatorBridge;
-    #endregion
-    #region Parameters
-
-    #endregion
-
     public AnimatorBridge AnimatorBridge => m_animatorBridge;
-  
+    #endregion
+
+    #region Parameters
+    public bool IsInCombat { get; private set; }
+    private CombatPerception m_combatPerception;
+    public CombatPerception CombatPerception => m_combatPerception;
+    #endregion
+
 
     protected override void Awake()
     {
         base.Awake();
         m_movement = GetSubsystem<MovementSubsystem>();
         m_animatorBridge= GetComponent<AnimatorBridge>();
+        m_combatPerception = GetComponent<CombatPerception>();
+        m_combatPerception.Initialize();
     }
 
     protected void Start()
@@ -44,11 +46,17 @@ public class Player : BaseEntity
         base.Update(); 
         if (m_movement == null)
             return;
-        //AnimatorBridge.UpdateMovementAnim(
-        //    m_movement.Velocity
-        //);
-    }
 
+        SetInCombat(m_combatPerception.HasTargetInAttackRange);
+
+        AnimatorBridge.UpdateMovementAnim(
+            m_movement.Velocity,IsInCombat
+        );
+    }
+    public void SetInCombat(bool inCombat)
+    {
+        IsInCombat = inCombat;
+    }
 
     protected override void OnDied()
     {

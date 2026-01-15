@@ -7,5 +7,6 @@ public class AttackCore : CoreComponent
         // Player: use bomb
         // Enemy: melee attack
         // Boss: special attack
+        Debug.Log($"{nameof(AttackCore)}.Attack called with damage: {damage}");
     }
 }

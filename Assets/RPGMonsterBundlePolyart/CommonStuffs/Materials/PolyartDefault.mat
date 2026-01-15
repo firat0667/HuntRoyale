@@ -26,7 +26,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -54,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 0acd5974827369042b71efa22a9a1947, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -70,11 +70,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: d84cc81065ac4648aceaf93b68ea05cf, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 68805ce992c44391896061e7e9c1b40f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 88e58b4cc42d7304fb1dc40653de8e97, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask03:
@@ -113,7 +113,7 @@ Material:
     - Vector1_D15D16DF: 1
     - Vector1_D682A6C5: 1
     - Vector1_E784DED5: 1
-    - _BumpScale: 1
+    - _BumpScale: 0.5
     - _Color07Power: 1
     - _Color08Power: 1
     - _Color09Power: 1
@@ -121,7 +121,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.3
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
@@ -142,10 +142,10 @@ Material:
     - Color_C5D962E7: {r: 0.40351287, g: 0.22321102, b: 0.8301887, a: 0}
     - Color_E64BA0E: {r: 1, g: 0, b: 0.009498596, a: 0}
     - Color_df356a6b29d64aee805a61f7bcdc2368: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.86764705, b: 0.86764705, a: 1}
     - _Color07: {r: 0.6415094, g: 0.21751776, b: 0.05749373, a: 0}
     - _Color08: {r: 0.28301886, g: 0.28301886, b: 0.28301886, a: 0}
     - _Color09_Skin: {r: 0.9056604, g: 0.64112663, b: 0.44001427, a: 0}
-    - _EmissionColor: {r: 5.992157, g: 5.992157, b: 5.992157, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

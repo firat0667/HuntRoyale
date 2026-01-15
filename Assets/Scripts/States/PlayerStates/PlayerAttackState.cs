@@ -3,49 +3,47 @@
 public class PlayerAttackState : IState
 {
     private readonly Player m_player;
-    private readonly PlayerInputCore m_input;
     private readonly AttackSubsystem m_attack;
     private readonly MovementSubsystem m_movement;
+
+    private const float ATTACK_MOVE_MULT = 0.5f;
 
     public PlayerAttackState(Player player)
     {
         m_player = player;
-        m_input = player.GetComponentInChildren<PlayerInputCore>();
         m_attack = player.GetSubsystem<AttackSubsystem>();
-        m_movement= player.GetSubsystem<MovementSubsystem>();
+        m_movement = player.GetSubsystem<MovementSubsystem>();
     }
 
     public void Enter()
     {
         Debug.Log("Entering Player Attack State");
-        m_player.AnimatorBridge.TriggerAttack();
+        m_movement.SetSpeedMultiplier(ATTACK_MOVE_MULT);
     }
 
     public void LogicUpdate()
     {
-        // 1) Hareket varsa → MoveState'e dön
-        if (m_input.MoveInput.sqrMagnitude > 0.1f)
+
+        var target = m_player.CombatPerception.CurrentTarget;
+        if (target != null)
         {
-            m_player.SM.ChangeState(m_player.MoveState);
-            return;
+            Vector3 dir = target.position - m_player.transform.position;
+            m_movement.RotateTowards(dir);
         }
 
-        // 2) Henüz target sistemi yok → sadece attack çalışsın
-        m_attack.TryAttack();
-
+        if (m_attack.TryAttack())
+        {
+            m_player.AnimatorBridge.TriggerAttack();
+        }
+        if (!m_player.IsInCombat)
+        {
+            if (m_movement.Velocity.sqrMagnitude > 0.01f)
+                m_player.SM.ChangeState(m_player.MoveState);
+            else
+                m_player.SM.ChangeState(m_player.IdleState);
+        }
     }
 
-    public void PhysicsUpdate()
-    {
-        //if (target == null) return;
-
-        //Vector3 dir = target.position - m_player.transform.position;
-        //m_movement.RotateTowards(dir);
-    }
-
-    public void Exit()
-    {
-        // İstersen burada attack animasyon flag’ini kapatırsın
-        // Örn: _animator.SetBool("IsAttacking", false);
-    }
+    public void Exit() { m_movement.SetSpeedMultiplier(1f); }
+    public void PhysicsUpdate() { }
 }
