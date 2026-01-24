@@ -32,20 +32,25 @@ public class PlayerMoveState : IState
             return;
         }
 
-        Vector3 moveDir = m_input.MoveInput;
+        Vector2 input = m_input.MoveInput;
 
-
-        if (moveDir.sqrMagnitude < 0.1f)
+        if (input.sqrMagnitude < 0.1f)
         {
+            m_movement.Stop();
             m_stateMachine.ChangeState(m_player.IdleState);
             return;
         }
+
+        Vector3 moveDir = new Vector3(input.x, 0f, input.y);
+
+        m_movement.SetMoveDirection(moveDir);
 
         if (m_movement.Velocity.sqrMagnitude > 0.001f)
             m_movement.RotateTowards(m_movement.Velocity);
 
         m_aim.SetAim(moveDir);
     }
+
 
 
     public void PhysicsUpdate() { } 

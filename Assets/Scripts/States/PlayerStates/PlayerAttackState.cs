@@ -23,26 +23,38 @@ public class PlayerAttackState : IState
 
     public void LogicUpdate()
     {
+        Vector2 input = m_player
+            .GetSubsystem<PlayerInputSubsystem>()
+            .MoveInput;
 
-        var target = m_player.CombatPerception.CurrentTarget;
+        Vector3 moveDir = Vector3.zero;
+        if (input.sqrMagnitude > 0.1f)
+            moveDir = new Vector3(input.x, 0f, input.y);
+
+        m_movement.SetMoveDirection(moveDir);
+
+        var target = m_attack.CurrentTarget;
         if (target != null)
         {
             Vector3 dir = target.position - m_player.transform.position;
             m_movement.RotateTowards(dir);
         }
-
-        if (m_attack.TryAttack())
+        else if (moveDir.sqrMagnitude > 0.001f)
         {
-            m_player.AnimatorBridge.TriggerAttack();
+            m_movement.RotateTowards(moveDir);
         }
+        if (m_attack.TryAttack())
+            m_player.AnimatorBridge.TriggerAttack();
+
         if (!m_player.IsInCombat)
         {
-            if (m_movement.Velocity.sqrMagnitude > 0.01f)
+            if (moveDir.sqrMagnitude > 0.01f)
                 m_player.SM.ChangeState(m_player.MoveState);
             else
                 m_player.SM.ChangeState(m_player.IdleState);
         }
     }
+
 
     public void Exit() { m_movement.SetSpeedMultiplier(1f); }
     public void PhysicsUpdate() { }

@@ -4,11 +4,12 @@ using UnityEngine;
 public class BaseStatsSO : ScriptableObject
 {
     [Header("Health")]
-    public float maxHP;
+    public int maxHP;
 
     [Header("Combat")]
     public float attackDamage;
     public float attackRate;
+    public float detectionRange;
     public float attackRange;
 
     [Header("Movement")]

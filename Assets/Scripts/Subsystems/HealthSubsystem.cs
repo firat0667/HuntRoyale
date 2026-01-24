@@ -18,10 +18,10 @@ public class HealthSubsystem : Subsystem,IDamageable,IHealth
     {
         OnDied = new BasicSignal();
         GetCoreComponent(ref m_core);
-        m_core.Init((int)StatsComponent.MaxHP);
+        m_core.Init(StatsComponent.MaxHP);
         m_core.OnDeath.Connect(HandleDeath);
     }
-    public void Damage(int amount)
+    public void TakeDamage(int amount)
     {
         m_core.ApplyDamage(amount);
     }

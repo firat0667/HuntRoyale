@@ -22,7 +22,6 @@ public class GameLoopController : MonoBehaviour
     private GameObject m_playerInstance;
     private readonly List<Spawner> m_spawners = new List<Spawner>();
 
- 
 
 
     private void Awake()

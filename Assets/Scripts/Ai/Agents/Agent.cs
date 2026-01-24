@@ -24,33 +24,35 @@ public class Agent : BaseEntity
         Brain = GetComponent<BotBrain>();
         Animator = GetComponentInChildren<AnimatorBridge>();
     }
+    protected override void Start()
+    {
+        base.Start();
+    }
     protected override void Update()
     {
         base.Update();
 
         if (m_movement == null) return;
 
-        float speed = m_movement.Velocity.magnitude;
-        float speed01 =
-            speed < 0.05f ? 0f : speed / m_movement.MaxSpeed;
-
-        Animator.SetSpeed(Mathf.Clamp01(speed01));
+        Animator.SetSpeed(m_movement.Speed01);
     }
-
-    private void Start()
-    {
-        IdleState = new BotIdleState(this);
-        ChaseState = new BotChaseState(this);
-        AttackState = new BotAttackState(this);
-        HealState = new BotHealState(this);
-        SM.ChangeState(IdleState);
-    }
-
     protected override void OnDied()
     {
         Animator.TriggerDead();
         Input.SetMove(Vector3.zero);
         Input.SetAttack(false);
         Brain.ClearTarget();
+    }
+    protected override void CreateStates()
+    {
+        IdleState = new BotIdleState(this);
+        ChaseState = new BotChaseState(this);
+        AttackState = new BotAttackState(this);
+        HealState = new BotHealState(this);
+    }
+
+    protected override IState GetEntryState()
+    {
+        return IdleState;
     }
 }

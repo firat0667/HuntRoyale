@@ -3,31 +3,20 @@ using UnityEngine;
 public class CombatPerception : MonoBehaviour
 {
     [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private float scanInterval = 0.15f;
 
     private StatsComponent _stats;
-    public float DetectRange { get; private set; }
-    public bool UseDetectRange { get; private set; }
-    public bool HasTargetInDetectRange { get; private set; }
-    public bool HasTargetInAttackRange { get; private set; }
-    public Transform CurrentTarget { get; private set; }
-
-    #region Scan Interval
-    [SerializeField] private float scanInterval = 0.15f;
     private float _scanTimer;
 
     private readonly Collider[] _hitsBuffer = new Collider[16];
-    #endregion
+
+    public Transform CurrentTarget { get; private set; }
+    public float CurrentTargetSqrDistance { get; private set; }
 
     private void Awake()
     {
         _stats = GetComponent<StatsComponent>();
         _scanTimer = Random.Range(0f, scanInterval);
-    }
-
-    public void Initialize(float detectRange = 0, bool useDetectRange=false)
-    {
-        DetectRange = detectRange;
-        UseDetectRange = useDetectRange;
     }
 
     private void Update()
@@ -42,67 +31,55 @@ public class CombatPerception : MonoBehaviour
 
     private void Scan()
     {
-        HasTargetInDetectRange = false;
-        HasTargetInAttackRange = false;
         CurrentTarget = null;
+        CurrentTargetSqrDistance = float.MaxValue;
 
-        float scanRange = UseDetectRange ? DetectRange : _stats.AttackRange;
-        float scanRangeSqr = scanRange * scanRange;
+        float maxScanRange = Mathf.Max(_stats.AttackRange, _stats.DetectionRange);
 
         int hitCount = Physics.OverlapSphereNonAlloc(
             transform.position,
-            scanRange,
+            maxScanRange,
             _hitsBuffer,
             targetLayer
         );
 
-        if (hitCount == 0)
-            return;
-
-        float minSqrDist = float.MaxValue;
-
         for (int i = 0; i < hitCount; i++)
         {
             var hit = _hitsBuffer[i];
-            if (hit == null) continue;
+            if (!hit) continue;
 
             float sqrDist =
                 (hit.transform.position - transform.position).sqrMagnitude;
 
-            if (sqrDist < minSqrDist)
+            if (sqrDist < CurrentTargetSqrDistance)
             {
-                minSqrDist = sqrDist;
+                CurrentTargetSqrDistance = sqrDist;
                 CurrentTarget = hit.transform;
             }
         }
-
-        if (CurrentTarget == null)
-            return;
-
-        if (UseDetectRange)
-            HasTargetInDetectRange = true;
-
-        if (minSqrDist <= _stats.AttackRange * _stats.AttackRange)
-            HasTargetInAttackRange = true;
     }
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        if (UseDetectRange)
-            Gizmos.DrawWireSphere(transform.position, DetectRange);
+        if (_stats == null)
+            _stats = GetComponent<StatsComponent>();
 
-        if (_stats != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _stats.AttackRange);
-        }
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _stats.DetectionRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _stats.AttackRange);
+
         if (CurrentTarget != null)
         {
-            Gizmos.color = Color.blue;
+            bool inAttackRange =
+                CurrentTargetSqrDistance <= _stats.AttackRange * _stats.AttackRange;
+
+            Gizmos.color = inAttackRange ? Color.red : Color.cyan;
+
             Gizmos.DrawLine(transform.position, CurrentTarget.position);
+            Gizmos.DrawSphere(CurrentTarget.position, 0.15f);
         }
     }
 #endif
-
 }

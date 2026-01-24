@@ -11,6 +11,8 @@ public class Player : BaseEntity
 
     #region Subsystems
     private MovementSubsystem m_movement;
+
+    private AttackSubsystem m_attack;
     #endregion
     #region Animator
     private AnimatorBridge m_animatorBridge;
@@ -18,9 +20,7 @@ public class Player : BaseEntity
     #endregion
 
     #region Parameters
-    public bool IsInCombat { get; private set; }
-    private CombatPerception m_combatPerception;
-    public CombatPerception CombatPerception => m_combatPerception;
+    public bool IsInCombat => m_attack.IsInCombat;
     #endregion
 
 
@@ -28,18 +28,13 @@ public class Player : BaseEntity
     {
         base.Awake();
         m_movement = GetSubsystem<MovementSubsystem>();
-        m_animatorBridge= GetComponent<AnimatorBridge>();
-        m_combatPerception = GetComponent<CombatPerception>();
-        m_combatPerception.Initialize();
+        m_attack = GetSubsystem<AttackSubsystem>();
+        m_animatorBridge = GetComponent<AnimatorBridge>();
     }
 
-    protected void Start()
+    protected override void Start()
     {
-        IdleState = new PlayerIdleState(this);
-        MoveState = new PlayerMoveState(this);
-        AttackState = new PlayerAttackState(this);
-
-        SM.ChangeState(IdleState);
+        base.Start();
     }
     protected override void Update()
     {
@@ -47,19 +42,23 @@ public class Player : BaseEntity
         if (m_movement == null)
             return;
 
-        SetInCombat(m_combatPerception.HasTargetInAttackRange);
 
         AnimatorBridge.UpdateMovementAnim(
             m_movement.Velocity,IsInCombat
         );
     }
-    public void SetInCombat(bool inCombat)
-    {
-        IsInCombat = inCombat;
-    }
-
     protected override void OnDied()
     {
         EventManager.Instance.Trigger(EventTags.EVENT_PLAYER_DIED);
+    }
+    protected override void CreateStates()
+    {
+        IdleState = new PlayerIdleState(this);
+        MoveState = new PlayerMoveState(this);
+        AttackState = new PlayerAttackState(this);
+    }
+    protected override IState GetEntryState()
+    {
+        return IdleState;
     }
 }

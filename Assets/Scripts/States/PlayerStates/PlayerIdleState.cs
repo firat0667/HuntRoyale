@@ -21,7 +21,7 @@ public class PlayerIdleState : IState
 
     public void LogicUpdate()
     {
-        if (m_player.CombatPerception.HasTargetInAttackRange)
+        if (m_player.IsInCombat)
         {
             m_stateMachine.ChangeState(m_player.AttackState);
             return;

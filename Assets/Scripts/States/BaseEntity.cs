@@ -16,8 +16,14 @@ public abstract class BaseEntity : MonoBehaviour
 
         if (_healthSubsystem != null)
             _healthSubsystem.OnDied?.Connect(OnDied);
+
+        CreateStates();
     }
 
+    protected virtual void Start()
+    {
+        SM.ChangeState(GetEntryState());
+    }
     protected virtual void Update()
     {
         foreach (var s in _subsystems)
@@ -41,6 +47,8 @@ public abstract class BaseEntity : MonoBehaviour
     }
 
     protected virtual void OnDied() { }
+    protected abstract void CreateStates();
+    protected abstract IState GetEntryState();
 
     public T GetSubsystem<T>() where T : Subsystem
     {

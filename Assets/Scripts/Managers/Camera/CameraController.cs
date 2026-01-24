@@ -13,7 +13,6 @@ public class CameraController : FoundationSingleton<CameraController>, IFoundati
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
