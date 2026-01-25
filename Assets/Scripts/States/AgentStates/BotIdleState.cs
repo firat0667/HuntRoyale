@@ -1,42 +1,46 @@
 using UnityEngine;
 
-public class BotIdleState : IState
+namespace States.AgentStates
 {
-    private Agent m_agent;
-
-    public BotIdleState(Agent agent)
+    public class BotIdleState : IState
     {
-        m_agent = agent;
-    }
+        private Agent m_agent;
 
-    public void Enter()
-    {
-        m_agent.Input.SetMove(Vector3.zero);
-        m_agent.Input.SetAttack(false);
-    }
-
-    public void Exit()
-    {
-    }
-
-    public void LogicUpdate()
-    {
-  
-        if (m_agent.Brain.ShouldHeal)
+        public BotIdleState(Agent agent)
         {
-            m_agent.SM.ChangeState(m_agent.HealState);
-            return;
+            m_agent = agent;
         }
 
-        if (m_agent.Brain.HasTarget)
+        public void Enter()
         {
-            m_agent.SM.ChangeState(m_agent.ChaseState);
+            m_agent.Input.SetMove(Vector3.zero);
+            m_agent.Input.SetAttack(false);
         }
 
-    }
+        public void Exit()
+        {
+        }
 
-    public void PhysicsUpdate()
-    {
+        public void LogicUpdate()
+        {
+
+            if (m_agent.Brain.ShouldHeal)
+            {
+                m_agent.SM.ChangeState(m_agent.HealState);
+                return;
+            }
+
+            if (m_agent.Brain.HasTarget)
+            {
+                m_agent.SM.ChangeState(m_agent.ChaseState);
+            }
+
+        }
+
+        public void PhysicsUpdate()
+        {
+        }
+
     }
 
 }

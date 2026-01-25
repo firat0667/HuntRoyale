@@ -1,40 +1,41 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputCore : CoreComponent
+namespace Subsystems.CoreComponents
 {
-    public Vector2 MoveInput { get; private set; }
-
-    private Vector2 actionInput;
-    private Joystick mobileJoystick;
-
-    private void Start()
+    public class PlayerInputCore : CoreComponent
     {
-        mobileJoystick = HUDManager.Instance.MovementJoyStick;
-    }
-    public void OnMove(InputAction.CallbackContext ctx)
-    {
-        actionInput = ctx.ReadValue<Vector2>();
-    }
+        public Vector2 MoveInput { get; private set; }
 
-    public override void LogicUpdate()
-    {
-        if (mobileJoystick != null)
+        private Vector2 actionInput;
+        private Joystick mobileJoystick;
+
+        private void Start()
         {
-            Vector2 joy = new Vector2(
-                mobileJoystick.Horizontal,
-                mobileJoystick.Vertical
-            );
-
-            if (joy.sqrMagnitude > 0.01f)
-            {
-                MoveInput = joy;
-                return;
-            }
+            mobileJoystick = HUDManager.Instance.MovementJoyStick;
+        }
+        public void OnMove(InputAction.CallbackContext ctx)
+        {
+            actionInput = ctx.ReadValue<Vector2>();
         }
 
-        MoveInput = actionInput;
+        public override void LogicUpdate()
+        {
+            if (mobileJoystick != null)
+            {
+                Vector2 joy = new Vector2(
+                    mobileJoystick.Horizontal,
+                    mobileJoystick.Vertical
+                );
+
+                if (joy.sqrMagnitude > 0.01f)
+                {
+                    MoveInput = joy;
+                    return;
+                }
+            }
+
+            MoveInput = actionInput;
+        }
     }
-
-
 }

@@ -1,38 +1,42 @@
 using UnityEngine;
 
-public class BotHealState : IState
+
+namespace States.AgentStates
 {
-    private Agent m_agent;
-
-    public BotHealState(Agent agent)
+    public class BotHealState : IState
     {
-        m_agent = agent;
-    }
+        private Agent m_agent;
 
-    public void Enter()
-    {
-        m_agent.Input.SetAttack(false);
-    }
-
-    public void Exit()
-    {
-        m_agent.Input.SetMove(Vector3.zero);
-    }
-
-    public void LogicUpdate()
-    {
-        if (!m_agent.Brain.ShouldHeal)
+        public BotHealState(Agent agent)
         {
-            m_agent.SM.ChangeState(m_agent.IdleState);
-            return;
+            m_agent = agent;
         }
-        Vector3 dir = m_agent.Brain.DirectionToHealZone;
-        m_agent.Input.SetMove(dir);
-        m_agent.Input.SetAim(dir);
-    }
 
-    public void PhysicsUpdate()
-    {
-    }
+        public void Enter()
+        {
+            m_agent.Input.SetAttack(false);
+        }
 
+        public void Exit()
+        {
+            m_agent.Input.SetMove(Vector3.zero);
+        }
+
+        public void LogicUpdate()
+        {
+            if (!m_agent.Brain.ShouldHeal)
+            {
+                m_agent.SM.ChangeState(m_agent.IdleState);
+                return;
+            }
+            Vector3 dir = m_agent.Brain.DirectionToHealZone;
+            m_agent.Input.SetMove(dir);
+            m_agent.Input.SetAim(dir);
+        }
+
+        public void PhysicsUpdate()
+        {
+        }
+
+    }
 }

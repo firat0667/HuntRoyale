@@ -1,34 +1,44 @@
-public class EnemyIdleState : IState
+using Subsystems;
+using UnityEngine;
+
+namespace States.EnemyStates
 {
-    private readonly Enemy m_enemy;
-
-    public EnemyIdleState(Enemy enemy)
+    public class EnemyIdleState : IState
     {
-        m_enemy = enemy;
+        private readonly Enemy m_enemy;
+        private readonly MovementSubsystem m_movement;
+        private readonly AttackSubsystem m_attack;
+
+        public EnemyIdleState(Enemy enemy)
+        {
+            m_enemy = enemy;
+            m_movement = enemy.Movement;
+            m_attack = enemy.Attack;
+        }
+
+        public void Enter()
+        {
+            m_movement.Stop();
+            m_enemy.AnimatorBridge.SetSpeed(0f);
+            Debug.Log("Entering Player Idle State");
+        }
+
+        public void LogicUpdate()
+        {
+            if (m_enemy.IsTargetInAttackRange)
+            {
+                m_enemy.SM.ChangeState(m_enemy.AttackState);
+                return;
+            }
+
+            if (m_enemy.IsTargetInDetectRange)
+            {
+                m_enemy.SM.ChangeState(m_enemy.FollowState);
+                return;
+            }
+        }
+
+        public void PhysicsUpdate() { }
+        public void Exit() { }
     }
-
-    public void Enter()
-    {
-       // aipath .stop();
-    }
-
-    public void LogicUpdate()
-    {
-        if (m_enemy.Attack.CurrentTarget == null)
-            return;
-
-        //if (m_enemy.IsInCombat)
-        //{
-        //    m_enemy.SM.ChangeState(m_enemy.AttackState);
-        //}
-        //else
-        //{
-        //    m_enemy.SM.ChangeState(m_enemy.FollowState);
-        //}
-    }
-
-
-
-    public void PhysicsUpdate() { }
-    public void Exit() { }
 }

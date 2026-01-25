@@ -1,3 +1,5 @@
+using States.PlayerStates;
+using Subsystems;
 using System;
 using UnityEngine;
 
@@ -20,7 +22,7 @@ public class Player : BaseEntity
     #endregion
 
     #region Parameters
-    public bool IsInCombat => m_attack.IsInCombat;
+    public bool IsInCombat => m_attack.IsTargetInAttackRange;
     #endregion
 
 

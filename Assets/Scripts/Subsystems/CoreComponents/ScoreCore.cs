@@ -1,12 +1,16 @@
 using UnityEngine;
 
-public class ScoreCore : CoreComponent
+namespace Subsystems.CoreComponents
 {
-    public int Score { get; private set; }
-
-    public void Add(int amount)
+    public class ScoreCore : CoreComponent
     {
-        Score += amount;
-        EventManager.Instance.Trigger("ScoreChanged", Score);
+        public int Score { get; private set; }
+
+        public void Add(int amount)
+        {
+            Score += amount;
+            EventManager.Instance.Trigger("ScoreChanged", Score);
+        }
     }
+
 }

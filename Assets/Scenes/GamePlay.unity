@@ -3718,7 +3718,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &7091165569349076492
 GameObject:
   m_ObjectHideFlags: 0
@@ -4180,8 +4180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 72
-  scanInterval: 0.05
+    m_Bits: 8
+  scanInterval: 0.15
 --- !u!114 &8611241499484671780
 MonoBehaviour:
   m_ObjectHideFlags: 0

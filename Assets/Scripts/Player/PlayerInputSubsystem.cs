@@ -1,12 +1,16 @@
+using Subsystems.CoreComponents;
 using UnityEngine;
 
-public class PlayerInputSubsystem : Subsystem
+namespace Subsystems
 {
-    private PlayerInputCore _core;
-
-    public Vector2 MoveInput => _core.MoveInput;
-    private void Start()
+    public class PlayerInputSubsystem : Subsystem
     {
-        GetCoreComponent(ref _core);
+        private PlayerInputCore _core;
+
+        public Vector2 MoveInput => _core.MoveInput;
+        private void Start()
+        {
+            GetCoreComponent(ref _core);
+        }
     }
 }

@@ -1,12 +1,16 @@
 using UnityEngine;
 
-public class AttackCore : CoreComponent
+
+namespace Subsystems.CoreComponents
 {
-    public virtual void Attack(float damage)
+    public class AttackCore : CoreComponent
     {
-        // Player: use bomb
-        // Enemy: melee attack
-        // Boss: special attack
-        Debug.Log($"{nameof(AttackCore)}.Attack called with damage: {damage}");
+        public virtual void Attack(float damage)
+        {
+            // Player: use bomb
+            // Enemy: melee attack
+            // Boss: special attack
+            Debug.Log($"{nameof(AttackCore)}.Attack called with damage: {damage}");
+        }
     }
 }

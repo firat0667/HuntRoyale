@@ -1,48 +1,48 @@
 using UnityEngine;
 
-public class BotChaseState : IState
+namespace States.AgentStates
 {
-    private Agent m_agent;
+    public class BotChaseState : IState
+    {
+        private Agent m_agent;
 
-    public BotChaseState(Agent agent)
-    {
-        m_agent = agent;
-    }
-    public void Enter()
-    {
-        m_agent.Input.SetAttack(false);
-    }
-
-    public void Exit()
-    {
-    }
-
-    public void LogicUpdate()
-    {
-        if (m_agent.Brain.ShouldHeal)
+        public BotChaseState(Agent agent)
         {
-            m_agent.SM.ChangeState(m_agent.HealState);
-            return;
+            m_agent = agent;
+        }
+        public void Enter()
+        {
+            m_agent.Input.SetAttack(false);
         }
 
-        if (!m_agent.Brain.HasTarget)
+        public void Exit()
         {
-            m_agent.SM.ChangeState(m_agent.IdleState);
-            return;
         }
-
-        Vector3 dir = m_agent.Brain.DirectionToTarget;
-        m_agent.Input.SetMove(dir);
-        m_agent.Input.SetAim(dir);
-
-        if (m_agent.Brain.InAttackRange)
+        public void LogicUpdate()
         {
-            m_agent.SM.ChangeState(m_agent.AttackState);
+            if (m_agent.Brain.ShouldHeal)
+            {
+                m_agent.SM.ChangeState(m_agent.HealState);
+                return;
+            }
+
+            if (!m_agent.Brain.HasTarget)
+            {
+                m_agent.SM.ChangeState(m_agent.IdleState);
+                return;
+            }
+
+            Vector3 dir = m_agent.Brain.DirectionToTarget;
+            m_agent.Input.SetMove(dir);
+            m_agent.Input.SetAim(dir);
+
+            if (m_agent.Brain.InAttackRange)
+            {
+                m_agent.SM.ChangeState(m_agent.AttackState);
+            }
         }
-    }
-
-
-    public void PhysicsUpdate()
-    {
+        public void PhysicsUpdate()
+        {
+        }
     }
 }
