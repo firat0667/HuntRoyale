@@ -33,6 +33,12 @@ namespace Subsystems
             m_perception.CurrentTargetSqrDistance <=
             AttackRange * AttackRange;
         }
+
+        public void NotifyAttackHit()
+        {
+            m_core.OnAttackHit();
+        }
+
         public bool TryAttack()
         {
             if (Time.time < m_nextAttackTime)
@@ -43,8 +49,10 @@ namespace Subsystems
 
             m_nextAttackTime = Time.time + cooldown;
 
-            m_core.Attack(StatsComponent.AttackDamage);
+            m_core.Prepare(StatsComponent.AttackDamage);
             return true;
         }
+      
+
     }
 }

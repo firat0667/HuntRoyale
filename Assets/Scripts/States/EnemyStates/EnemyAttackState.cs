@@ -19,12 +19,11 @@ namespace States.EnemyStates
         public void Enter()
         {
             m_movement.Stop();
-            m_enemy.AnimatorBridge.TriggerAttack();
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
+
         }
 
         public void LogicUpdate()

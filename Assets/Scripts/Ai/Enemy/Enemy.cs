@@ -53,6 +53,9 @@ public class Enemy : BaseEntity
     protected override void Update()
     {
         base.Update();
+        AnimatorBridge.UpdateMovementAnim(
+         Movement.Velocity, IsInCombat
+     );
     }
     protected override void OnDied()
     {

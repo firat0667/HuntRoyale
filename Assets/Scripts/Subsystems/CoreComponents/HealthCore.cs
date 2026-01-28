@@ -31,7 +31,6 @@ namespace Subsystems.CoreComponents
         public void ApplyDamage(int amount)
         {
             m_currentHealth -= amount;
-
             if (m_currentHealth <= 0)
             {
                 m_currentHealth = 0;

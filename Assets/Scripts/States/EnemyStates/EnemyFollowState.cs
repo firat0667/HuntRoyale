@@ -20,7 +20,7 @@ namespace States.EnemyStates
 
         public void Enter()
         {
-            m_enemy.AnimatorBridge.SetSpeed(1f);
+
         }
 
         public void Exit()

@@ -9,14 +9,16 @@ namespace States.PlayerStates
         private readonly Player m_player;
         private readonly AttackSubsystem m_attack;
         private readonly MovementSubsystem m_movement;
+        private readonly PlayerInputSubsystem m_playerInput;
 
-        private const float ATTACK_MOVE_MULT = 0.5f;
+        private const float ATTACK_MOVE_MULT = 0.7f;
 
         public PlayerAttackState(Player player)
         {
             m_player = player;
             m_attack = player.GetSubsystem<AttackSubsystem>();
             m_movement = player.GetSubsystem<MovementSubsystem>();
+            m_playerInput = player.GetSubsystem<PlayerInputSubsystem>();
         }
 
         public void Enter()
@@ -27,9 +29,7 @@ namespace States.PlayerStates
 
         public void LogicUpdate()
         {
-            Vector2 input = m_player
-                .GetSubsystem<PlayerInputSubsystem>()
-                .MoveInput;
+            Vector2 input = m_playerInput.MoveInput;
 
             Vector3 moveDir = Vector3.zero;
             if (input.sqrMagnitude > 0.1f)
@@ -41,6 +41,7 @@ namespace States.PlayerStates
             if (target != null)
             {
                 Vector3 dir = target.position - m_player.transform.position;
+                dir.y = 0f;
                 m_movement.RotateTowards(dir);
             }
             else if (moveDir.sqrMagnitude > 0.001f)

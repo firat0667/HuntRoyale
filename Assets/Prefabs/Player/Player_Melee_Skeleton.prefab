@@ -1517,7 +1517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4773249237773575}
-  - component: {fileID: 4788846588963917116}
+  - component: {fileID: 7556206537277713826}
   m_Layer: 3
   m_Name: AttackCore
   m_TagString: Untagged
@@ -1540,7 +1540,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7304597704858649304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4788846588963917116
+--- !u!114 &7556206537277713826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1549,9 +1549,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6083718850570325702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2066925bf9d4c4c48a78a524fe8bbbe1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d07f2dec75baa64e8abb79ee6a91421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_range: 1.5
+  m_boxSize: {x: 1, y: 1, z: 1}
 --- !u!1 &6221053697284893234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1823,7 +1825,7 @@ GameObject:
   - component: {fileID: 8242857023698442842}
   - component: {fileID: 5954408717341924334}
   m_Layer: 3
-  m_Name: Player
+  m_Name: Player_Melee_Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1897,10 +1899,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec2815c04ece0448bb3e4ad8a78d4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayer:
+  m_targetLayer:
     serializedVersion: 2
     m_Bits: 64
-  scanInterval: 0.05
+  m_scanInterval: 0.15
 --- !u!136 &6614328356072766753
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ public class AnimatorBridge : MonoBehaviour
 {
     [SerializeField] private float dampTime = 0.15f;
 
-    private Player m_player;
+    private BaseEntity m_entity;
     private Animator m_animator;
    
 
@@ -17,8 +17,8 @@ public class AnimatorBridge : MonoBehaviour
 
     private void Awake()
     {
-        m_player = GetComponent<Player>();
-        m_animator = m_player.GetComponentInChildren<Animator>();
+        m_entity = GetComponent<BaseEntity>();
+        m_animator = m_entity.GetComponentInChildren<Animator>();
     }
 
     public void UpdateMovementAnim(Vector3 worldVelocity, bool isCombat)

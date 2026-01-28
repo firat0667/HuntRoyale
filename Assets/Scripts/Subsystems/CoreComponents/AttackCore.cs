@@ -3,14 +3,16 @@ using UnityEngine;
 
 namespace Subsystems.CoreComponents
 {
-    public class AttackCore : CoreComponent
+    public abstract class AttackCore : CoreComponent
     {
-        public virtual void Attack(float damage)
+        protected int currentDamage;
+
+        public virtual void Prepare(int damage)
         {
-            // Player: use bomb
-            // Enemy: melee attack
-            // Boss: special attack
-            Debug.Log($"{nameof(AttackCore)}.Attack called with damage: {damage}");
+            currentDamage = damage;
         }
+
+        public abstract void OnAttackHit();
     }
+
 }

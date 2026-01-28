@@ -4,15 +4,15 @@ using UnityEngine;
 public class AnimationEventController : MonoBehaviour
 {
     private AttackSubsystem _attack;
-    private Player m_player;
+    private BaseEntity m_entity;
     private void Awake()
     {
-        m_player = transform.root.GetComponent<Player>();
-        _attack = m_player.GetComponentInChildren<AttackSubsystem>();
+        m_entity = transform.root.GetComponent<BaseEntity>();
+        _attack = m_entity.GetComponentInChildren<AttackSubsystem>();
     }
 
     public void OnAttackHit()
     {
-        _attack?.TryAttack();
+        _attack?.NotifyAttackHit();
     }
 }

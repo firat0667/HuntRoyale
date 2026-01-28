@@ -19,8 +19,6 @@ namespace States.EnemyStates
         public void Enter()
         {
             m_movement.Stop();
-            m_enemy.AnimatorBridge.SetSpeed(0f);
-            Debug.Log("Entering Player Idle State");
         }
 
         public void LogicUpdate()

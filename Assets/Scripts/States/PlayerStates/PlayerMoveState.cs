@@ -24,7 +24,7 @@ namespace States.PlayerStates
 
         public void Enter()
         {
-            m_player.AnimatorBridge.SetSpeed(1f);
+
         }
 
         public void LogicUpdate()

@@ -18,7 +18,6 @@ namespace States.PlayerStates
 
         public void Enter()
         {
-            m_player.AnimatorBridge.SetSpeed(0f);
             Debug.Log("Entering Player Idle State");
         }
 

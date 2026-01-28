@@ -2,29 +2,30 @@ using UnityEngine;
 
 public class CombatPerception : MonoBehaviour
 {
-    [SerializeField] private LayerMask targetLayer;
-    [SerializeField] private float scanInterval = 0.15f;
+    [SerializeField] private LayerMask m_targetLayer;
+    [SerializeField] private float m_scanInterval = 0.15f;
 
-    private StatsComponent _stats;
-    private float _scanTimer;
+    private StatsComponent m_stats;
+    private float m_scanTimer;
 
-    private readonly Collider[] _hitsBuffer = new Collider[16];
+    private readonly Collider[] m_hitsBuffer = new Collider[16];
 
     public Transform CurrentTarget { get; private set; }
     public float CurrentTargetSqrDistance { get; private set; }
+    public LayerMask TargetLayer => m_targetLayer;
 
     private void Awake()
     {
-        _stats = GetComponent<StatsComponent>();
-        _scanTimer = Random.Range(0f, scanInterval);
+        m_stats = GetComponent<StatsComponent>();
+        m_scanTimer = Random.Range(0f, m_scanInterval);
     }
 
     private void Update()
     {
-        _scanTimer -= Time.deltaTime;
-        if (_scanTimer <= 0f)
+        m_scanTimer -= Time.deltaTime;
+        if (m_scanTimer <= 0f)
         {
-            _scanTimer = scanInterval;
+            m_scanTimer = m_scanInterval;
             Scan();
         }
     }
@@ -34,18 +35,18 @@ public class CombatPerception : MonoBehaviour
         CurrentTarget = null;
         CurrentTargetSqrDistance = float.MaxValue;
 
-        float maxScanRange = Mathf.Max(_stats.AttackRange, _stats.DetectionRange);
+        float maxScanRange = Mathf.Max(m_stats.AttackRange, m_stats.DetectionRange);
 
         int hitCount = Physics.OverlapSphereNonAlloc(
             transform.position,
             maxScanRange,
-            _hitsBuffer,
-            targetLayer
+            m_hitsBuffer,
+            m_targetLayer
         );
 
         for (int i = 0; i < hitCount; i++)
         {
-            var hit = _hitsBuffer[i];
+            var hit = m_hitsBuffer[i];
             if (!hit) continue;
 
             float sqrDist =
@@ -61,19 +62,19 @@ public class CombatPerception : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        if (_stats == null)
-            _stats = GetComponent<StatsComponent>();
+        if (m_stats == null)
+            m_stats = GetComponent<StatsComponent>();
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _stats.DetectionRange);
+        Gizmos.DrawWireSphere(transform.position, m_stats.DetectionRange);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _stats.AttackRange);
+        Gizmos.DrawWireSphere(transform.position, m_stats.AttackRange);
 
         if (CurrentTarget != null)
         {
             bool inAttackRange =
-                CurrentTargetSqrDistance <= _stats.AttackRange * _stats.AttackRange;
+                CurrentTargetSqrDistance <= m_stats.AttackRange * m_stats.AttackRange;
 
             Gizmos.color = inAttackRange ? Color.red : Color.cyan;
 

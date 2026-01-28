@@ -7,7 +7,7 @@ public class BaseStatsSO : ScriptableObject
     public int maxHP;
 
     [Header("Combat")]
-    public float attackDamage;
+    public int   attackDamage;
     public float attackRate;
     public float detectionRange;
     public float attackRange;

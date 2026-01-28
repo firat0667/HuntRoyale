@@ -18,11 +18,12 @@ public abstract class BaseEntity : MonoBehaviour
         if (_healthSubsystem != null)
             _healthSubsystem.OnDied?.Connect(OnDied);
 
-        CreateStates();
+   
     }
 
     protected virtual void Start()
     {
+        CreateStates();
         SM.ChangeState(GetEntryState());
     }
     protected virtual void Update()
