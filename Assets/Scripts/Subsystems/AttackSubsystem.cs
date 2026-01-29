@@ -16,7 +16,9 @@ namespace Subsystems
         public CombatPerception Perception => m_perception;
         public Transform CurrentTarget => m_perception.CurrentTarget;
 
-        public float AttackRange => StatsComponent.AttackRange;
+        public float AttackStartRange => StatsComponent.AttackStartRange;
+        public float AttackAngle => StatsComponent.AttackAngle;
+        public float attackHitRange => StatsComponent.AttackHitRange;   
         public float DetectRange => StatsComponent.DetectionRange;
 
         protected override void Awake()
@@ -31,7 +33,7 @@ namespace Subsystems
             base.LogicUpdate();
             IsTargetInAttackRange = m_perception.CurrentTarget != null &&
             m_perception.CurrentTargetSqrDistance <=
-            AttackRange * AttackRange;
+            AttackStartRange * AttackStartRange;
         }
 
         public void NotifyAttackHit()
@@ -48,8 +50,7 @@ namespace Subsystems
             float cooldown = 1f / attackRate;
 
             m_nextAttackTime = Time.time + cooldown;
-
-            m_core.Prepare(StatsComponent.AttackDamage);
+            m_core.Prepare(StatsComponent.AttackDamage,this);
             return true;
         }
       

@@ -55,7 +55,7 @@ public class BotBrain : MonoBehaviour
             return Vector3.Distance(
                 transform.position,
                 CurrentTarget.position
-            ) <= m_stats.AttackRange;
+            ) <= m_stats.AttackStartRange;
         }
     }
 

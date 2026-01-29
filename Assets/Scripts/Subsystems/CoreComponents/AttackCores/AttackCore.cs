@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,9 +8,10 @@ namespace Subsystems.CoreComponents
     {
         protected int currentDamage;
 
-        public virtual void Prepare(int damage)
+        public virtual void Prepare(int damage,Subsystem subsystem)
         {
             currentDamage = damage;
+            Initialize(subsystem);
         }
 
         public abstract void OnAttackHit();

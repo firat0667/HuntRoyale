@@ -10,8 +10,7 @@ namespace States.PlayerStates
         private readonly AttackSubsystem m_attack;
         private readonly MovementSubsystem m_movement;
         private readonly PlayerInputSubsystem m_playerInput;
-
-        private const float ATTACK_MOVE_MULT = 0.7f;
+        private readonly float m_attackMoveMultiply;
 
         public PlayerAttackState(Player player)
         {
@@ -19,12 +18,13 @@ namespace States.PlayerStates
             m_attack = player.GetSubsystem<AttackSubsystem>();
             m_movement = player.GetSubsystem<MovementSubsystem>();
             m_playerInput = player.GetSubsystem<PlayerInputSubsystem>();
+            m_attackMoveMultiply = m_movement.MoveAttackSpeedMult;
         }
 
         public void Enter()
         {
             Debug.Log("Entering Player Attack State");
-            m_movement.SetSpeedMultiplier(ATTACK_MOVE_MULT);
+            m_movement.SetSpeedMultiplier(m_attackMoveMultiply);
         }
 
         public void LogicUpdate()

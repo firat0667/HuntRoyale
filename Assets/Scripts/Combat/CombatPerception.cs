@@ -35,7 +35,7 @@ public class CombatPerception : MonoBehaviour
         CurrentTarget = null;
         CurrentTargetSqrDistance = float.MaxValue;
 
-        float maxScanRange = Mathf.Max(m_stats.AttackRange, m_stats.DetectionRange);
+        float maxScanRange = Mathf.Max(m_stats.AttackStartRange, m_stats.DetectionRange);
 
         int hitCount = Physics.OverlapSphereNonAlloc(
             transform.position,
@@ -69,12 +69,12 @@ public class CombatPerception : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, m_stats.DetectionRange);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, m_stats.AttackRange);
+        Gizmos.DrawWireSphere(transform.position, m_stats.AttackStartRange);
 
         if (CurrentTarget != null)
         {
             bool inAttackRange =
-                CurrentTargetSqrDistance <= m_stats.AttackRange * m_stats.AttackRange;
+                CurrentTargetSqrDistance <= m_stats.AttackStartRange * m_stats.AttackStartRange;
 
             Gizmos.color = inAttackRange ? Color.red : Color.cyan;
 

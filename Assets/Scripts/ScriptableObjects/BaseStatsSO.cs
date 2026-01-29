@@ -3,18 +3,31 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Stats/Base Entity Stats")]
 public class BaseStatsSO : ScriptableObject
 {
-    [Header("Health")]
+    public AttackType attackType = AttackType.Melee;
+
     public int maxHP;
 
-    [Header("Combat")]
+    public float attackStartRange;
+    public float attackHitRange;
+
+    public float projectileRange;
+    public float projectileSpeed;
+    public int projectilePierce;
+    public GameObject projectilePrefab;
+
     public int   attackDamage;
     public float attackRate;
+    public float attackAngle;
     public float detectionRange;
-    public float attackRange;
-
-    [Header("Movement")]
+  
+    
     public float moveSpeed;
+    public float moveAttackSpeedMult;
 
-    [Header("Rotation")]
     public float rotationSpeed;
+}
+public enum AttackType
+{
+    Melee,
+    Ranged
 }

@@ -12,10 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6382de310689d8949a07d3f52e268100, type: 3}
   m_Name: Enemy_Skeleton
   m_EditorClassIdentifier: 
+  attackType: 0
   maxHP: 100
+  attackStartRange: 3
+  attackHitRange: 5
+  projectileRange: 0
+  projectileSpeed: 0
+  projectilePierce: 0
+  projectilePrefab: {fileID: 0}
   attackDamage: 5
   attackRate: 0.5
+  attackAngle: 60
   detectionRange: 10
-  attackRange: 3
   moveSpeed: 4
+  moveAttackSpeedMult: 0
   rotationSpeed: 9

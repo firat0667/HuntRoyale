@@ -14,6 +14,7 @@ namespace Subsystems
 
         public Vector3 Velocity => m_physics.Velocity;
         public float MaxSpeed => StatsComponent.MoveSpeed;
+        public float MoveAttackSpeedMult => StatsComponent.MoveAttackSpeedMult;
 
         public float Speed01
         {

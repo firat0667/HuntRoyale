@@ -26,6 +26,7 @@ namespace Subsystems
         }
         public void TakeDamage(int amount)
         {
+            Debug.Log($"{transform.root.name} took {amount} damage. current health{CurrentHP} ");
             m_core.ApplyDamage(amount);
         }
         public void Heal(int amount)
