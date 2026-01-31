@@ -19,9 +19,12 @@ public class StatsComponent : MonoBehaviour
     public float MoveSpeed => m_baseStats.moveSpeed;
     public float MoveAttackSpeedMult => m_baseStats.moveAttackSpeedMult;
     public float RotationSpeed => m_baseStats.rotationSpeed;
-   
+
 
     public float ProjectileSpeed => m_baseStats.projectileSpeed;
     public int ProjectilePierce => m_baseStats.projectilePierce;
     public Projectile ProjectilePrefab => m_baseStats.projectilePrefab;
+    public float ProjectileRange => m_baseStats.projectileRange;
 }
+
+

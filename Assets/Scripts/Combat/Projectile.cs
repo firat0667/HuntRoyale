@@ -24,13 +24,14 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<IDamageable>(out var dmg))
-        {
-            dmg.TakeDamage((int)m_damage);
-            m_projectilePierce--;
+        var dmg = other.GetComponentInChildren<IDamageable>();
+        if (dmg == null)
+            return;
 
-            if(m_projectilePierce <= 0)
-                Destroy(gameObject);  // turn to object pool later
-        }
+        dmg.TakeDamage((int)m_damage);
+        m_projectilePierce--;
+
+        if (m_projectilePierce <= 0)
+            Destroy(gameObject); // pool later
     }
 }

@@ -58,9 +58,16 @@ namespace Subsystems
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            IsTargetInAttackRange = m_perception.CurrentTarget != null &&
-            m_perception.CurrentTargetSqrDistance <=
-            AttackStartRange * AttackStartRange;
+
+            if (m_perception.CurrentTarget == null)
+            {
+                IsTargetInAttackRange = false;
+                return;
+            }
+            float range = GetEffectiveAttackRange();
+
+            IsTargetInAttackRange =
+                m_perception.CurrentTargetSqrDistance <= range * range;
         }
 
         public void NotifyAttackHit()
@@ -80,7 +87,14 @@ namespace Subsystems
             m_core.Prepare(StatsComponent.AttackDamage,this);
             return true;
         }
-      
+        private float GetEffectiveAttackRange()
+        {
+            if (StatsComponent.AttackType == AttackType.Ranged)
+                return StatsComponent.ProjectileRange;
+
+            return StatsComponent.AttackStartRange;
+        }
+
 
     }
 }

@@ -19,6 +19,7 @@ public class BaseStatsSOEditor : Editor
     SerializedProperty projectileSpeed;
     SerializedProperty projectilePierce;
     SerializedProperty projectilePrefab;
+    SerializedProperty projectileRange;
 
 
     SerializedProperty moveSpeed;
@@ -44,6 +45,7 @@ public class BaseStatsSOEditor : Editor
         projectileSpeed = serializedObject.FindProperty("projectileSpeed");
         projectilePierce = serializedObject.FindProperty("projectilePierce");
         projectilePrefab = serializedObject.FindProperty("projectilePrefab");
+        projectileRange = serializedObject.FindProperty("projectileRange");
 
         moveSpeed = serializedObject.FindProperty("moveSpeed");
         moveAttackSpeedMult = serializedObject.FindProperty("moveAttackSpeedMult");
@@ -107,6 +109,7 @@ public class BaseStatsSOEditor : Editor
             EditorGUILayout.PropertyField(projectileSpeed);
             EditorGUILayout.PropertyField(projectilePierce);
             EditorGUILayout.PropertyField(projectilePrefab);
+            EditorGUILayout.PropertyField(projectileRange);
         }
 
         EditorGUILayout.Space(6);
