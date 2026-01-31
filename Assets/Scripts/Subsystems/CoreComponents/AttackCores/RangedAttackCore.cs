@@ -1,43 +1,43 @@
-using Subsystems.CoreComponents;
 using UnityEngine;
 
 namespace Subsystems.CoreComponents.AttackCores
 {
     public class RangedAttackCore : AttackCore
     {
-        [SerializeField] private GameObject m_projectilePrefab;
         [SerializeField] private Transform m_projectileSpawnPoint;
-
-        private CombatPerception _perception;
-
-        private void Awake()
-        {
-            _perception = GetComponentInParent<CombatPerception>();
-        }
 
         public override void OnAttackHit()
         {
-            if (_perception == null)
+            if (context == null)
                 return;
 
-            var target = _perception.CurrentTarget;
-            if (target == null)
+            var perception = context.Perception;
+            if (perception == null || perception.CurrentTarget == null)
+                return;
+
+            var stats = context.Stats;
+            if (stats.ProjectilePrefab == null)
                 return;
 
             Vector3 dir =
-                (target.position - m_projectileSpawnPoint.position).normalized;
+                perception.CurrentTarget.position - m_projectileSpawnPoint.position;
+            dir.y = 0f;
+            dir.Normalize();
 
-            // use object pooler in future
-            var proj = Instantiate(
-                m_projectilePrefab,
+
+            // use object pool later
+            var projectile = Instantiate(
+                stats.ProjectilePrefab,
                 m_projectileSpawnPoint.position,
                 Quaternion.LookRotation(dir)
             );
 
-            if (proj.TryGetComponent<Projectile>(out var projectile))
-            {
-                projectile.Init(currentDamage, dir);
-            }
+            projectile.Init(
+                currentDamage,
+                dir,
+                stats.ProjectileSpeed,
+                stats.ProjectilePierce
+            );
         }
     }
 }

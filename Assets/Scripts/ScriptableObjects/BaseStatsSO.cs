@@ -10,10 +10,9 @@ public class BaseStatsSO : ScriptableObject
     public float attackStartRange;
     public float attackHitRange;
 
-    public float projectileRange;
     public float projectileSpeed;
     public int projectilePierce;
-    public GameObject projectilePrefab;
+    public Projectile projectilePrefab;
 
     public int   attackDamage;
     public float attackRate;

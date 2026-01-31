@@ -1,12 +1,18 @@
 using Subsystems.CoreComponents;
+using Subsystems.CoreComponents.AttackCores;
 using UnityEngine;
 
 
 namespace Subsystems
 {
-    public class AttackSubsystem : Subsystem
+    public class AttackSubsystem : Subsystem, IAttackContext
     {
+
         private AttackCore m_core;
+
+        [SerializeField] private MeleeAttackCore m_meleeCore;
+
+        [SerializeField] private RangedAttackCore m_rangedCore;
 
         private float m_nextAttackTime;
 
@@ -14,6 +20,7 @@ namespace Subsystems
 
         private CombatPerception m_perception;
         public CombatPerception Perception => m_perception;
+        public StatsComponent Stats => StatsComponent;
         public Transform CurrentTarget => m_perception.CurrentTarget;
 
         public float AttackStartRange => StatsComponent.AttackStartRange;
@@ -24,10 +31,30 @@ namespace Subsystems
         protected override void Awake()
         {
             base.Awake();
-            GetCoreComponent(ref m_core);
+
             m_perception = GetComponentInParent<CombatPerception>();
 
+            switch (StatsComponent.AttackType)
+            {
+                case AttackType.Melee:
+                    m_core = m_meleeCore;
+                    if (m_rangedCore != null)
+                        m_rangedCore.gameObject.SetActive(false);
+                    break;
+
+                case AttackType.Ranged:
+                    m_core = m_rangedCore;
+                    if (m_meleeCore != null)
+                        m_meleeCore.gameObject.SetActive(false);
+                    break;
+            }
+
+            if (m_core == null)
+            {
+                Debug.LogError("AttackSubsystem: Active AttackCore is missing!");
+            }
         }
+
         public override void LogicUpdate()
         {
             base.LogicUpdate();

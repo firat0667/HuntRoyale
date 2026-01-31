@@ -5,12 +5,16 @@ public class Projectile : MonoBehaviour
     private float m_damage;
     private Vector3 m_dir;
 
-    [SerializeField] private float m_speed = 20f;
+    private float m_speed;
 
-    public void Init(float damage, Vector3 dir)
+    private int m_projectilePierce;
+
+    public void Init(float damage, Vector3 dir, float speeed,int projectilePierce)
     {
         m_damage = damage;
         m_dir = dir.normalized;
+        m_speed = speeed;
+        m_projectilePierce= projectilePierce;
     }
 
     private void Update()
@@ -23,7 +27,10 @@ public class Projectile : MonoBehaviour
         if (other.TryGetComponent<IDamageable>(out var dmg))
         {
             dmg.TakeDamage((int)m_damage);
-            Destroy(gameObject);
+            m_projectilePierce--;
+
+            if(m_projectilePierce <= 0)
+                Destroy(gameObject);  // turn to object pool later
         }
     }
 }
