@@ -57,6 +57,9 @@ namespace Subsystems.CoreComponents.AttackCores
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
+            if (!isActiveAndEnabled)
+                return;
+
             if (context == null)
                 return;
 

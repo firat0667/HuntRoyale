@@ -1,3 +1,4 @@
+using Combat;
 using Subsystems.CoreComponents;
 using Subsystems.CoreComponents.AttackCores;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace Subsystems
         private CombatPerception m_perception;
         public CombatPerception Perception => m_perception;
         public StatsComponent Stats => StatsComponent;
+        public Transform OwnerTransform => transform;
         public Transform CurrentTarget => m_perception.CurrentTarget;
 
         public float AttackStartRange => StatsComponent.AttackStartRange;
@@ -94,7 +96,5 @@ namespace Subsystems
 
             return StatsComponent.AttackStartRange;
         }
-
-
     }
 }

@@ -1,3 +1,4 @@
+using Combat;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Stats/Base Entity Stats")]

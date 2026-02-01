@@ -1,37 +1,64 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace Combat
 {
-    private float m_damage;
-    private Vector3 m_dir;
-
-    private float m_speed;
-
-    private int m_projectilePierce;
-
-    public void Init(float damage, Vector3 dir, float speeed,int projectilePierce)
+    public class Projectile : MonoBehaviour
     {
-        m_damage = damage;
-        m_dir = dir.normalized;
-        m_speed = speeed;
-        m_projectilePierce= projectilePierce;
+        private float _damage;
+        private float _speed;
+
+        private List<Transform> _targets;
+        private int _index;
+
+        public void Init(
+            float damage,
+            List<Transform> targets,
+            float speed)
+        {
+            _damage = damage;
+            _targets = targets;
+            _speed = speed;
+            _index = 0;
+        }
+
+        private void Update()
+        {
+            if (_index >= _targets.Count)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Transform target = _targets[_index];
+            if (target == null)
+            {
+                _index++;
+                return;
+            }
+
+            Vector3 dir = (target.position - transform.position);
+            dir.y = 0f;
+
+            transform.position += dir.normalized * _speed * Time.deltaTime;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (_index >= _targets.Count)
+                return;
+            Transform hitRoot = other.transform;
+            if (hitRoot != _targets[_index])
+                return;
+            var dmg = hitRoot.GetComponentInChildren<IDamageable>();
+            if (dmg == null)
+                return;
+
+            dmg.TakeDamage((int)_damage);
+
+            _index++; 
+        }
+
     }
 
-    private void Update()
-    {
-        transform.position += m_dir * m_speed * Time.deltaTime;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        var dmg = other.GetComponentInChildren<IDamageable>();
-        if (dmg == null)
-            return;
-
-        dmg.TakeDamage((int)m_damage);
-        m_projectilePierce--;
-
-        if (m_projectilePierce <= 0)
-            Destroy(gameObject); // pool later
-    }
 }

@@ -13,10 +13,6 @@ namespace Subsystems.CoreComponents
             currentDamage = damage;
             Initialize(subsystem);
             context = subsystem as IAttackContext;
-            if (context == null)
-            {
-                Debug.LogError($"{GetType().Name} requires IAttackContext");
-            }
         }
 
         public abstract void OnAttackHit();
