@@ -8,7 +8,6 @@ namespace Subsystems
 {
     public class AttackSubsystem : Subsystem, IAttackContext
     {
-
         private AttackCore m_core;
 
         [SerializeField] private MeleeAttackCore m_meleeCore;
@@ -30,6 +29,7 @@ namespace Subsystems
         public float attackHitRange => StatsComponent.AttackHitRange;   
         public float DetectRange => StatsComponent.DetectionRange;
 
+        public float EffectiveAttackRange { get; private set; }
         protected override void Awake()
         {
             base.Awake();
@@ -64,12 +64,13 @@ namespace Subsystems
             if (m_perception.CurrentTarget == null)
             {
                 IsTargetInAttackRange = false;
+                EffectiveAttackRange = 0f;
                 return;
             }
-            float range = GetEffectiveAttackRange();
+            EffectiveAttackRange = CalculateEffectiveAttackRange();
 
             IsTargetInAttackRange =
-                m_perception.CurrentTargetSqrDistance <= range * range;
+                m_perception.CurrentTargetSqrDistance <= EffectiveAttackRange * EffectiveAttackRange;
         }
 
         public void NotifyAttackHit()
@@ -89,7 +90,7 @@ namespace Subsystems
             m_core.Prepare(StatsComponent.AttackDamage,this);
             return true;
         }
-        private float GetEffectiveAttackRange()
+        private float CalculateEffectiveAttackRange()
         {
             if (StatsComponent.AttackType == AttackType.Ranged)
                 return StatsComponent.ProjectileRange;

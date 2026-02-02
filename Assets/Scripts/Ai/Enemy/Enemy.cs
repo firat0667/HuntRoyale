@@ -1,6 +1,7 @@
 using Pathfinding;
 using States.EnemyStates;
 using Subsystems;
+using Subsystems.Ai;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class Enemy : BaseEntity
     #endregion
 
     #region Subsystems
-    public MovementSubsystem Movement { get; private set; }
+    public AINavigationSubsystem Navigation { get; private set; }
     public AttackSubsystem Attack { get; private set; }
 
     #endregion
@@ -23,6 +24,10 @@ public class Enemy : BaseEntity
     #region Animations
     private AnimatorBridge m_animatorBridge;
     public AnimatorBridge AnimatorBridge => m_animatorBridge;
+    #endregion
+
+    #region Navmesh
+    private AIPath m_aiPath;
     #endregion
 
 
@@ -33,8 +38,10 @@ public class Enemy : BaseEntity
     HasTarget &&
     Attack.Perception.CurrentTargetSqrDistance <=
     Attack.DetectRange * Attack.DetectRange;
+
     public bool IsTargetInAttackRange =>
     Attack.IsTargetInAttackRange;
+
     #endregion
 
 
@@ -42,9 +49,11 @@ public class Enemy : BaseEntity
     {
         base.Awake();
 
-        Movement = GetSubsystem<MovementSubsystem>();
         Attack = GetSubsystem<AttackSubsystem>();
+        Navigation = GetSubsystem<AINavigationSubsystem>();
+
         m_animatorBridge = GetComponent<AnimatorBridge>();
+        m_aiPath = GetComponent<AIPath>();
     }
     protected override void Start()
     {
@@ -53,9 +62,15 @@ public class Enemy : BaseEntity
     protected override void Update()
     {
         base.Update();
-        AnimatorBridge.UpdateMovementAnim(
-         Movement.Velocity, IsInCombat
-     );
+
+        Vector3 velocity = m_aiPath.canMove
+            ? m_aiPath.velocity
+            : Vector3.zero;
+
+        m_animatorBridge.UpdateMovementAnim(
+            velocity,
+            IsInCombat
+        );
     }
     protected override void OnDied()
     {

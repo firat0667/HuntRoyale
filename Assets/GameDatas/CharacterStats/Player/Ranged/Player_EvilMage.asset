@@ -17,13 +17,13 @@ MonoBehaviour:
   attackStartRange: 0
   attackHitRange: 0
   projectileSpeed: 30
-  projectilePierce: 3
+  projectilePierce: 2
   projectileRange: 15
   projectilePrefab: {fileID: 9063109088658851176, guid: b16d93a2db7abcc44a9edab8d949db56, type: 3}
   attackDamage: 10
   attackRate: 0.5
   attackAngle: 30
   detectionRange: 25
-  moveSpeed: 5
-  moveAttackSpeedMult: 0
+  moveSpeed: 6
+  moveAttackSpeedMult: 0.7
   rotationSpeed: 9

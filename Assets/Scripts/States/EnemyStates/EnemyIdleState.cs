@@ -1,4 +1,5 @@
 using Subsystems;
+using Subsystems.Ai;
 using UnityEngine;
 
 namespace States.EnemyStates
@@ -6,19 +7,17 @@ namespace States.EnemyStates
     public class EnemyIdleState : IState
     {
         private readonly Enemy m_enemy;
-        private readonly MovementSubsystem m_movement;
-        private readonly AttackSubsystem m_attack;
+        private readonly AINavigationSubsystem m_navigation;
 
         public EnemyIdleState(Enemy enemy)
         {
             m_enemy = enemy;
-            m_movement = enemy.Movement;
-            m_attack = enemy.Attack;
+            m_navigation=enemy.Navigation;
         }
 
         public void Enter()
         {
-            m_movement.Stop();
+            m_navigation.Stop();
         }
 
         public void LogicUpdate()

@@ -785,6 +785,10 @@ PrefabInstance:
       propertyPath: visualRoot
       value: 
       objectReference: {fileID: 4503159113355240613}
+    - target: {fileID: 4931974248405877323, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
+      propertyPath: pickNextWaypointDist
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5140422621813453498, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -824,6 +828,14 @@ PrefabInstance:
     - target: {fileID: 5140422621813453498, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976738998943949849, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976738998943949849, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

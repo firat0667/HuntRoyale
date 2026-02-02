@@ -18,6 +18,7 @@ MonoBehaviour:
   attackHitRange: 6
   projectileSpeed: 0
   projectilePierce: 0
+  projectileRange: 0
   projectilePrefab: {fileID: 0}
   attackDamage: 7
   attackRate: 1
@@ -25,4 +26,4 @@ MonoBehaviour:
   detectionRange: 15
   moveSpeed: 5
   moveAttackSpeedMult: 0
-  rotationSpeed: 9
+  rotationSpeed: 270
