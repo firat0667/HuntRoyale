@@ -41,7 +41,7 @@ public class Enemy : BaseEntity
     public bool IsTargetInDetectRange =>
   HasTarget &&
   Attack.Perception.CurrentTargetSqrDistance <=
-  Attack.DetectRange * Attack.DetectRange;
+  Attack.Perception.CurrentDetectionRange * Attack.Perception.CurrentDetectionRange;
 
     #endregion
 
@@ -81,7 +81,7 @@ public class Enemy : BaseEntity
         if (source == null)
             return;
 
-        //Attack.Perception.SetCurrentTarget(source);
+        Attack.Perception.SetCurrentTarget(source);
     }
     protected override void OnDied()
     {
