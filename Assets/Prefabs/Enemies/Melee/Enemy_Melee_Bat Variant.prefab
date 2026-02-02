@@ -1298,6 +1298,10 @@ PrefabInstance:
       propertyPath: visualRoot
       value: 
       objectReference: {fileID: 5561199233351670187}
+    - target: {fileID: 4127120357082849371, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
+      propertyPath: visualRoot
+      value: 
+      objectReference: {fileID: 5561199233351670187}
     - target: {fileID: 5140422621813453498, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

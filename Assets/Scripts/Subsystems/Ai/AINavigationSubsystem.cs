@@ -1,5 +1,4 @@
 using Pathfinding;
-using System.IO;
 using UnityEngine;
 
 namespace Subsystems.Ai
@@ -37,7 +36,6 @@ namespace Subsystems.Ai
             m_aiPath.maxSpeed = StatsComponent.MoveSpeed;
             m_aiPath.canMove = true;
             m_aiPath.canSearch = true;
-            m_aiPath.enableRotation = true;
             m_destinationSetter.target = target;
         }
  
@@ -51,7 +49,6 @@ namespace Subsystems.Ai
         {
             m_aiPath.canMove = false;
             m_aiPath.canSearch = false;
-            m_aiPath.enableRotation = false;
             m_target = null;
         }
         public override void LogicUpdate()

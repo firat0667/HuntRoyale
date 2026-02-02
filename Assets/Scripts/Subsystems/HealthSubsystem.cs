@@ -11,10 +11,12 @@ namespace Subsystems
         private HealthCore m_core;
         public int CurrentHP => m_core.CurrentHP;
         public int MaxHP => m_core.MaxHP;
+        public BasicSignal<Transform> OnDamaged  {  get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
+            OnDamaged = new BasicSignal<Transform>();
 
         }
         private void Start()
@@ -24,10 +26,11 @@ namespace Subsystems
             m_core.Init(StatsComponent.MaxHP);
             m_core.OnDeath.Connect(HandleDeath);
         }
-        public void TakeDamage(int amount)
+        public void TakeDamage(int amount, Transform source)
         {
             Debug.Log($"{transform.root.name} took {amount} damage. current health{CurrentHP} ");
             m_core.ApplyDamage(amount);
+            OnDamaged.Emit(source);
         }
         public void Heal(int amount)
         {

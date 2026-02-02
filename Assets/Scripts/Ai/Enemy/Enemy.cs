@@ -18,6 +18,7 @@ public class Enemy : BaseEntity
     #region Subsystems
     public AINavigationSubsystem Navigation { get; private set; }
     public AttackSubsystem Attack { get; private set; }
+    public MovementSubsystem Movement { get; private set; }
 
     #endregion
 
@@ -28,22 +29,21 @@ public class Enemy : BaseEntity
 
     #region Navmesh
     private AIPath m_aiPath;
+    public AIPath AIPath => m_aiPath;
     #endregion
-
 
     #region Properties
     public bool IsInCombat => Attack.IsTargetInAttackRange;
     public bool HasTarget => Attack.CurrentTarget != null;
-    public bool IsTargetInDetectRange =>
-    HasTarget &&
-    Attack.Perception.CurrentTargetSqrDistance <=
-    Attack.DetectRange * Attack.DetectRange;
-
     public bool IsTargetInAttackRange =>
     Attack.IsTargetInAttackRange;
 
-    #endregion
+    public bool IsTargetInDetectRange =>
+  HasTarget &&
+  Attack.Perception.CurrentTargetSqrDistance <=
+  Attack.DetectRange * Attack.DetectRange;
 
+    #endregion
 
     protected override void Awake()
     {
@@ -51,13 +51,17 @@ public class Enemy : BaseEntity
 
         Attack = GetSubsystem<AttackSubsystem>();
         Navigation = GetSubsystem<AINavigationSubsystem>();
+        Movement = GetSubsystem<MovementSubsystem>();
 
         m_animatorBridge = GetComponent<AnimatorBridge>();
         m_aiPath = GetComponent<AIPath>();
+      
     }
     protected override void Start()
     {
         base.Start();
+        healthSubsystem.OnDamaged.Connect(OnDamaged);
+
     }
     protected override void Update()
     {
@@ -72,8 +76,16 @@ public class Enemy : BaseEntity
             IsInCombat
         );
     }
+    private void OnDamaged(Transform source)
+    {
+        if (source == null)
+            return;
+
+        //Attack.Perception.SetCurrentTarget(source);
+    }
     protected override void OnDied()
     {
+        healthSubsystem.OnDamaged.Disconnect(OnDamaged);
         // particle effects, sound effects, etc. can be triggered here
         // xp for who killed the enemy can be awarded here
     }

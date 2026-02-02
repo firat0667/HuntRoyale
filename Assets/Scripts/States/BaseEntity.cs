@@ -4,21 +4,19 @@ using UnityEngine;
 
 public abstract class BaseEntity : MonoBehaviour
 {
-    protected Subsystem[] _subsystems;
-    protected HealthSubsystem _healthSubsystem;
+    protected Subsystem[] subsystems;
+    protected HealthSubsystem healthSubsystem;
 
     public StateMachine SM { get; protected set; }
 
     protected virtual void Awake()
     {
         SM = new StateMachine();
-        _subsystems = GetComponentsInChildren<Subsystem>();
-        _healthSubsystem = GetSubsystem<HealthSubsystem>();
+        subsystems = GetComponentsInChildren<Subsystem>();
+        healthSubsystem = GetSubsystem<HealthSubsystem>();
 
-        if (_healthSubsystem != null)
-            _healthSubsystem.OnDied?.Connect(OnDied);
-
-   
+        if (healthSubsystem != null)
+            healthSubsystem.OnDied?.Connect(OnDied);
     }
 
     protected virtual void Start()
@@ -28,7 +26,7 @@ public abstract class BaseEntity : MonoBehaviour
     }
     protected virtual void Update()
     {
-        foreach (var s in _subsystems)
+        foreach (var s in subsystems)
             s.LogicUpdate();
 
         SM.LogicUpdate();
@@ -36,7 +34,7 @@ public abstract class BaseEntity : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        foreach (var s in _subsystems)
+        foreach (var s in subsystems)
             s.PhysicsUpdate();
 
         SM.PhysicsUpdate();
@@ -44,8 +42,8 @@ public abstract class BaseEntity : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        if (_healthSubsystem != null)
-            _healthSubsystem.OnDied?.Disconnect(OnDied);
+        if (healthSubsystem != null)
+            healthSubsystem.OnDied?.Disconnect(OnDied);
     }
 
     protected virtual void OnDied() { }
@@ -54,6 +52,6 @@ public abstract class BaseEntity : MonoBehaviour
 
     public T GetSubsystem<T>() where T : Subsystem
     {
-        return _subsystems.OfType<T>().FirstOrDefault();
+        return subsystems.OfType<T>().FirstOrDefault();
     }
 }

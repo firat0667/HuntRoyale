@@ -59,6 +59,7 @@ namespace Subsystems.CoreComponents.AttackCores
             projectile.Init(
                 currentDamage,
                 finalTargets,
+                transform.root,
                 stats.ProjectileSpeed
             );
         }

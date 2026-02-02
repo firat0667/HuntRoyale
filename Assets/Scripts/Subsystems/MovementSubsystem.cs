@@ -6,8 +6,6 @@ namespace Subsystems
 {
     public class MovementSubsystem : Subsystem
     {
-        [SerializeField] private Transform visualRoot;
-
         private MovementPhysicsCore m_physics;
         private Vector3 m_moveDir;
         private float m_speedMultiplier = 1f;
@@ -52,10 +50,10 @@ namespace Subsystems
             dir.y = 0f;
             if (dir.sqrMagnitude < 0.001f) return;
 
-            Quaternion target = Quaternion.LookRotation(dir);
+            Quaternion target = Quaternion.LookRotation(dir.normalized);
             float t = 1f - Mathf.Exp(-StatsComponent.RotationSpeed * Time.deltaTime);
 
-            visualRoot.rotation = Quaternion.Slerp(visualRoot.rotation, target, t);
+            transform.root.rotation = Quaternion.Slerp(transform.root.rotation, target, t);
         }
 
         public void SetSpeedMultiplier(float v)

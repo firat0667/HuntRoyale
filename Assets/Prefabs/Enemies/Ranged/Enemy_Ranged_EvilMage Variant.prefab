@@ -785,6 +785,10 @@ PrefabInstance:
       propertyPath: visualRoot
       value: 
       objectReference: {fileID: 4503159113355240613}
+    - target: {fileID: 4127120357082849371, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
+      propertyPath: visualRoot
+      value: 
+      objectReference: {fileID: 4503159113355240613}
     - target: {fileID: 4931974248405877323, guid: f19fda03a1838264cae3587f0cb767b9, type: 3}
       propertyPath: pickNextWaypointDist
       value: 0

@@ -24,6 +24,6 @@ MonoBehaviour:
   attackRate: 0.5
   attackAngle: 30
   detectionRange: 25
-  moveSpeed: 6
+  moveSpeed: 8
   moveAttackSpeedMult: 0.7
   rotationSpeed: 9

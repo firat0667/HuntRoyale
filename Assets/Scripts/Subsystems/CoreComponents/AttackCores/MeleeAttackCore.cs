@@ -50,7 +50,7 @@ namespace Subsystems.CoreComponents.AttackCores
                 if (dmg == null)
                     continue;
 
-                dmg.TakeDamage(currentDamage);
+                dmg.TakeDamage(currentDamage,transform.root);
             }
         }
 
