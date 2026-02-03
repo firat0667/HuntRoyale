@@ -37,12 +37,12 @@ namespace States.EnemyStates
                 return;
             }
 
-            if (!m_enemy.IsTargetInAttackRange)
+            if (!m_enemy.IsTargetInAttackRange || !m_attack.CanAttack())
             {
-                m_movement.Stop();
                 m_enemy.SM.ChangeState(m_enemy.FollowState);
                 return;
             }
+
 
             if (m_attack.TryAttack())
                 m_enemy.AnimatorBridge.TriggerAttack();

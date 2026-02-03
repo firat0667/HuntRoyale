@@ -26,7 +26,6 @@ namespace States.PlayerStates
             Debug.Log("Entering Player Attack State");
             m_movement.SetSpeedMultiplier(m_attackMoveMultiply);
         }
-
         public void LogicUpdate()
         {
             Vector2 input = m_playerInput.MoveInput;

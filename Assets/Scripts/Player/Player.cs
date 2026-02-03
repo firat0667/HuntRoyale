@@ -22,7 +22,7 @@ public class Player : BaseEntity
     #endregion
 
     #region Parameters
-    public bool IsInCombat => m_attack.IsTargetInAttackRange;
+    public bool IsInCombat => m_attack.IsTargetInAttackRange && m_attack.CanAttack();
     #endregion
 
 

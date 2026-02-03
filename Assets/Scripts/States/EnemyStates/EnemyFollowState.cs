@@ -30,8 +30,7 @@ namespace States.EnemyStates
 
         public void Exit()
         {
-            m_navigation.Stop();
-            
+ 
         }
 
         public void LogicUpdate()
@@ -41,7 +40,7 @@ namespace States.EnemyStates
                 m_enemy.SM.ChangeState(m_enemy.IdleState);
                 return;
             }
-            if (m_attack.IsTargetInAttackRange)
+            if (m_attack.IsTargetInAttackRange && m_attack.CanAttack())
             {
                 m_enemy.SM.ChangeState(m_enemy.AttackState);
                 return;

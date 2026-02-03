@@ -8,11 +8,13 @@ namespace States.EnemyStates
     {
         private readonly Enemy m_enemy;
         private readonly AINavigationSubsystem m_navigation;
+        private readonly AttackSubsystem m_attack;
 
         public EnemyIdleState(Enemy enemy)
         {
             m_enemy = enemy;
             m_navigation=enemy.Navigation;
+            m_attack=enemy.Attack;
         }
 
         public void Enter()
@@ -22,7 +24,7 @@ namespace States.EnemyStates
 
         public void LogicUpdate()
         {
-            if (m_enemy.IsTargetInAttackRange)
+            if (m_enemy.IsTargetInAttackRange && m_attack.CanAttack())
             {
                 m_enemy.SM.ChangeState(m_enemy.AttackState);
                 return;

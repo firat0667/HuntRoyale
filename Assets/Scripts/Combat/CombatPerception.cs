@@ -4,6 +4,7 @@ namespace Combat {
     public class CombatPerception : MonoBehaviour
     {
         [SerializeField] private LayerMask m_targetLayer;
+        [SerializeField] private LayerMask m_obstacleLayer;
         [SerializeField] private float m_scanInterval = 0.15f;
         [SerializeField] private float m_followInterval = 3.0f;
 
@@ -88,6 +89,33 @@ namespace Combat {
             CurrentTargetSqrDistance = bestTarget != null
                 ? bestSqr
                 : float.MaxValue;
+        }
+        public bool HasClearLineOfSight(Transform target)
+        {
+            if (target == null)
+                return false;
+
+            Vector3 origin = transform.position;
+            Vector3 targetPos = target.position;
+
+            origin.y = 0.5f;
+            targetPos.y = 0.5f;
+
+            Vector3 dir = targetPos - origin;
+            float dist = dir.magnitude;
+
+            if (Physics.Raycast(
+                origin,
+                dir.normalized,
+                out RaycastHit hit,
+                dist,
+                m_obstacleLayer
+            ))
+            {
+                return false; 
+            }
+
+            return true;
         }
 
 #if UNITY_EDITOR

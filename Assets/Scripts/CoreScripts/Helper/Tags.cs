@@ -66,12 +66,13 @@ public static class EventTags
     public static string EVENT_MATCH_TIME_UPDATED = "MatchTimeUpdated";
 
 }
-    public static class Layout
+    public static class LayerTags
 { 
     public static string Player_Layer = "Player";
     public static string Enemy_Layer = "Enemy";
     public static string Boss_Layer = "Boss";
     public static string Ground_Layer = "Ground";
+    public static string Obstacle_Layer = "Obstacle";
 }
 public static class PlayerPrefsTag
 {

@@ -9,6 +9,7 @@ namespace States.PlayerStates
         private readonly Player m_player;
         private readonly PlayerInputSubsystem m_input;
         private readonly StateMachine m_stateMachine;
+        private readonly AttackSubsystem m_attack;
         public PlayerIdleState(Player player)
         {
             m_player = player;

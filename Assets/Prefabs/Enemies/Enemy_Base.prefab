@@ -172,7 +172,11 @@ MonoBehaviour:
   m_targetLayer:
     serializedVersion: 2
     m_Bits: 8
+  m_obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 512
   m_scanInterval: 0.15
+  m_followInterval: 3
 --- !u!136 &4088254522143655321
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -436,7 +440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a0c9038004d4148b9b39ba99199640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualRoot: {fileID: 0}
 --- !u!1 &3785484298884823144
 GameObject:
   m_ObjectHideFlags: 0

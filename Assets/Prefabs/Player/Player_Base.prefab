@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a0c9038004d4148b9b39ba99199640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualRoot: {fileID: 0}
 --- !u!1 &4514392419653459004
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +527,11 @@ MonoBehaviour:
   m_targetLayer:
     serializedVersion: 2
     m_Bits: 64
+  m_obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 512
   m_scanInterval: 0.15
+  m_followInterval: 3
 --- !u!136 &197991073106699518
 CapsuleCollider:
   m_ObjectHideFlags: 0

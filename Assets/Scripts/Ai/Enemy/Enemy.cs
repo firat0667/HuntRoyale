@@ -39,9 +39,9 @@ public class Enemy : BaseEntity
     Attack.IsTargetInAttackRange;
 
     public bool IsTargetInDetectRange =>
-  HasTarget &&
-  Attack.Perception.CurrentTargetSqrDistance <=
-  Attack.Perception.CurrentDetectionRange * Attack.Perception.CurrentDetectionRange;
+    HasTarget &&
+    Attack.Perception.CurrentTargetSqrDistance <=
+    Attack.Perception.CurrentDetectionRange * Attack.Perception.CurrentDetectionRange;
 
     #endregion
 

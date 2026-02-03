@@ -56,6 +56,19 @@ namespace Subsystems
                 Debug.LogError("AttackSubsystem: Active AttackCore is missing!");
             }
         }
+        public bool CanAttack()
+        {
+            if (CurrentTarget == null)
+                return false;
+
+            if (!IsTargetInAttackRange)
+                return false;
+
+            if (!Perception.HasClearLineOfSight(CurrentTarget))
+                return false;
+
+            return true;
+        }
 
         public override void LogicUpdate()
         {
@@ -80,6 +93,9 @@ namespace Subsystems
 
         public bool TryAttack()
         {
+            if (!CanAttack())
+                return false;
+
             if (Time.time < m_nextAttackTime)
                 return false;
 
