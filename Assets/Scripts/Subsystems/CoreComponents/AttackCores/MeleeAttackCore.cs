@@ -50,7 +50,8 @@ namespace Subsystems.CoreComponents.AttackCores
                 if (dmg == null)
                     continue;
 
-                dmg.TakeDamage(currentDamage,transform.root);
+                Transform damageSource = context.OwnerTransform;
+                dmg.TakeDamage(currentDamage, damageSource);
             }
         }
 

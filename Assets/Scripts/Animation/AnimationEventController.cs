@@ -5,9 +5,10 @@ public class AnimationEventController : MonoBehaviour
 {
     private AttackSubsystem _attack;
     private BaseEntity m_entity;
-    private void Awake()
+
+    private void Start()
     {
-        m_entity = transform.root.GetComponent<BaseEntity>();
+        m_entity = transform.GetComponentInParent<BaseEntity>();
         _attack = m_entity.GetComponentInChildren<AttackSubsystem>();
     }
 

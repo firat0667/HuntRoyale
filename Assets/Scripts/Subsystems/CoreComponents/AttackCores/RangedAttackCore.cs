@@ -65,7 +65,7 @@ namespace Subsystems.CoreComponents.AttackCores
                 m_projectileSpawnPoint,
                 currentDamage,
                 finalTargets,
-                transform.root,
+                context.OwnerTransform,
                 stats.ProjectileSpeed
             );
         }
@@ -83,8 +83,7 @@ namespace Subsystems.CoreComponents.AttackCores
 
             foreach (var hit in hits)
             {
-                Transform root = hit.transform.root;
-
+                Transform root = hit.transform;
                 if (root == context.OwnerTransform)
                     continue;
 

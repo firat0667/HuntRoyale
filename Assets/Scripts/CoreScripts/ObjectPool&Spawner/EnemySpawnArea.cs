@@ -6,8 +6,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class EnemySpawnEntry
-{
-    public Enemy EnemyPrefab;         
+{      
     public ComponentPool<Enemy> Pool; 
     public int Weight = 1;          
 }
@@ -67,7 +66,7 @@ namespace CoreScripts.ObjectPool.Spawner
 
             Vector3 pos = GetRandomPoint();
             Enemy enemy = entry.Pool.Retrieve();
-
+            enemy.ResetForSpawn();
             enemy.transform.SetPositionAndRotation(pos, Quaternion.identity);
 
             m_aliveCount++;

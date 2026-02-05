@@ -26,13 +26,10 @@ namespace Subsystems
             m_core.Init(StatsComponent.MaxHP);
             m_core.OnDeath.Connect(HandleDeath);
         }
-        private void OnDisable()
-        {
-            m_core.OnDeath.Disconnect(HandleDeath);
-        }
         public void TakeDamage(int amount, Transform source)
         {
-            Debug.Log($"{transform.root.name} took {amount} damage. current health{CurrentHP} ");
+            Debug.Log($"{transform.parent.parent.name} took {amount} damage. current health{CurrentHP} ");
+            //change debug later
             m_core.ApplyDamage(amount);
             OnDamaged.Emit(source);
         }
@@ -43,6 +40,7 @@ namespace Subsystems
         private void HandleDeath()
         {
             OnDied.Emit();
+            m_core.OnDeath.Disconnect(HandleDeath);
         }
     }
 }

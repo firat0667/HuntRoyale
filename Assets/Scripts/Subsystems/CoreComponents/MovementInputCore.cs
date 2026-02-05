@@ -12,9 +12,6 @@ namespace Subsystems.CoreComponents
         {
             base.Awake();
             m_provider = transform.root.GetComponentInChildren<ICharacterInputProvider>();
-
-            if (m_provider == null)
-                Debug.LogError($"[MovementInputCore] No InputProvider on {transform.root.name}");
         }
 
         public override void LogicUpdate()

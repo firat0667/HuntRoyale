@@ -31,6 +31,10 @@ public class Enemy : BaseEntity
     #region Navmesh
     private AIPath m_aiPath;
     public AIPath AIPath => m_aiPath;
+
+    private AIDestinationSetter m_destinationSetter;
+
+
     #endregion
 
     #region Properties
@@ -62,7 +66,8 @@ public class Enemy : BaseEntity
 
         m_animatorBridge = GetComponent<AnimatorBridge>();
         m_aiPath = GetComponent<AIPath>();
-      
+        m_destinationSetter = GetComponent<AIDestinationSetter>();
+
     }
     protected override void Start()
     {
@@ -89,6 +94,16 @@ public class Enemy : BaseEntity
             return;
 
         Attack.Perception.SetCurrentTarget(source);
+    }
+    protected override void OnDisable()
+    {
+        OnDeath.DisconnectAll();
+    }
+    public void ResetForSpawn()
+    {
+        m_destinationSetter.target = null;
+        Movement.Stop();
+        Navigation.Stop();
     }
     protected override void OnDied()
     {
