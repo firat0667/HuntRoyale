@@ -66,6 +66,12 @@ public static class EventTags
     public static string EVENT_MATCH_TIME_UPDATED = "MatchTimeUpdated";
 
 }
+
+public static class GameRegistryTags
+{
+    public static string GAME_REGISTRY_SPAWNER_PROJECTILE = "ProjectileSpawner";
+}
+
     public static class LayerTags
 { 
     public static string Player_Layer = "Player";

@@ -22,10 +22,10 @@ public class StatsComponent : MonoBehaviour
     public float RotationSpeed => m_baseStats.rotationSpeed;
 
 
-    public float ProjectileSpeed => m_baseStats.projectileSpeed;
-    public int ProjectilePierce => m_baseStats.projectilePierce;
-    public Projectile ProjectilePrefab => m_baseStats.projectilePrefab;
-    public float ProjectileRange => m_baseStats.projectileRange;
+    public float ProjectileSpeed => m_baseStats.projectileStats.Speed;
+    public int ProjectilePierce => m_baseStats.projectileStats.MaxTargets;
+    public float ProjectileRange => m_baseStats.projectileStats.Range;
+    public int ProjectileID => m_baseStats.projectileStats.ProjectileID;
 }
 
 

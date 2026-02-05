@@ -37,6 +37,7 @@ namespace States.EnemyStates
         {
             if (!m_enemy.IsTargetInDetectRange)
             {
+                m_move.Stop();
                 m_enemy.SM.ChangeState(m_enemy.IdleState);
                 return;
             }

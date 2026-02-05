@@ -102,17 +102,17 @@ namespace Firat0667.CaseLib.Game
 
 
 
-/*📌 Ne Zaman FoundationMaster, Ne Zaman GameRegistry Kullanılmalı?
-✅ Eğer Singleton bir sistem ise → FoundationMaster Kullan
+/* Ne Zaman FoundationMaster, Ne Zaman GameRegistry Kullanılmalı?
+ Eğer Singleton bir sistem ise → FoundationMaster Kullan
 
 GameManager, UIManager, AudioManager, InputManager gibi tekil nesneler için FoundationMaster en iyisi.
-✅ Eğer Sahneye Bağlı veya Geçici Bir Sistemse → GameRegistry Kullan
+ Eğer Sahneye Bağlı veya Geçici Bir Sistemse → GameRegistry Kullan
 
 Örneğin, Spawner, NPC Manager, LevelController, QuestManager gibi sahneye özgü nesneler için GameRegistry iyi bir çözüm.
-✅ Eğer Oyun içinde Dinamik Olarak Yönetilmesi Gereken Nesneler Varsa → GameRegistry Kullan
+ Eğer Oyun içinde Dinamik Olarak Yönetilmesi Gereken Nesneler Varsa → GameRegistry Kullan
 
 Örneğin, dinamik olarak sahnede yaratılan görevler, event’ler veya geçici UI nesneleri için GameRegistry uygun.
-✅ Eğer Singleton Kullanılmayacak ama Merkezi Yönetim Gerekliyse → GameRegistry Kullan
+ Eğer Singleton Kullanılmayacak ama Merkezi Yönetim Gerekliyse → GameRegistry Kullan
 
 Örneğin, bazı veri taşıyıcı nesneleri, Timer veya geçici UI bileşenlerini yönetmek için.
 */

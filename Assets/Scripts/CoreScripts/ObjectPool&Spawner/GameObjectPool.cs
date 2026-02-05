@@ -12,8 +12,9 @@ namespace Firat0667.CaseLib.Pattern.Pool
     /// </summary>
     public class GameObjectPool : MonoBehaviour, IPool
     {
-        public PoolType PoolType; 
-        public GameObject Prefab; 
+        public PoolType PoolType;
+
+        [Header("DefaultOnlyFirst")]
         public List<GameObject> Prefabs; 
         public int PoolCapacity = 30; 
 
@@ -33,7 +34,7 @@ namespace Firat0667.CaseLib.Pattern.Pool
         {
             if (PoolType == PoolType.NormalPool)
             {
-                return Instantiate(Prefab);
+                return Instantiate(Prefabs[0]);
             }
             else
             {

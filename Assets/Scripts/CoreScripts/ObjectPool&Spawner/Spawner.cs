@@ -29,10 +29,37 @@ namespace Firat0667.CaseLib.Game
 
         private protected ManualStopwatch _unityStopwatch = new();
 
-        protected GameObject Spawn()
+        protected GameObject Spawn(Transform spawnpos=null)
         {
             var go = _spawnPool.Retrieve();
             go.transform.SetPositionAndRotation(_spawnTransform.position, _spawnTransform.rotation);
+            return go;
+        }
+    }
+    public abstract class BaseSpawner : MonoBehaviour
+    {
+        protected GameObject SpawnFromPool(
+            GameObjectPool pool,
+            Transform spawnPoint
+        )
+        {
+            if (pool == null)
+            {
+                Debug.LogError($"{GetType().Name}: Pool is null!");
+                return null;
+            }
+
+            if (spawnPoint == null)
+            {
+                Debug.LogError($"{GetType().Name}: SpawnPoint is null!");
+                return null;
+            }
+
+            var go = pool.Retrieve();
+            go.transform.SetPositionAndRotation(
+                spawnPoint.position,
+                spawnPoint.rotation
+            );
             return go;
         }
     }

@@ -16,10 +16,7 @@ MonoBehaviour:
   maxHP: 100
   attackStartRange: 0
   attackHitRange: 0
-  projectileSpeed: 30
-  projectilePierce: 3
-  projectileRange: 15
-  projectilePrefab: {fileID: 9063109088658851176, guid: b16d93a2db7abcc44a9edab8d949db56, type: 3}
+  projectileStats: {fileID: 11400000, guid: 00c33154db21ba7419500608f7663382, type: 2}
   attackDamage: 10
   attackRate: 0.5
   attackAngle: 30

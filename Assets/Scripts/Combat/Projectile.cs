@@ -1,3 +1,4 @@
+using Firat0667.CaseLib.Pattern.Pool;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,25 +11,36 @@ namespace Combat
         private Transform m_source;
         private List<Transform> m_targets;
         private int m_index;
+        private Vector3 m_dir;
+        private ComponentPool<Projectile> m_ownerPool;
+
 
         public void Init(
             float damage,
             List<Transform> targets,
             Transform source,
-            float speed)
+            float speed, 
+            ComponentPool<Projectile> ownerPool)
         {
             m_damage = damage;
             m_targets = targets;
             m_speed = speed;
             m_source = source;
             m_index = 0;
+            m_ownerPool = ownerPool;
         }
 
         private void Update()
         {
+            if (m_targets == null || m_targets.Count == 0)
+            {
+                Despawn();
+                return;
+            }
+
             if (m_index >= m_targets.Count)
             {
-                Destroy(gameObject);
+                Despawn();
                 return;
             }
 
@@ -39,7 +51,7 @@ namespace Combat
                 return;
             }
 
-            Vector3 dir = (target.position - transform.position);
+            Vector3 dir = target.position - transform.position;
             dir.y = 0f;
 
             transform.position += dir.normalized * m_speed * Time.deltaTime;
@@ -49,18 +61,21 @@ namespace Combat
         {
             if (m_index >= m_targets.Count)
                 return;
-            Transform hitRoot = other.transform;
-            if (hitRoot != m_targets[m_index])
+
+            if (other.transform != m_targets[m_index])
                 return;
-            var dmg = hitRoot.GetComponentInChildren<IDamageable>();
+
+            var dmg = other.GetComponentInChildren<IDamageable>();
             if (dmg == null)
                 return;
 
             dmg.TakeDamage((int)m_damage, m_source);
-
-            m_index++; 
+            m_index++;
         }
 
+        private void Despawn()
+        {
+            m_ownerPool.Return(this); 
+        }
     }
-
 }
