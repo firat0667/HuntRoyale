@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a86799b1e7b3ff49b2cdf65689664e5, type: 3}
-  m_Name: MageFire
+  m_Script: {fileID: 11500000, guid: a623deceedc572d40a913de71ec78b6f, type: 3}
+  m_Name: VFX_EnemySpawn
   m_EditorClassIdentifier: 
-  ProjectileID: 0
-  Speed: 30
-  Range: 15
-  MaxTargets: 2

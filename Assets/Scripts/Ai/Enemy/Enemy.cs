@@ -1,9 +1,9 @@
+using CoreScripts.ObjectPool;
 using Firat0667.CaseLib.Key;
 using Pathfinding;
 using States.EnemyStates;
 using Subsystems;
 using Subsystems.Ai;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class Enemy : BaseEntity
@@ -47,6 +47,8 @@ public class Enemy : BaseEntity
     HasTarget &&
     Attack.Perception.CurrentTargetSqrDistance <=
     Attack.Perception.CurrentDetectionRange * Attack.Perception.CurrentDetectionRange;
+
+    private ComponentPool<Enemy> m_ownerPool;
 
     #endregion
 
@@ -95,20 +97,23 @@ public class Enemy : BaseEntity
 
         Attack.Perception.SetCurrentTarget(source);
     }
-    protected override void OnDisable()
-    {
-        OnDeath.DisconnectAll();
-    }
-    public void ResetForSpawn()
+    public void ResetForSpawn(ComponentPool<Enemy>  enemyPool)
     {
         m_destinationSetter.target = null;
         Movement.Stop();
         Navigation.Stop();
+        m_ownerPool = enemyPool;
+
+    }
+    private void Despawn()
+    {
+        m_ownerPool.Return(this);
     }
     protected override void OnDied()
     {
-        healthSubsystem.OnDamaged.Disconnect(OnDamaged);
         OnDeath.Emit(this);
+        healthSubsystem.OnDamaged.Disconnect(OnDamaged);
+        Despawn();
         // particle effects, sound effects, etc. can be triggered here
         // xp for who killed the enemy can be awarded here
     }

@@ -2,7 +2,7 @@ using CoreScripts.ObjectPool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using FiratGames.CampSimulator.Event;
 
 [System.Serializable]
 public class EnemySpawnEntry
@@ -23,8 +23,14 @@ namespace CoreScripts.ObjectPool.Spawner
         [SerializeField] private int m_maxAliveEnemies = 5;
         [SerializeField] private Vector2 m_spawnIntervalRange = new Vector2(2f, 5f);
 
+        [Header("Spawn Warning VFX")]
+        [SerializeField] private EventKey m_spawnWarningVFXKey;
+        [SerializeField] private float m_spawnDelay = 1.5f;
+
         [Header("Enemies That Can Spawn Here")]
         [SerializeField] private List<EnemySpawnEntry> m_enemies;
+
+     
 
         private int m_totalWeight;
         private int m_aliveCount;
@@ -64,16 +70,36 @@ namespace CoreScripts.ObjectPool.Spawner
             if (entry == null || entry.Pool == null)
                 return;
 
-            Vector3 pos = GetRandomPoint();
+            Vector3 spawnPos = GetRandomPoint();
+
+            StartCoroutine(SpawnWithWarning(entry, spawnPos));
+        }
+        private IEnumerator SpawnWithWarning(
+        EnemySpawnEntry entry,
+        Vector3 spawnPos
+)
+        {
+            VFXManager.Instance.Play(
+                m_spawnWarningVFXKey,
+                spawnPos,
+                Quaternion.identity,
+                m_spawnDelay
+            );
+
+            yield return new WaitForSeconds(m_spawnDelay);
+
             Enemy enemy = entry.Pool.Retrieve();
-            enemy.ResetForSpawn();
-            enemy.transform.SetPositionAndRotation(pos, Quaternion.identity);
+            enemy.ResetForSpawn(entry.Pool);
+            enemy.transform.SetPositionAndRotation(
+                spawnPos,
+                Quaternion.identity
+            );
 
             m_aliveCount++;
 
+            enemy.OnDeath.Disconnect(HandleEnemyDeath);
             enemy.OnDeath.Connect(HandleEnemyDeath);
         }
-
         private void HandleEnemyDeath(Enemy enemy)
         {
             enemy.OnDeath.Disconnect(HandleEnemyDeath);

@@ -15,14 +15,15 @@ public abstract class BaseEntity : MonoBehaviour
         subsystems = GetComponentsInChildren<Subsystem>();
         healthSubsystem = GetSubsystem<HealthSubsystem>();
 
-        if (healthSubsystem != null)
-            healthSubsystem.OnDied?.Connect(OnDied);
+     
     }
 
     protected virtual void Start()
     {
         CreateStates();
         SM.ChangeState(GetEntryState());
+        if (healthSubsystem != null)
+            healthSubsystem.OnDied?.Connect(OnDied);
     }
     protected virtual void Update()
     {

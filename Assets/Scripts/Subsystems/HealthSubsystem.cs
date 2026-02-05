@@ -17,11 +17,11 @@ namespace Subsystems
         {
             base.Awake();
             OnDamaged = new BasicSignal<Transform>();
+            OnDied = new BasicSignal();
 
         }
         private void Start()
         {
-            OnDied = new BasicSignal();
             GetCoreComponent(ref m_core);
             m_core.Init(StatsComponent.MaxHP);
             m_core.OnDeath.Connect(HandleDeath);
@@ -40,7 +40,6 @@ namespace Subsystems
         private void HandleDeath()
         {
             OnDied.Emit();
-            m_core.OnDeath.Disconnect(HandleDeath);
         }
     }
 }
