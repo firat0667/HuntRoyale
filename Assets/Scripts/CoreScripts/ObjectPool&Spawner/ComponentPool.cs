@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Pattern.Pool
-{
+namespace CoreScripts.ObjectPool
+{ 
     public class ComponentPool<T> : MonoBehaviour where T : MonoBehaviour
     {
         [SerializeField] private T prefab;

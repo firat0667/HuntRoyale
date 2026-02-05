@@ -1,3 +1,4 @@
+using Firat0667.CaseLib.Key;
 using Pathfinding;
 using States.EnemyStates;
 using Subsystems;
@@ -45,10 +46,16 @@ public class Enemy : BaseEntity
 
     #endregion
 
+
+    #region Signal Handlers
+
+    public BasicSignal<Enemy>OnDeath { get; private set; }
+    #endregion
+
     protected override void Awake()
     {
         base.Awake();
-
+        OnDeath= new BasicSignal<Enemy>();
         Attack = GetSubsystem<AttackSubsystem>();
         Navigation = GetSubsystem<AINavigationSubsystem>();
         Movement = GetSubsystem<MovementSubsystem>();
@@ -86,6 +93,7 @@ public class Enemy : BaseEntity
     protected override void OnDied()
     {
         healthSubsystem.OnDamaged.Disconnect(OnDamaged);
+        OnDeath.Emit(this);
         // particle effects, sound effects, etc. can be triggered here
         // xp for who killed the enemy can be awarded here
     }

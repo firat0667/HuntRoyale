@@ -1,7 +1,8 @@
 using Combat;
+using CoreScripts.ObjectPool;
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Pattern.Pool
+namespace CoreScripts.ObjectPool
 {
     public class ProjectilePool : ComponentPool<Projectile>
     {
