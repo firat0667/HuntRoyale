@@ -19,7 +19,7 @@ namespace Subsystems.CoreComponents
             base.Awake();
             OnDeath = new BasicSignal();
         }
-        void Start()
+        private void OnEnable()
         {
             m_currentHealth = m_maxHealth;
         }

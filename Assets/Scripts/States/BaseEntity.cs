@@ -13,17 +13,19 @@ public abstract class BaseEntity : MonoBehaviour
     {
         SM = new StateMachine();
         subsystems = GetComponentsInChildren<Subsystem>();
+        
+    }
+    private void OnEnable()
+    {
         healthSubsystem = GetSubsystem<HealthSubsystem>();
-
-     
+        if (healthSubsystem != null)
+            healthSubsystem.OnDied?.Connect(OnDied);
     }
 
     protected virtual void Start()
     {
         CreateStates();
         SM.ChangeState(GetEntryState());
-        if (healthSubsystem != null)
-            healthSubsystem.OnDied?.Connect(OnDied);
     }
     protected virtual void Update()
     {

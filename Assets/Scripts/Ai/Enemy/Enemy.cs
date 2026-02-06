@@ -51,10 +51,7 @@ public class Enemy : BaseEntity
     Attack.Perception.CurrentDetectionRange * Attack.Perception.CurrentDetectionRange;
 
     private ComponentPool<Enemy> m_ownerPool;
-  
-
-    private LayerMask m_originalLayer;
-
+    private Collider m_collider;
     #endregion
 
     #region VFX
@@ -74,19 +71,19 @@ public class Enemy : BaseEntity
         base.Awake();
         OnDeath= new BasicSignal<Enemy>();
         Attack = GetSubsystem<AttackSubsystem>();
-        Navigation = GetSubsystem<AINavigationSubsystem>();
         Movement = GetSubsystem<MovementSubsystem>();
-
         m_animatorBridge = GetComponent<AnimatorBridge>();
+
+        Navigation = GetSubsystem<AINavigationSubsystem>();
         m_aiPath = GetComponent<AIPath>();
         m_destinationSetter = GetComponent<AIDestinationSetter>();
-        m_originalLayer = gameObject.layer;
+
+        m_collider = GetComponent<Collider>();
 
     }
     protected override void Start()
     {
         base.Start();
-        healthSubsystem.OnDamaged.Connect(OnDamaged);
 
     }
     protected override void Update()
@@ -115,11 +112,11 @@ public class Enemy : BaseEntity
     public void ResetForSpawn(ComponentPool<Enemy>  enemyPool)
     {
         m_destinationSetter.target = null;
-        Movement.Stop();
-        Navigation.Stop();
+        m_aiPath.SetPath(null);
+        m_collider.isTrigger = false;
         m_ownerPool = enemyPool;
-        gameObject.layer = m_originalLayer;
-
+        Attack.Perception.ClearTarget();
+        healthSubsystem.OnDamaged.Connect(OnDamaged);
     }
     private void Despawn()
     {
@@ -131,14 +128,18 @@ public class Enemy : BaseEntity
         VFXManager.Instance.Play(m_deathVFXKey, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.5f);
         Despawn();
+        healthSubsystem.ResetHealth();
     }
     protected override void OnDied()
     {
+        base.OnDied();
         OnDeath.Emit(this);
-        gameObject.layer = LayerMask.NameToLayer(LayerTags.Dead_Layer);
+        m_collider.isTrigger = true;
         healthSubsystem.OnDamaged.Disconnect(OnDamaged);
         m_animatorBridge.TriggerDead();
         StartCoroutine(DespawnAfterDelay(3f));
+
+
         // particle effects, sound effects, etc. can be triggered here
         // xp for who killed the enemy can be awarded here
     }
