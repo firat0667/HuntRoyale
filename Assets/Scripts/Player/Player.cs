@@ -23,6 +23,7 @@ public class Player : BaseEntity
 
     #region Parameters
     public bool IsInCombat => m_attack.IsTargetInAttackRange && m_attack.CanAttack();
+    private bool m_isDead => healthSubsystem.IsDead;
     #endregion
 
 
@@ -40,6 +41,9 @@ public class Player : BaseEntity
     }
     protected override void Update()
     {
+        if (m_isDead)
+            return;
+
         base.Update(); 
         if (m_movement == null)
             return;
@@ -52,6 +56,9 @@ public class Player : BaseEntity
     protected override void OnDied()
     {
         EventManager.Instance.Trigger(EventTags.EVENT_PLAYER_DIED);
+        m_animatorBridge.TriggerDead();
+
+
     }
     protected override void CreateStates()
     {

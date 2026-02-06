@@ -12,6 +12,7 @@ namespace Subsystems
         public int CurrentHP => m_core.CurrentHP;
         public int MaxHP => m_core.MaxHP;
         public BasicSignal<Transform> OnDamaged  {  get; private set; }
+         public bool IsDead => CurrentHP <= 0;
 
         protected override void Awake()
         {

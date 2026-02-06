@@ -101,7 +101,6 @@ GameObject:
   - component: {fileID: 6900591398821670256}
   - component: {fileID: 1236189160740778228}
   - component: {fileID: 4088254522143655321}
-  - component: {fileID: 6976738998943949849}
   - component: {fileID: 5924428786717139236}
   - component: {fileID: 1609756722349831372}
   - component: {fileID: 152000740004040101}
@@ -200,33 +199,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!54 &6976738998943949849
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1567509118140035713}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!114 &5924428786717139236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2acc82f76cd751c47bb4dd707a296563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_deathVFXKey: {fileID: 11400000, guid: cf2e089628a47994cafe0395b731c5fa, type: 2}
 --- !u!114 &1609756722349831372
 MonoBehaviour:
   m_ObjectHideFlags: 0

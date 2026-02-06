@@ -8,73 +8,54 @@ using UnityEngine;
 
 public class VFXManager : FoundationSingleton<VFXManager>, IFoundationSingleton
 {
-    public bool Initialized { get ; set ; }
+    public bool Initialized { get; set; }
 
-    [SerializeField] private List<VFXEntry> m_vfxEntries = new();
-    private Dictionary<string, GameObject> m_prefabs = new();
-
+    [SerializeField] private List<VFXEntry> m_vfxEntries;
     [SerializeField] private int m_preloadCount = 10;
     [SerializeField] private VFXPool m_vfxPool;
+
+    private Dictionary<string, GameObject> m_prefabs = new();
 
     [System.Serializable]
     public class VFXEntry
     {
-        public EventKey key;        
-        public GameObject prefab;  
+        public EventKey key;
+        public GameObject prefab;
     }
-
 
     private void Start()
     {
-        if (m_vfxPool == null)
-        {
-            Debug.LogError("[VFXManager] VFXPool not found!");
-            return;
-        }
-
         foreach (var entry in m_vfxEntries)
         {
-            if (entry.prefab == null || entry.key == null)
+            if (entry.key == null || entry.prefab == null)
                 continue;
 
-            var gameKey = entry.key.StringKey;
-
-            if (!m_prefabs.ContainsKey(gameKey))
-                m_prefabs.Add(gameKey, entry.prefab);
+            var k = entry.key.StringKey;
+            m_prefabs[k] = entry.prefab;
+            m_vfxPool.Preload(entry.prefab, m_preloadCount);
         }
     }
     public GameObject Play(
         EventKey key,
-        Vector3 position,
-        Quaternion rotation,
+        Vector3 pos,
+        Quaternion rot,
         float autoReturnTime = 2f,
-        Transform parent = null
-    )
+        Transform parent = null)
     {
-        if (!m_prefabs.TryGetValue(key.Key.ValueAsString, out var prefab))
-        {
-            Debug.LogWarning($"[VFXManager] VFX key not found: {key.Key?.ValueAsString}");
+        if (!m_prefabs.TryGetValue(key.StringKey, out var prefab))
             return null;
-        }
 
-        var vfx = m_vfxPool.Retrieve();
-        vfx.transform.SetPositionAndRotation(position, rotation);
+        var go = m_vfxPool.Retrieve(prefab, pos, rot, parent);
 
-        if (parent != null)
-            vfx.transform.SetParent(parent);
+        if (autoReturnTime > 0)
+            StartCoroutine(ReturnAfterDelay(prefab, go, autoReturnTime));
 
-        if (autoReturnTime > 0f)
-            StartCoroutine(ReturnAfterDelay(vfx, autoReturnTime));
-
-        return vfx.gameObject;
+        return go;
     }
-    private IEnumerator ReturnAfterDelay(VFXObject vfx, float time)
-    {
-        yield return new WaitForSeconds(time);
 
-        if (m_vfxPool != null)
-            m_vfxPool.Return(vfx);
-        else
-            vfx.gameObject.SetActive(false);
+    private IEnumerator ReturnAfterDelay(GameObject prefab, GameObject go, float t)
+    {
+        yield return new WaitForSeconds(t);
+        m_vfxPool.ReturnToPool(prefab, go);
     }
 }

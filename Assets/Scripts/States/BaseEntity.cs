@@ -6,9 +6,9 @@ public abstract class BaseEntity : MonoBehaviour
 {
     protected Subsystem[] subsystems;
     protected HealthSubsystem healthSubsystem;
-
+    public bool IsDead => healthSubsystem.IsDead;
     public StateMachine SM { get; protected set; }
-
+  
     protected virtual void Awake()
     {
         SM = new StateMachine();

@@ -54,6 +54,13 @@ namespace Combat {
             float distance = Vector3.Distance(target.position,this.transform.position);
             m_currentDetectionRange = Mathf.Max(m_defaultDetectionRange, distance * 2f);
         }
+        public void ClearTarget()
+        {
+            CurrentTarget = null;
+            CurrentTargetSqrDistance = float.MaxValue;
+            m_currentDetectionRange = m_defaultDetectionRange;
+        }
+
         private void Scan()
         {
             Transform bestTarget = CurrentTarget;

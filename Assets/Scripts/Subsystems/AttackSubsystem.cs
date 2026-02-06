@@ -61,10 +61,17 @@ namespace Subsystems
             if (CurrentTarget == null)
                 return false;
 
+            var entry = CurrentTarget.GetComponent<BaseEntity>();
+            if (entry != null && entry.IsDead)
+            {
+                m_perception.ClearTarget();
+                return false;
+            }
+
             if (!IsTargetInAttackRange)
                 return false;
 
-            if (!Perception.HasClearLineOfSight(CurrentTarget))
+            if (!m_perception.HasClearLineOfSight(CurrentTarget))
                 return false;
 
             return true;

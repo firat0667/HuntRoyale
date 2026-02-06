@@ -1,3 +1,4 @@
+using CoreScripts.ObjectPool.Spawner;
 using Firat0667.CaseLib.Diagnostics;
 using Firat0667.CaseLib.Game;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public class GameLoopController : MonoBehaviour
     private bool m_isMatchActive = false;
 
     private GameObject m_playerInstance;
-    private readonly List<Spawner> m_spawners = new List<Spawner>();
+    private readonly List<EnemySpawnArea> m_spawners = new List<EnemySpawnArea>();
 
 
 
@@ -30,7 +31,7 @@ public class GameLoopController : MonoBehaviour
         GameRegistry.Instance.Register(KeyTags.KEY_GAME_LOOP_CONTROLLER, this);
 
         // add all spawners in the scene to the list
-        m_spawners.AddRange(FindObjectsOfType<Spawner>());
+        m_spawners.AddRange(FindObjectsOfType<EnemySpawnArea>());
 
         //when player dead trigger game over
         EventManager.Instance.Subscribe(EventTags.EVENT_PLAYER_DIED, OnPlayerDied);

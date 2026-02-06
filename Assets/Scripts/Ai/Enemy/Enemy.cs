@@ -1,9 +1,11 @@
 using CoreScripts.ObjectPool;
 using Firat0667.CaseLib.Key;
+using FiratGames.CampSimulator.Event;
 using Pathfinding;
 using States.EnemyStates;
 using Subsystems;
 using Subsystems.Ai;
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : BaseEntity
@@ -49,6 +51,15 @@ public class Enemy : BaseEntity
     Attack.Perception.CurrentDetectionRange * Attack.Perception.CurrentDetectionRange;
 
     private ComponentPool<Enemy> m_ownerPool;
+  
+
+    private LayerMask m_originalLayer;
+
+    #endregion
+
+    #region VFX
+    [Header("VFX KEY")]
+    [SerializeField] private EventKey m_deathVFXKey;
 
     #endregion
 
@@ -69,6 +80,7 @@ public class Enemy : BaseEntity
         m_animatorBridge = GetComponent<AnimatorBridge>();
         m_aiPath = GetComponent<AIPath>();
         m_destinationSetter = GetComponent<AIDestinationSetter>();
+        m_originalLayer = gameObject.layer;
 
     }
     protected override void Start()
@@ -79,6 +91,9 @@ public class Enemy : BaseEntity
     }
     protected override void Update()
     {
+        if(IsDead)
+            return;
+
         base.Update();
 
         Vector3 velocity = m_aiPath.canMove
@@ -103,17 +118,27 @@ public class Enemy : BaseEntity
         Movement.Stop();
         Navigation.Stop();
         m_ownerPool = enemyPool;
+        gameObject.layer = m_originalLayer;
 
     }
     private void Despawn()
     {
         m_ownerPool.Return(this);
     }
+    private IEnumerator DespawnAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        VFXManager.Instance.Play(m_deathVFXKey, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.5f);
+        Despawn();
+    }
     protected override void OnDied()
     {
         OnDeath.Emit(this);
+        gameObject.layer = LayerMask.NameToLayer(LayerTags.Dead_Layer);
         healthSubsystem.OnDamaged.Disconnect(OnDamaged);
-        Despawn();
+        m_animatorBridge.TriggerDead();
+        StartCoroutine(DespawnAfterDelay(3f));
         // particle effects, sound effects, etc. can be triggered here
         // xp for who killed the enemy can be awarded here
     }

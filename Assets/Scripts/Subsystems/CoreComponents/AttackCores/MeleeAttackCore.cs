@@ -21,7 +21,7 @@ namespace Subsystems.CoreComponents.AttackCores
             Vector3 origin = transform.position;
 
             Vector3 forward =
-                perception.CurrentTarget.position - origin;
+                perception.CurrentTarget.transform.position - origin;
             forward.y = 0f;
             forward.Normalize();
 
@@ -76,7 +76,7 @@ namespace Subsystems.CoreComponents.AttackCores
             Vector3 origin = transform.position;
 
             Vector3 forward =
-                perception.CurrentTarget.position - origin;
+                perception.CurrentTarget.transform.position - origin;
             forward.y = 0f;
             forward.Normalize();
 

@@ -43,7 +43,7 @@ public static class AnimTag
 
     public static string Speed_Param = "Speed";
     public static string Attack_Param = "Attack";
-    public static string isDead_Param = "isDead";
+    public static string isDead_Param = "Dead";
     public static string MoveX_Param="MoveX";
     public static string MoveY_Param="MoveY";
     public static string IsMoving_Param="IsMoving";
@@ -79,6 +79,7 @@ public static class GameRegistryTags
     public static string Boss_Layer = "Boss";
     public static string Ground_Layer = "Ground";
     public static string Obstacle_Layer = "Obstacle";
+    public static string Dead_Layer = "Dead";
 }
 public static class PlayerPrefsTag
 {
