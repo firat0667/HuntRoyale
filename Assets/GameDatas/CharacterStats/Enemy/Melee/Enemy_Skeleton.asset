@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_Skeleton
   m_EditorClassIdentifier: 
   attackType: 0
-  maxHP: 100
+  maxHP: 1
   attackStartRange: 3
   attackHitRange: 5
   projectileStats: {fileID: 0}
