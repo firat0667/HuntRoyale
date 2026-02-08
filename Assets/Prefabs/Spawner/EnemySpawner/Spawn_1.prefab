@@ -47,8 +47,17 @@ MonoBehaviour:
   m_radius: 10
   m_maxAliveEnemies: 1
   m_spawnIntervalRange: {x: 2, y: 5}
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  m_blockedLayers:
+    serializedVersion: 2
+    m_Bits: 328
+  m_sphereCastRadius: 1
+  m_overlapRadius: 0.8
+  m_maxSlopeAngle: 45
+  m_maxSpawnTries: 25
   m_spawnWarningVFXKey: {fileID: 11400000, guid: 3ee66e126f9e00142b766e71ffc52f52, type: 2}
-  m_enemyDeathVFXKey: {fileID: 11400000, guid: cf2e089628a47994cafe0395b731c5fa, type: 2}
   m_spawnDelay: 1.5
   m_enemies:
   - Pool: {fileID: 0}

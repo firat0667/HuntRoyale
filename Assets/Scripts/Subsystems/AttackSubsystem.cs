@@ -62,7 +62,7 @@ namespace Subsystems
                 return false;
 
             var entry = CurrentTarget.GetComponent<BaseEntity>();
-            if (entry != null && entry.IsDead)
+            if (!entry.gameObject.activeInHierarchy || entry.IsDead)
             {
                 m_perception.ClearTarget();
                 return false;

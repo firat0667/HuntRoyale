@@ -126,7 +126,7 @@ public class Enemy : BaseEntity
     {
         yield return new WaitForSeconds(delay);
         VFXManager.Instance.Play(m_deathVFXKey, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         Despawn();
         healthSubsystem.ResetHealth();
     }

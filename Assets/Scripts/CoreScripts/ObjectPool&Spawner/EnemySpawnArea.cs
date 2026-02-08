@@ -6,11 +6,10 @@ using FiratGames.CampSimulator.Event;
 
 [System.Serializable]
 public class EnemySpawnEntry
-{      
-    public ComponentPool<Enemy> Pool; 
-    public int Weight = 1;          
+{
+    public ComponentPool<Enemy> Pool;
+    public int Weight = 1;
 }
-
 
 namespace CoreScripts.ObjectPool.Spawner
 {
@@ -23,14 +22,20 @@ namespace CoreScripts.ObjectPool.Spawner
         [SerializeField] private int m_maxAliveEnemies = 5;
         [SerializeField] private Vector2 m_spawnIntervalRange = new Vector2(2f, 5f);
 
+        [Header("Spawn Validation")]
+        [SerializeField] private LayerMask m_groundLayer;
+        [SerializeField] private LayerMask m_blockedLayers;
+        [SerializeField] private float m_sphereCastRadius = 1f;
+        [SerializeField] private float m_overlapRadius = 0.8f;
+        [SerializeField] private float m_maxSlopeAngle = 45f;
+        [SerializeField] private int m_maxSpawnTries = 25;
+
         [Header("Spawn Warning VFX")]
         [SerializeField] private EventKey m_spawnWarningVFXKey;
         [SerializeField] private float m_spawnDelay = 1.5f;
 
         [Header("Enemies That Can Spawn Here")]
         [SerializeField] private List<EnemySpawnEntry> m_enemies;
-
-     
 
         private int m_totalWeight;
         private int m_aliveCount;
@@ -55,8 +60,8 @@ namespace CoreScripts.ObjectPool.Spawner
                     m_spawnIntervalRange.x,
                     m_spawnIntervalRange.y
                 );
-                yield return new WaitForSeconds(wait);
 
+                yield return new WaitForSeconds(wait);
                 TrySpawn();
             }
         }
@@ -70,14 +75,16 @@ namespace CoreScripts.ObjectPool.Spawner
             if (entry == null || entry.Pool == null)
                 return;
 
-            Vector3 spawnPos = GetRandomPoint();
+            if (!TryFindValidSpawnPoint(out Vector3 spawnPos))
+                return;
 
             StartCoroutine(SpawnWithWarning(entry, spawnPos));
         }
+
         private IEnumerator SpawnWithWarning(
-        EnemySpawnEntry entry,
-        Vector3 spawnPos
-)
+            EnemySpawnEntry entry,
+            Vector3 spawnPos
+        )
         {
             VFXManager.Instance.Play(
                 m_spawnWarningVFXKey,
@@ -90,6 +97,7 @@ namespace CoreScripts.ObjectPool.Spawner
 
             Enemy enemy = entry.Pool.Retrieve();
             enemy.ResetForSpawn(entry.Pool);
+
             enemy.transform.SetPositionAndRotation(
                 spawnPos,
                 Quaternion.identity
@@ -100,10 +108,68 @@ namespace CoreScripts.ObjectPool.Spawner
             enemy.OnDeath.Disconnect(HandleEnemyDeath);
             enemy.OnDeath.Connect(HandleEnemyDeath);
         }
+
         private void HandleEnemyDeath(Enemy enemy)
         {
             enemy.OnDeath.Disconnect(HandleEnemyDeath);
             m_aliveCount = Mathf.Max(0, m_aliveCount - 1);
+        }
+
+
+        private bool TryFindValidSpawnPoint(out Vector3 spawnPoint)
+        {
+            spawnPoint = Vector3.zero;
+
+            for (int i = 0; i < m_maxSpawnTries; i++)
+            {
+                Vector3 randomXZ = GetRandomPointXZ();
+
+                if (!TryGetGroundSphere(randomXZ, out RaycastHit hit))
+                    continue;
+
+                if (!IsSlopeValid(hit))
+                    continue;
+
+                if (!IsAreaFree(hit.point))
+                    continue;
+
+                spawnPoint = hit.point;
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool TryGetGroundSphere(
+            Vector3 randomXZ,
+            out RaycastHit hit
+        )
+        {
+            Vector3 origin = randomXZ + Vector3.up * 20f;
+
+            return Physics.SphereCast(
+                origin,
+                m_sphereCastRadius,
+                Vector3.down,
+                out hit,
+                50f,
+                m_groundLayer
+            );
+        }
+
+        private bool IsSlopeValid(RaycastHit hit)
+        {
+            float slope = Vector3.Angle(hit.normal, Vector3.up);
+            return slope <= m_maxSlopeAngle;
+        }
+
+        private bool IsAreaFree(Vector3 point)
+        {
+            return !Physics.CheckSphere(
+                point + Vector3.up * 0.5f,
+                m_overlapRadius,
+                m_blockedLayers
+            );
         }
 
         private EnemySpawnEntry PickByWeight()
@@ -124,7 +190,7 @@ namespace CoreScripts.ObjectPool.Spawner
             return null;
         }
 
-        private Vector3 GetRandomPoint()
+        private Vector3 GetRandomPointXZ()
         {
             Vector2 rnd = Random.insideUnitCircle * m_radius;
             return transform.position + new Vector3(rnd.x, 0f, rnd.y);
