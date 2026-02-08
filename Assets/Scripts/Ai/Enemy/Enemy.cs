@@ -77,13 +77,13 @@ public class Enemy : BaseEntity
         Navigation = GetSubsystem<AINavigationSubsystem>();
         m_aiPath = GetComponent<AIPath>();
         m_destinationSetter = GetComponent<AIDestinationSetter>();
-
         m_collider = GetComponent<Collider>();
 
     }
     protected override void Start()
     {
         base.Start();
+        healthSubsystem.SetHealable(false);
 
     }
     protected override void Update()
@@ -108,6 +108,7 @@ public class Enemy : BaseEntity
             return;
 
         Attack.Perception.SetCurrentTarget(source);
+
     }
     public void ResetForSpawn(ComponentPool<Enemy>  enemyPool)
     {
@@ -137,6 +138,7 @@ public class Enemy : BaseEntity
         m_collider.isTrigger = true;
         healthSubsystem.OnDamaged.Disconnect(OnDamaged);
         m_animatorBridge.TriggerDead();
+        Movement.Stop();
         StartCoroutine(DespawnAfterDelay(3f));
 
 

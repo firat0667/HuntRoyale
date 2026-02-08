@@ -173,7 +173,7 @@ MonoBehaviour:
     m_Bits: 8
   m_obstacleLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 256
   m_scanInterval: 0.15
   m_followInterval: 3
 --- !u!136 &4088254522143655321
@@ -580,6 +580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1244294118373985298}
   - component: {fileID: 7639332253966171009}
+  - component: {fileID: 7556843210576559955}
   m_Layer: 6
   m_Name: HealthSubsystem
   m_TagString: Untagged
@@ -615,6 +616,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb12ec5a30b0b44094a4aa769e5c73a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7556843210576559955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6397753169805005984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6433779c16965041ac15807960ca43c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageVFXKey: {fileID: 11400000, guid: 7aa06dbd4c336d44c80e60b80eae3039, type: 2}
 --- !u!1 &6535198037841570366
 GameObject:
   m_ObjectHideFlags: 0
