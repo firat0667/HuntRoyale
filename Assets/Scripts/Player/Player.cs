@@ -22,7 +22,7 @@ public class Player : BaseEntity
     #endregion
 
     #region Parameters
-    public bool IsInCombat => m_attack.IsTargetInAttackRange && m_attack.CanAttack();
+    public bool IsInCombat => !IsDead && m_attack.IsTargetInAttackRange && m_attack.CanAttack();
     private bool m_isDead => healthSubsystem.IsDead;
     #endregion
 
@@ -33,11 +33,13 @@ public class Player : BaseEntity
         m_movement = GetSubsystem<MovementSubsystem>();
         m_attack = GetSubsystem<AttackSubsystem>();
         m_animatorBridge = GetComponent<AnimatorBridge>();
+       
     }
 
     protected override void Start()
     {
         base.Start();
+        Initialize();
     }
     protected override void Update()
     {
@@ -53,9 +55,12 @@ public class Player : BaseEntity
             m_movement.Velocity,IsInCombat
         );
     }
+
     protected override void OnDied()
     {
+        base.OnDied();
         EventManager.Instance.Trigger(EventTags.EVENT_PLAYER_DIED);
+        m_movement.Stop();
         m_animatorBridge.TriggerDead();
 
 

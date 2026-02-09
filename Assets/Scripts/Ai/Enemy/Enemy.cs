@@ -45,6 +45,7 @@ public class Enemy : BaseEntity
     public bool IsTargetInAttackRange =>
     Attack.IsTargetInAttackRange;
 
+
     public bool IsTargetInDetectRange =>
     HasTarget &&
     Attack.Perception.CurrentTargetSqrDistance <=
@@ -65,6 +66,11 @@ public class Enemy : BaseEntity
 
     public BasicSignal<Enemy>OnDeath { get; private set; }
     #endregion
+
+    private void OnEnable()
+    {
+        Initialize();
+    }
 
     protected override void Awake()
     {
@@ -114,7 +120,7 @@ public class Enemy : BaseEntity
     {
         m_destinationSetter.target = null;
         m_aiPath.SetPath(null);
-        m_collider.isTrigger = false;
+        m_collider.enabled = true;
         m_ownerPool = enemyPool;
         Attack.Perception.ClearTarget();
         healthSubsystem.OnDamaged.Connect(OnDamaged);
@@ -135,7 +141,7 @@ public class Enemy : BaseEntity
     {
         base.OnDied();
         OnDeath.Emit(this);
-        m_collider.isTrigger = true;
+        m_collider.enabled = false;
         healthSubsystem.OnDamaged.Disconnect(OnDamaged);
         m_animatorBridge.TriggerDead();
         Movement.Stop();

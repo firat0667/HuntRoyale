@@ -57,7 +57,7 @@ namespace Combat {
         public void ClearTarget()
         {
             CurrentTarget = null;
-            CurrentTargetSqrDistance = float.MaxValue;
+             CurrentTargetSqrDistance = float.MaxValue;
             m_currentDetectionRange = m_defaultDetectionRange;
         }
 
@@ -81,7 +81,6 @@ namespace Combat {
             {
                 var hit = m_hitsBuffer[i];
                 if (!hit) continue;
-
                 float sqrDist =
                     (hit.transform.position - transform.position).sqrMagnitude;
 

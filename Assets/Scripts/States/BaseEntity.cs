@@ -15,7 +15,8 @@ public abstract class BaseEntity : MonoBehaviour
         subsystems = GetComponentsInChildren<Subsystem>();
         
     }
-    private void OnEnable()
+
+    protected void Initialize()
     {
         healthSubsystem = GetSubsystem<HealthSubsystem>();
         if (healthSubsystem != null)

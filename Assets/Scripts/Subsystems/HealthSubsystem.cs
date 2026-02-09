@@ -15,6 +15,8 @@ namespace Subsystems
         public BasicSignal<Transform> OnDamaged  {  get; private set; }
 
         public BasicSignal OnHealed;
+
+        public BasicSignal<int, int> OnHealthChanged => m_core.OnHealthChanged;
         #endregion
 
         public bool IsDead => CurrentHP <= 0;
@@ -24,6 +26,8 @@ namespace Subsystems
         private bool m_healable  = true;
         private bool m_inHealZone;
         public bool IsHealable => CurrentHP<MaxHP && m_inHealZone && m_healable ;
+
+
         #endregion
 
         protected override void Awake()
@@ -33,11 +37,11 @@ namespace Subsystems
             OnDamaged = new BasicSignal<Transform>();
             OnDied = new BasicSignal();
             OnHealed = new BasicSignal();
-
+            GetCoreComponent(ref m_core);
         }
         private void Start()
         {
-            GetCoreComponent(ref m_core);
+          
             m_core.Init(StatsComponent.MaxHP);
             m_core.OnDeath.Connect(HandleDeath);
         }

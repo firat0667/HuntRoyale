@@ -6,7 +6,11 @@ namespace Subsystems.CoreComponents
 {
     public class HealthCore : CoreComponent
     {
+        #region Signals
         public BasicSignal OnDeath;
+        public BasicSignal<int, int> OnHealthChanged;
+        #endregion
+
 
         private int m_maxHealth;
         private int m_currentHealth;
@@ -18,6 +22,7 @@ namespace Subsystems.CoreComponents
         {
             base.Awake();
             OnDeath = new BasicSignal();
+            OnHealthChanged = new BasicSignal<int, int>();
         }
         private void OnEnable()
         {
@@ -27,6 +32,7 @@ namespace Subsystems.CoreComponents
         {
             m_maxHealth = maxHP;
             m_currentHealth = maxHP;
+            OnHealthChanged.Emit(m_currentHealth, m_maxHealth);
         }
         public void ApplyDamage(int amount)
         {
@@ -36,10 +42,12 @@ namespace Subsystems.CoreComponents
                 m_currentHealth = 0;
                 OnDeath.Emit();
             }
+            OnHealthChanged.Emit(m_currentHealth, m_maxHealth);
         }
         public void ApplyHeal(int amount)
         {
             m_currentHealth = Mathf.Min(m_currentHealth + amount, m_maxHealth);
+            OnHealthChanged.Emit(m_currentHealth, m_maxHealth);
         }
 
     }

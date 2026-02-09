@@ -2,33 +2,36 @@ using FiratGames.CampSimulator.Event;
 using Subsystems;
 using UnityEngine;
 
-public class EntityDamageVFXListener : MonoBehaviour
+namespace Game 
 {
-    [Header("Damage VFX")]
-    [SerializeField] private EventKey m_damageVFXKey;
-
-    private HealthSubsystem m_health;
-
-    private void Awake()
+    public class EntityDamageVFXListener : MonoBehaviour
     {
-        m_health = GetComponent<HealthSubsystem>();
+        [Header("Damage VFX")]
+        [SerializeField] private EventKey m_damageVFXKey;
 
-        if (m_health != null)
-            m_health.OnDamaged.Connect(OnDamaged);
-    }
+        private HealthSubsystem m_health;
 
-    private void OnDestroy()
-    {
-        if (m_health != null)
-            m_health.OnDamaged.Disconnect(OnDamaged);
-    }
+        private void Awake()
+        {
+            m_health = GetComponent<HealthSubsystem>();
 
-    private void OnDamaged(Transform source)
-    {
-        VFXManager.Instance.Play(
-            m_damageVFXKey,
-            transform.position,
-            Quaternion.identity
-        );
+            if (m_health != null)
+                m_health.OnDamaged.Connect(OnDamaged);
+        }
+
+        private void OnDestroy()
+        {
+            if (m_health != null)
+                m_health.OnDamaged.Disconnect(OnDamaged);
+        }
+
+        private void OnDamaged(Transform source)
+        {
+            VFXManager.Instance.Play(
+                m_damageVFXKey,
+                transform.position,
+                Quaternion.identity
+            );
+        }
     }
 }
