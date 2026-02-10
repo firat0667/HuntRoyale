@@ -118,8 +118,7 @@ public class Enemy : BaseEntity
     }
     public void ResetForSpawn(ComponentPool<Enemy>  enemyPool)
     {
-        m_destinationSetter.target = null;
-        m_aiPath.SetPath(null);
+       
         m_collider.enabled = true;
         m_ownerPool = enemyPool;
         Attack.Perception.ClearTarget();
@@ -142,6 +141,8 @@ public class Enemy : BaseEntity
         base.OnDied();
         OnDeath.Emit(this);
         m_collider.enabled = false;
+        m_destinationSetter.target = null;
+        m_aiPath.SetPath(null);
         healthSubsystem.OnDamaged.Disconnect(OnDamaged);
         m_animatorBridge.TriggerDead();
         Movement.Stop();

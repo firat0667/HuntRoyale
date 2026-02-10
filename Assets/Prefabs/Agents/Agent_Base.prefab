@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 837733292959046714}
   - component: {fileID: 9048525633545502425}
   - component: {fileID: 8240359601086660891}
+  - component: {fileID: 9058941526921003119}
   m_Layer: 0
   m_Name: Agent_Base
   m_TagString: Untagged
@@ -313,6 +314,33 @@ MonoBehaviour:
     m_Bits: 256
   m_scanInterval: 0.15
   m_followInterval: 3
+--- !u!114 &9058941526921003119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3301865255620900661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 560112f876f5746c780eca0d404e7139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 2
+  radiusBackingField: 2
+  heightBackingField: 4
+  centerBackingField: 2
+  locked: 0
+  lockWhenNotMoving: 0
+  agentTimeHorizon: 2
+  obstacleTimeHorizon: 2
+  maxNeighbours: 10
+  layer: 1
+  collidesWith: -5
+  wallAvoidForce: 1
+  wallAvoidFalloff: 1
+  priority: 0.5
+  debug: 0
 --- !u!1 &3934312843152531836
 GameObject:
   m_ObjectHideFlags: 0
