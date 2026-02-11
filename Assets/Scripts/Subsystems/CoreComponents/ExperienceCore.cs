@@ -28,13 +28,27 @@ namespace Subsystems.CoreComponents
         }
         public bool AddExp(int amount)
         {
+            if (amount <= 0)
+                return false;
+
             CurrentExp += amount;
-            if (CurrentExp >= RequiredExp)
+
+            bool leveledUp = false;
+            int safetyCounter = 0;
+
+            while (CurrentExp >= RequiredExp && RequiredExp > 0)
             {
                 LevelUp();
-                return true;
+                leveledUp = true;
+                safetyCounter++;
+                if (safetyCounter > 50)
+                {
+                    Debug.LogWarning("ExperienceCore: Possible infinite level loop.");
+                    break;
+                }
             }
-            return false;
+
+            return leveledUp;
         }
         private void LevelUp()
         {

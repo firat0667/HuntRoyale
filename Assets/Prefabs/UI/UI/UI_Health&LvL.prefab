@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5411513876406870040}
   - component: {fileID: 3585004744890424513}
+  - component: {fileID: 267066481327151487}
   m_Layer: 3
   m_Name: UI_Health&LvL
   m_TagString: Untagged
@@ -47,6 +48,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_barTool: {fileID: 8934360188639160560}
   m_healthSubsystem: {fileID: 0}
+--- !u!114 &267066481327151487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3710271834073010322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a4618d3478b614b8b59b2fa16a6796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LvlText: {fileID: 690776893771617685}
 --- !u!1 &4815927604908783806
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,10 +6,10 @@ namespace Game.UI
     public class HUDView : UIBase
     {
         [Header("HUD Parts")]
-        //[SerializeField] private LevelHUD m_levelHUD;
+        [SerializeField] private LevelHUD m_levelHUD;
         [SerializeField] private Joystick m_joystick;
-        //[SerializeField] private LeaderboardHUD m_leaderboard;
         public Joystick Joystick => m_joystick;
+        public LevelHUD LevelHUD => m_levelHUD;
         protected override void OnAfterShow()
         {
             m_joystick.gameObject.SetActive(true);

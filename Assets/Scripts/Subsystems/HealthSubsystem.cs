@@ -6,17 +6,24 @@ namespace Subsystems
 {
     public class HealthSubsystem : Subsystem, IDamageable, IHealth
     {
+        #region Properties
+
+        public int ExpReward = 5; // change this value as needed for balancing  also add xp starts to the enemy prefab
+
         private HealthCore m_core;
         public int CurrentHP => m_core.CurrentHP;
         public int MaxHP => m_core.MaxHP;
 
+        private Transform m_lastDamageSource;
+        #endregion
         #region Signals
         public BasicSignal OnDied;
         public BasicSignal<Transform> OnDamaged  {  get; private set; }
 
         public BasicSignal OnHealed;
-
         public BasicSignal<int, int> OnHealthChanged => m_core.OnHealthChanged;
+
+
         #endregion
 
         public bool IsDead => CurrentHP <= 0;
@@ -26,7 +33,6 @@ namespace Subsystems
         private bool m_healable  = true;
         private bool m_inHealZone;
         public bool IsHealable => CurrentHP<MaxHP && m_inHealZone && m_healable ;
-
 
         #endregion
 
@@ -52,9 +58,11 @@ namespace Subsystems
         public void TakeDamage(int amount, Transform source)
         {
             Debug.Log($"{transform.parent.parent.name} took {amount} damage. current health{CurrentHP} ");
+            m_lastDamageSource = source;
             m_core.ApplyDamage(amount);
             OnDamaged.Emit(source);
         }
+  
         public void Heal(int amount)
         {
             if (!IsHealable)
@@ -75,6 +83,18 @@ namespace Subsystems
         private void HandleDeath()
         {
             OnDied.Emit();
+
+            if (m_lastDamageSource == null)
+                return;
+            var entity = m_lastDamageSource.GetComponentInParent<BaseEntity>();
+            if (entity == null)
+                return;
+
+            var exp = entity.GetSubsystem<ExperienceSubsystem>();
+            if (exp != null)
+            {
+                exp.AddExp(ExpReward);
+            }
         }
     }
 }

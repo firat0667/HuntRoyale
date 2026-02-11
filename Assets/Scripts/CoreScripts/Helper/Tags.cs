@@ -58,6 +58,7 @@ public static class KeyTags
 }
 public static class EventTags
 {
+    public const string EVENT_PLAYER_SPAWNED = "EVENT_PLAYER_SPAWNED";
     public static string EVENT_PLAYER_DIED = "PlayerDied";
     public static string EVENT_GAME_WIN = "GameWin";
     public static string EVENT_GAME_LOSE = "GameLose";
