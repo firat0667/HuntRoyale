@@ -118,7 +118,7 @@ public class Enemy : BaseEntity
     }
     public void ResetForSpawn(ComponentPool<Enemy>  enemyPool)
     {
-       
+        healthSubsystem.ResetHealth();
         m_collider.enabled = true;
         m_ownerPool = enemyPool;
         Attack.Perception.ClearTarget();
@@ -134,7 +134,7 @@ public class Enemy : BaseEntity
         VFXManager.Instance.Play(m_deathVFXKey, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.3f);
         Despawn();
-        healthSubsystem.ResetHealth();
+     
     }
     protected override void OnDied()
     {
