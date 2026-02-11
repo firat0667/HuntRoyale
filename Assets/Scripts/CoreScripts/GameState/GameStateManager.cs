@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Firat0667.CaseLib.Patterns;
+using Firat0667.CaseLib.Key;
 public enum GameState
 {
     MainMenu,
@@ -17,11 +18,12 @@ public class GameStateManager : FoundationSingleton<GameStateManager>, IFoundati
 
     public bool Initialized { get ;  set; }
 
-    public event Action<GameState> OnStateChanged;
+    public BasicSignal<GameState> OnStateChanged;
 
     private void Awake()
     {
         _currentState = GameState.MainMenu;
+        OnStateChanged = new BasicSignal<GameState>();
     }
 
     /// <summary>
@@ -34,7 +36,7 @@ public class GameStateManager : FoundationSingleton<GameStateManager>, IFoundati
         _currentState = newState;
         Debug.Log($"[GameStateManager] State changed to: {newState}");
 
-        OnStateChanged?.Invoke(newState);
+        OnStateChanged?.Emit(newState);
         HandleStateChange(newState);
     }
 

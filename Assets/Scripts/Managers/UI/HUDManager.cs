@@ -1,4 +1,6 @@
+using DG.Tweening;
 using Firat0667.CaseLib.Patterns;
+using Game.UI;
 using UnityEngine;
 
 namespace Managers.UI
@@ -7,8 +9,8 @@ namespace Managers.UI
     {
         public bool Initialized { get; set; }
 
-        [SerializeField] private Joystick m_movementJoyStick;
-        public Joystick MovementJoyStick => m_movementJoyStick;
+        [SerializeField] private HUDView m_hudView;
+        public Joystick MovementJoyStick => m_hudView.Joystick;
 
     }
 

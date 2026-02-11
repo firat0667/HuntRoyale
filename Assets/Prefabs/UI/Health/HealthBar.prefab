@@ -174,6 +174,54 @@ PrefabInstance:
       propertyPath: AllShowIcon.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[0].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[0].g
+      value: 0.8490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[0].r
+      value: 0.46718422
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[1].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[1].g
+      value: 0.8407325
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[1].r
+      value: 0.8490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[2].b
+      value: 0.012281928
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[2].g
+      value: 0.29025722
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[2].r
+      value: 0.8679245
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[3].b
+      value: 0.0035599943
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[3].g
+      value: 0.030710246
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822414672498564649, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
+      propertyPath: AllShowColor.Array.data[3].r
+      value: 0.754717
+      objectReference: {fileID: 0}
     - target: {fileID: 3822414672498564662, guid: 34d28c4a3da3a4e4cb493aff23bf9918, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
