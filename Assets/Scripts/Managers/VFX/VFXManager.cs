@@ -1,6 +1,6 @@
 using CoreScripts.ObjectPool;
-using Firat0667.CaseLib.Key;
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Key;
+using Firat0667.WesternRoyaleLib.Patterns;
 using FiratGames.CampSimulator.Event;
 using System.Collections;
 using System.Collections.Generic;

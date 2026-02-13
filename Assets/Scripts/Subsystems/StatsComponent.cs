@@ -1,5 +1,6 @@
 using Combat;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class StatsComponent : MonoBehaviour
 {
@@ -8,24 +9,57 @@ public class StatsComponent : MonoBehaviour
     public int MaxHP => m_baseStats.maxHP;
     public float DetectionRange => m_baseStats.detectionRange;
 
-
+    #region Cummon Attack Stats
     public AttackType AttackType => m_baseStats.attackType;
     public int AttackDamage => m_baseStats.attackDamage;
     public float AttackRate => m_baseStats.attackRate;
     public float AttackStartRange => m_baseStats.attackStartRange;
     public float AttackHitRange => m_baseStats.attackHitRange;
     public float AttackAngle => m_baseStats.attackAngle;
+    #endregion
 
-
+    #region Movement Stats
     public float MoveSpeed => m_baseStats.moveSpeed;
     public float MoveAttackSpeedMult => m_baseStats.moveAttackSpeedMult;
     public float RotationSpeed => m_baseStats.rotationSpeed;
+    #endregion
 
 
-    public float ProjectileSpeed => m_baseStats.projectileStats.Speed;
-    public int ProjectilePierce => m_baseStats.projectileStats.MaxTargets;
-    public float ProjectileRange => m_baseStats.projectileStats.Range;
-    public int ProjectileID => m_baseStats.projectileStats.ProjectileID;
+    #region Projectile Stats
+    public float ProjectileSpeed => m_baseStats.projectileStats.speed;
+    public int ProjectilePierce => m_baseStats.projectileStats.maxTargets;
+    public float ProjectileRange => m_baseStats.projectileStats.range;
+    public int ProjectileID => m_baseStats.projectileStats.projectileID;
+    #endregion
+
+    #region Summon Stats
+    public int SummonID => m_baseStats.summonStats.summonID;
+
+    public float SummonAttackRange => m_baseStats.summonStats.attackRange;
+    public float SummonExplosionRadius => m_baseStats.summonStats.explosionRadius;
+    public float SummonExplosionTriggerDistance=> m_baseStats.summonStats.explosionTriggerDistance;
+    public int SummonSpawnCount => m_baseStats.summonStats.spawnCount;
+
+    public float EffectiveAttackRange
+    {
+        get
+        {
+            switch (AttackType)
+            {
+                case AttackType.Ranged:
+                    return ProjectileRange;
+
+                case AttackType.Summon:
+                    return SummonAttackRange;
+
+                default:
+                    return AttackStartRange;
+            }
+        }
+    }
+
+    #endregion
+
 }
 
 

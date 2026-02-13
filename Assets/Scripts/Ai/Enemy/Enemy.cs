@@ -1,5 +1,5 @@
 using CoreScripts.ObjectPool;
-using Firat0667.CaseLib.Key;
+using Firat0667.WesternRoyaleLib.Key;
 using FiratGames.CampSimulator.Event;
 using Pathfinding;
 using States.EnemyStates;
@@ -8,7 +8,7 @@ using Subsystems.Ai;
 using System.Collections;
 using UnityEngine;
 
-public class Enemy : BaseEntity
+public class Enemy : BaseEntity,IMovableEntity
 {
 
     #region States
@@ -35,8 +35,6 @@ public class Enemy : BaseEntity
     public AIPath AIPath => m_aiPath;
 
     private AIDestinationSetter m_destinationSetter;
-
-
     #endregion
 
     #region Properties
@@ -44,6 +42,10 @@ public class Enemy : BaseEntity
     public bool HasTarget => Attack.CurrentTarget != null;
     public bool IsTargetInAttackRange =>
     Attack.IsTargetInAttackRange;
+
+    public bool IsMoving =>
+    Movement != null &&
+    Movement.Velocity.sqrMagnitude > 0.01f;
 
 
     public bool IsTargetInDetectRange =>
@@ -60,7 +62,6 @@ public class Enemy : BaseEntity
     [SerializeField] private EventKey m_deathVFXKey;
 
     #endregion
-
 
     #region Signal Handlers
 

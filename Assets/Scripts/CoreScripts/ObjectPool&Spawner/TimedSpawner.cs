@@ -1,7 +1,7 @@
-using Firat0667.CaseLib.Game;
+using Firat0667.WesternRoyaleLib.Game;
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Game
+namespace Firat0667.WesternRoyaleLib.Game
 {
     /// <summary>
     /// Spawner implementation that spawns on a timetable.

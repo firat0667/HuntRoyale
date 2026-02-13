@@ -1,10 +1,10 @@
-using Firat0667.CaseLib.Key;
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Key;
+using Firat0667.WesternRoyaleLib.Patterns;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Patterns
+namespace Firat0667.WesternRoyaleLib.Patterns
 {
     /// <summary>
     /// Foundation is a global singleton initalization system.

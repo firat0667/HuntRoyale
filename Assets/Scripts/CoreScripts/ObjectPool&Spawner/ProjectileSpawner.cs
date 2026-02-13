@@ -12,7 +12,7 @@ public class ProjectilePoolEntry
     public ComponentPool<Projectile> Pool;
 }
 
-namespace Firat0667.CaseLib.Game
+namespace Firat0667.WesternRoyaleLib.Game
 {
     public class ProjectileSpawner : MonoBehaviour
     {

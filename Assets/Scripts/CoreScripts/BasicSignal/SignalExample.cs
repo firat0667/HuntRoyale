@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-using Firat0667.CaseLib.Key;
+using Firat0667.WesternRoyaleLib.Key;
 
 public class SignalExample : MonoBehaviour
 {

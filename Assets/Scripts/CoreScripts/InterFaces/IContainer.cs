@@ -1,4 +1,4 @@
-namespace Firat0667.CaseLib.DI
+namespace Firat0667.WesternRoyaleLib.DI
 {
     /// <summary>
     /// Object carrier.

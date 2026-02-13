@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Patterns;
 
 public class DebugConsole : FoundationSingleton<DebugConsole>, IFoundationSingleton
 {

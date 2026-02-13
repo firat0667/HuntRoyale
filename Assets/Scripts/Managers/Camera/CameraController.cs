@@ -1,4 +1,4 @@
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Patterns;
 using Unity.Cinemachine;
 using UnityEngine;
 

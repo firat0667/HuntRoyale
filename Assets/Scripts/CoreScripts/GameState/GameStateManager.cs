@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
-using Firat0667.CaseLib.Patterns;
-using Firat0667.CaseLib.Key;
+using Firat0667.WesternRoyaleLib.Patterns;
+using Firat0667.WesternRoyaleLib.Key;
 public enum GameState
 {
     MainMenu,

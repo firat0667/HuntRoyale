@@ -21,7 +21,6 @@ namespace States.PlayerStates
             m_movement = player.GetSubsystem<MovementSubsystem>();
             m_stateMachine = player.SM;
         }
-
         public void Enter()
         {
 

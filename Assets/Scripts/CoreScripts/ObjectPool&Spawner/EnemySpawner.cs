@@ -1,6 +1,6 @@
-﻿using Firat0667.CaseLib.Pattern.Pool;
+﻿using Firat0667.WesternRoyaleLib.Pattern.Pool;
 using UnityEngine;
-namespace Firat0667.CaseLib.Game
+namespace Firat0667.WesternRoyaleLib.Game
 {
     /// <summary>
     /// Spawner that spawns enemies at random intervals and makes them jump to a random position within a specified radius.

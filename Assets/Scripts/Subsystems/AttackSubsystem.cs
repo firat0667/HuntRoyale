@@ -1,6 +1,7 @@
 using Combat;
 using Subsystems.CoreComponents;
 using Subsystems.CoreComponents.AttackCores;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -10,9 +11,12 @@ namespace Subsystems
     {
         private AttackCore m_core;
 
-        [SerializeField] private MeleeAttackCore m_meleeCore;
+        private MeleeAttackCore m_meleeCore;
 
-        [SerializeField] private RangedAttackCore m_rangedCore;
+        private RangedAttackCore m_rangedCore;
+
+        private SummonAttackCore m_summonCore;
+
 
         private float m_nextAttackTime;
 
@@ -36,25 +40,35 @@ namespace Subsystems
 
             m_perception = GetComponentInParent<CombatPerception>();
 
+            m_meleeCore = GetComponentInChildren<MeleeAttackCore>(true);
+            m_rangedCore = GetComponentInChildren<RangedAttackCore>(true);
+            m_summonCore = GetComponentInChildren<SummonAttackCore>(true);
+
+            if (m_meleeCore != null) m_meleeCore.gameObject.SetActive(false);
+            if (m_rangedCore != null) m_rangedCore.gameObject.SetActive(false);
+            if (m_summonCore != null) m_summonCore.gameObject.SetActive(false);
+
             switch (StatsComponent.AttackType)
             {
                 case AttackType.Melee:
                     m_core = m_meleeCore;
-                    if (m_rangedCore != null)
-                        m_rangedCore.gameObject.SetActive(false);
                     break;
 
                 case AttackType.Ranged:
                     m_core = m_rangedCore;
-                    if (m_meleeCore != null)
-                        m_meleeCore.gameObject.SetActive(false);
+                    break;
+
+                case AttackType.Summon:
+                    m_core = m_summonCore;
                     break;
             }
-
             if (m_core == null)
             {
                 Debug.LogError("AttackSubsystem: Active AttackCore is missing!");
+                return;
             }
+
+            m_core.gameObject.SetActive(true);
         }
         public bool CanAttack()
         {
@@ -87,7 +101,7 @@ namespace Subsystems
                 EffectiveAttackRange = 0f;
                 return;
             }
-            EffectiveAttackRange = CalculateEffectiveAttackRange();
+            EffectiveAttackRange = StatsComponent.EffectiveAttackRange;
 
             IsTargetInAttackRange =
                 m_perception.CurrentTargetSqrDistance <= EffectiveAttackRange * EffectiveAttackRange;
@@ -112,13 +126,6 @@ namespace Subsystems
             m_nextAttackTime = Time.time + cooldown;
             m_core.Prepare(StatsComponent.AttackDamage,this);
             return true;
-        }
-        private float CalculateEffectiveAttackRange()
-        {
-            if (StatsComponent.AttackType == AttackType.Ranged)
-                return StatsComponent.ProjectileRange;
-
-            return StatsComponent.AttackStartRange;
         }
     }
 }

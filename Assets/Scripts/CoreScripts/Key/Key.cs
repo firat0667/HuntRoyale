@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Key
+namespace Firat0667.WesternRoyaleLib.Key
 {
     /// <summary>
     /// LongKey ensures no conflicts between keys.

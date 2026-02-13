@@ -4,7 +4,6 @@ using UnityEngine;
 public class BotBrain : MonoBehaviour
 {
     [SerializeField] private BotAIBrainProfileSO m_profile;
-
     public Transform CurrentTarget { get; private set; }
     private StatsComponent m_stats;
     private HealthSubsystem m_health;

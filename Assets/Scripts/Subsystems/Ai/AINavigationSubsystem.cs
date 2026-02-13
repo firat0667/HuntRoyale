@@ -20,9 +20,9 @@ namespace Subsystems.Ai
             m_aiPath.gravity = Vector3.zero;
             m_aiPath.canMove = false;
             m_aiPath.canSearch = false;
+
             m_aiPath.maxSpeed = StatsComponent.MoveSpeed;
             m_aiPath.rotationSpeed = StatsComponent.RotationSpeed;
-
         }
         public void SetTarget(Transform target)
         {

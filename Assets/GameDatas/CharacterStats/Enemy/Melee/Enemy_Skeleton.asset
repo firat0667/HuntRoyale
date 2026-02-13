@@ -17,6 +17,7 @@ MonoBehaviour:
   attackStartRange: 3
   attackHitRange: 5
   projectileStats: {fileID: 0}
+  summonStats: {fileID: 0}
   attackDamage: 5
   attackRate: 0.5
   attackAngle: 60

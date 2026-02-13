@@ -3,7 +3,7 @@ using Subsystems;
 using System;
 using UnityEngine;
 
-public class Player : BaseEntity
+public class Player : BaseEntity, IMovableEntity
 {
     #region States
     public PlayerIdleState IdleState { get; private set; }
@@ -27,6 +27,10 @@ public class Player : BaseEntity
 
     private bool m_walkAttackEnabled = false;
     public bool AllowWalkAttack => m_walkAttackEnabled;
+
+    public bool IsMoving =>
+    m_movement != null &&
+    m_movement.Velocity.sqrMagnitude > 0.01f;
 
 
     #endregion

@@ -9,7 +9,6 @@ namespace States.EnemyStates
         private readonly Enemy m_enemy;
         private readonly AINavigationSubsystem m_navigation;
         private readonly AttackSubsystem m_attack;
-        private readonly MovementSubsystem m_move;
 
         public EnemyIdleState(Enemy enemy)
         {

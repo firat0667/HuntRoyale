@@ -1,4 +1,4 @@
-namespace Firat0667.CaseLib.Diagnostics
+namespace Firat0667.WesternRoyaleLib.Diagnostics
 {
     /// <summary>
     /// Stopwatch for time keeping purposes.

@@ -6,12 +6,12 @@ using UnityEngine;
 public class ProjectileSO : ScriptableObject
 {
     [Header("Pool")]
-    public int ProjectileID;
+    public int projectileID;
 
     [Header("Movement")]
-    public float Speed;
-    public float Range;
+    public float speed;
+    public float range;
 
     [Header("Hit")]
-    public int MaxTargets;
+    public int maxTargets;
 }

@@ -3,7 +3,7 @@ using Subsystems;
 using System.Xml;
 using UnityEngine;
 
-public class Agent : BaseEntity
+public class Agent : BaseEntity,IMovableEntity
 {
     public BotInputProvider Input { get; private set; }
     public BotBrain Brain { get; private set; }
@@ -17,8 +17,12 @@ public class Agent : BaseEntity
     public BotAttackState AttackState { get; private set; }
     public BotHealState HealState { get; private set; }
     #endregion
-  
-  
+
+
+    public bool IsMoving =>
+    m_movement != null &&
+    m_movement.Velocity.sqrMagnitude > 0.01f;
+
     protected override void Awake()
     {
         base.Awake();

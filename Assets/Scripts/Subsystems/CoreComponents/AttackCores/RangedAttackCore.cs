@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Firat0667.CaseLib.Game;
+using Firat0667.WesternRoyaleLib.Game;
 
 namespace Subsystems.CoreComponents.AttackCores
 {

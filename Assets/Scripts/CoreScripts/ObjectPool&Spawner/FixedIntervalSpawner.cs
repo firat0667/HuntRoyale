@@ -1,8 +1,8 @@
-using Firat0667.CaseLib.Pattern.Pool;
-using Firat0667.CaseLib.Diagnostics;
+using Firat0667.WesternRoyaleLib.Pattern.Pool;
+using Firat0667.WesternRoyaleLib.Diagnostics;
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Game
+namespace Firat0667.WesternRoyaleLib.Game
 {
     /// <summary>
     /// Spawner that spawns a single object every fixed interval (e.g., every 15 seconds).

@@ -1,9 +1,9 @@
-﻿using Firat0667.CaseLib.Behavior.GameSystem;
-using Firat0667.CaseLib.Game;
+﻿using Firat0667.WesternRoyaleLib.Behavior.GameSystem;
+using Firat0667.WesternRoyaleLib.Game;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Pattern.Pool
+namespace Firat0667.WesternRoyaleLib.Pattern.Pool
 {
     public enum PoolType { NormalPool, RandomGameObjectPool } 
 

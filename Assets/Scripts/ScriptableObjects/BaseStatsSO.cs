@@ -12,6 +12,8 @@ public class BaseStatsSO : ScriptableObject
     public float attackHitRange;
 
     public ProjectileSO projectileStats;
+    public SummonSO summonStats;
+
 
     public int   attackDamage;
     public float attackRate;
@@ -27,5 +29,6 @@ public class BaseStatsSO : ScriptableObject
 public enum AttackType
 {
     Melee,
-    Ranged
+    Ranged,
+    Summon
 }

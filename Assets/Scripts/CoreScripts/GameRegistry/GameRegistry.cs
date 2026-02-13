@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Firat0667.CaseLib.Key;
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Key;
+using Firat0667.WesternRoyaleLib.Patterns;
 
-namespace Firat0667.CaseLib.Game
+namespace Firat0667.WesternRoyaleLib.Game
 {
     public class GameRegistry : FoundationSingleton<GameRegistry>,IFoundationSingleton 
     {

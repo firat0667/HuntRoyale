@@ -1,10 +1,11 @@
 using CoreScripts.ObjectPool;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Combat
 {
-    public class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour 
     {
         private float m_damage;
         private float m_speed;

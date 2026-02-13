@@ -1,4 +1,4 @@
-using Firat0667.CaseLib.Key;
+using Firat0667.WesternRoyaleLib.Key;
 using Subsystems.CoreComponents;
 using UnityEngine;
 namespace Subsystems

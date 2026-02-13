@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Patterns;
 public enum AudioType
 {
     BGM,  

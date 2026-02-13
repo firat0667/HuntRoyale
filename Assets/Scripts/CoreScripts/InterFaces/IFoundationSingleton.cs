@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Patterns
+namespace Firat0667.WesternRoyaleLib.Patterns
 {
     /// <summary>
     /// DI for FoundationSingletons.

@@ -2,7 +2,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Game
+namespace Firat0667.WesternRoyaleLib.Game
 {
     /// <summary>
     /// Spawner timetable data. Holds when and how many to spawn.

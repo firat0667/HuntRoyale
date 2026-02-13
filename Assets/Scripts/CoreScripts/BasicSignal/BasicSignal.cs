@@ -1,6 +1,6 @@
 using System;
 
-namespace Firat0667.CaseLib.Key
+namespace Firat0667.WesternRoyaleLib.Key
 {
     /// <summary>
     /// DI for BasicSignal.

@@ -1,6 +1,6 @@
 using CoreScripts.ObjectPool.Spawner;
-using Firat0667.CaseLib.Diagnostics;
-using Firat0667.CaseLib.Game;
+using Firat0667.WesternRoyaleLib.Diagnostics;
+using Firat0667.WesternRoyaleLib.Game;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;

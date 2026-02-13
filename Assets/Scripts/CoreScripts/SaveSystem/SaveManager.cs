@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Patterns;
 
 public class SaveManager : FoundationSingleton<SaveManager>, IFoundationSingleton
 {

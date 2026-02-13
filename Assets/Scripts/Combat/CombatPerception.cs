@@ -1,6 +1,9 @@
+using Firat0667.WesternRoyaleLib.Key;
 using UnityEngine;
+using UnityEngine.Timeline;
 
-namespace Combat {
+namespace Combat
+{
     public class CombatPerception : MonoBehaviour
     {
         [SerializeField] private LayerMask m_targetLayer;
@@ -11,7 +14,7 @@ namespace Combat {
         private StatsComponent m_stats;
         private float m_scanTimer;
         private float m_followTimer;
-       
+
         private float m_currentDetectionRange;
         private float m_defaultDetectionRange => m_stats.DetectionRange;
 
@@ -21,7 +24,8 @@ namespace Combat {
         public float CurrentTargetSqrDistance { get; private set; }
         public LayerMask TargetLayer => m_targetLayer;
         public float CurrentDetectionRange => m_currentDetectionRange;
-     
+
+        public BasicSignal<Transform> OnTargetChanged { get; private set; } = new BasicSignal<Transform>();
 
         private void Awake()
         {
@@ -51,24 +55,26 @@ namespace Combat {
         {
             CurrentTarget = target;
             m_followTimer = m_followInterval;
-            float distance = Vector3.Distance(target.position,this.transform.position);
+            float distance = Vector3.Distance(target.position, this.transform.position);
             m_currentDetectionRange = Mathf.Max(m_defaultDetectionRange, distance * 2f);
         }
         public void ClearTarget()
         {
+            if (CurrentTarget == null)
+                return;
+
             CurrentTarget = null;
-             CurrentTargetSqrDistance = float.MaxValue;
+
+            OnTargetChanged.Emit(null);
+
+            CurrentTargetSqrDistance = float.MaxValue;
             m_currentDetectionRange = m_defaultDetectionRange;
         }
 
         private void Scan()
         {
-            Transform bestTarget = CurrentTarget;
-            float bestSqr = bestTarget != null
-                ? (bestTarget.position - transform.position).sqrMagnitude
-                : float.MaxValue;
-
-            float scanRange = Mathf.Max(m_stats.AttackStartRange, m_currentDetectionRange);
+            float scanRange = Mathf.Max(m_stats.EffectiveAttackRange, m_currentDetectionRange);
+            float scanRangeSqr = scanRange * scanRange;
 
             int hitCount = Physics.OverlapSphereNonAlloc(
                 transform.position,
@@ -77,23 +83,52 @@ namespace Combat {
                 m_targetLayer
             );
 
+            Transform bestTarget = CurrentTarget;
+            float bestScore = float.MinValue;
+
             for (int i = 0; i < hitCount; i++)
             {
                 var hit = m_hitsBuffer[i];
                 if (!hit) continue;
-                float sqrDist =
-                    (hit.transform.position - transform.position).sqrMagnitude;
 
-                if (sqrDist < bestSqr)
+                Vector3 toEnemy = hit.transform.position - transform.position;
+                float sqrDist = toEnemy.sqrMagnitude;
+
+                if (sqrDist > scanRangeSqr)
+                    continue;
+
+                float distanceScore = -sqrDist;
+
+                float dot = Vector3.Dot(transform.forward, toEnemy.normalized);
+                float frontScore = dot * 5f;
+                float inAttackRangeBonus =
+                    sqrDist <= m_stats.AttackStartRange * m_stats.AttackStartRange
+                    ? 10f
+                    : 0f;
+
+                float totalScore = distanceScore + frontScore + inAttackRangeBonus;
+
+                if (hit.transform == CurrentTarget)
+                    totalScore += 15f;
+
+                if (totalScore > bestScore)
                 {
-                    bestSqr = sqrDist;
+                    bestScore = totalScore;
                     bestTarget = hit.transform;
                 }
             }
 
-            CurrentTarget = bestTarget;
+            if (bestTarget != CurrentTarget)
+            {
+                CurrentTarget = bestTarget;
+                OnTargetChanged.Emit(CurrentTarget);
+            }
+            else
+            {
+                CurrentTarget = bestTarget;
+            }
             CurrentTargetSqrDistance = bestTarget != null
-                ? bestSqr
+                ? (bestTarget.position - transform.position).sqrMagnitude
                 : float.MaxValue;
         }
         public bool HasClearLineOfSight(Transform target)
@@ -118,7 +153,7 @@ namespace Combat {
                 m_obstacleLayer
             ))
             {
-                return false; 
+                return false;
             }
 
             return true;

@@ -18,6 +18,8 @@ public class BaseStatsSOEditor : Editor
 
     SerializedProperty projectileStats;
 
+    SerializedProperty summonStats;
+
 
     SerializedProperty moveSpeed;
     SerializedProperty moveAttackSpeedMult;
@@ -40,6 +42,8 @@ public class BaseStatsSOEditor : Editor
         attackHitRange = serializedObject.FindProperty("attackHitRange");
         
         projectileStats= serializedObject.FindProperty("projectileStats");
+
+        summonStats = serializedObject.FindProperty("summonStats");
 
         moveSpeed = serializedObject.FindProperty("moveSpeed");
         moveAttackSpeedMult = serializedObject.FindProperty("moveAttackSpeedMult");
@@ -101,6 +105,11 @@ public class BaseStatsSOEditor : Editor
             EditorGUILayout.LabelField("Ranged Settings", EditorStyles.boldLabel);
 
             EditorGUILayout.PropertyField(projectileStats);
+        }
+        else if (type == AttackType.Summon)
+        {
+            EditorGUILayout.LabelField("Summon Settings", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(summonStats);
         }
 
         EditorGUILayout.Space(6);

@@ -47,7 +47,10 @@ namespace Subsystems
             m_physics.Move(m_moveDir, speed);
         }
 
-        public void RotateTowards(Vector3 dir)
+        public void 
+            
+            
+            RotateTowards(Vector3 dir)
         {
             dir.y = 0f;
             if (dir.sqrMagnitude < 0.001f) return;

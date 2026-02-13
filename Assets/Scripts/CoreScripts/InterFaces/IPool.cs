@@ -1,4 +1,4 @@
-namespace Firat0667.CaseLib.Behavior.GameSystem
+namespace Firat0667.WesternRoyaleLib.Behavior.GameSystem
 {
     /// <summary>
     /// DI for all pool.

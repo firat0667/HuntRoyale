@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a86799b1e7b3ff49b2cdf65689664e5, type: 3}
   m_Name: MageFire
   m_EditorClassIdentifier: 
-  ProjectileID: 0
-  Speed: 30
-  Range: 15
-  MaxTargets: 2
+  projectileID: 0
+  speed: 30
+  range: 25
+  maxTargets: 2

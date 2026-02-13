@@ -19,7 +19,6 @@ namespace States.AgentStates
         public void Exit()
         {
         }
-
         public void LogicUpdate()
         {
             if (m_agent.Brain.ShouldHeal)
@@ -39,7 +38,6 @@ namespace States.AgentStates
                 m_agent.SM.ChangeState(m_agent.ChaseState);
             }
         }
-
 
 
         public void PhysicsUpdate()

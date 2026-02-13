@@ -1,7 +1,7 @@
-using Firat0667.CaseLib.Diagnostics;
+using Firat0667.WesternRoyaleLib.Diagnostics;
 using UnityEngine;
 
-namespace Firat0667.CaseLib.Diagnostics
+namespace Firat0667.WesternRoyaleLib.Diagnostics
 {
 
     /// <summary>

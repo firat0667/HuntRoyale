@@ -1,5 +1,5 @@
-using Firat0667.CaseLib.DI;
-using Firat0667.CaseLib.Key;
+using Firat0667.WesternRoyaleLib.DI;
+using Firat0667.WesternRoyaleLib.Key;
 using UnityEngine;
 
 namespace FiratGames.CampSimulator.Service

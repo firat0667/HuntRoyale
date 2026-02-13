@@ -1,5 +1,5 @@
 using DG.Tweening;
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Patterns;
 using Game.UI;
 using Subsystems;
 using UnityEngine;

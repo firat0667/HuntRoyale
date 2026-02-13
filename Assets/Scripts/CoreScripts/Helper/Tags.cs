@@ -71,6 +71,7 @@ public static class EventTags
 public static class GameRegistryTags
 {
     public static string GAME_REGISTRY_SPAWNER_PROJECTILE = "ProjectileSpawner";
+    public static string GAME_REGISTRY_SPAWNER_SUMMON = "SummonSpawner";
 }
 
     public static class LayerTags

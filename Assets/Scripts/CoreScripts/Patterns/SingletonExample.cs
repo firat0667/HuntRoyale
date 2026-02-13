@@ -1,4 +1,4 @@
-using Firat0667.CaseLib.Patterns;
+using Firat0667.WesternRoyaleLib.Patterns;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
