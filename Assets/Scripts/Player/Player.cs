@@ -24,6 +24,11 @@ public class Player : BaseEntity
     #region Parameters
     public bool IsInCombat => !IsDead && m_attack.IsTargetInAttackRange && m_attack.CanAttack();
     private bool m_isDead => healthSubsystem.IsDead;
+
+    private bool m_walkAttackEnabled = false;
+    public bool AllowWalkAttack => m_walkAttackEnabled;
+
+
     #endregion
 
 
