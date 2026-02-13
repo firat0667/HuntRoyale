@@ -95,7 +95,7 @@ namespace Combat
             Initialize();
             if (m_owner != null)
             {
-                var perception = m_owner.GetComponent<CombatPerception>();
+                var perception = m_owner.GetComponentInParent<CombatPerception>();
                 if (perception != null)
                 {
                     perception.OnTargetChanged.Connect(OnOwnerTargetChanged);
@@ -135,7 +135,7 @@ namespace Combat
             base.OnDisable();
             if (m_owner != null)
             {
-                var perception = m_owner.GetComponent<CombatPerception>();
+                var perception = m_owner.GetComponentInParent<CombatPerception>();
                 if (perception != null)
                 {
                     perception.OnTargetChanged.Disconnect(OnOwnerTargetChanged);

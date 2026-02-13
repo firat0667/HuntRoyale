@@ -121,6 +121,7 @@ public class Enemy : BaseEntity,IMovableEntity
     {
         healthSubsystem.ResetHealth();
         m_collider.enabled = true;
+        m_aiPath.canMove = true;
         m_ownerPool = enemyPool;
         Attack.Perception.ClearTarget();
         healthSubsystem.OnDamaged.Connect(OnDamaged);
@@ -141,6 +142,7 @@ public class Enemy : BaseEntity,IMovableEntity
     {
         base.OnDied();
         OnDeath.Emit(this);
+        m_aiPath.canMove = false;
         m_collider.enabled = false;
         m_destinationSetter.target = null;
         m_aiPath.SetPath(null);

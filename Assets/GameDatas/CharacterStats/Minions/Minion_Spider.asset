@@ -24,4 +24,4 @@ MonoBehaviour:
   detectionRange: 0
   moveSpeed: 12
   moveAttackSpeedMult: 0
-  rotationSpeed: 9
+  rotationSpeed: 270

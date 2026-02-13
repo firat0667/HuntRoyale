@@ -27,7 +27,7 @@ public class SummonFollowState : IState
 
         Transform target = s.CurrentTarget;
 
-        if (target != null)
+        if (target != null &&  target.gameObject.activeInHierarchy)
         {
             m_navigation.SetTarget(target);
 

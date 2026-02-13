@@ -33,7 +33,6 @@ namespace Combat
             m_scanTimer = Random.Range(0f, m_scanInterval);
             m_followTimer = m_followInterval;
             m_currentDetectionRange = m_defaultDetectionRange;
-
         }
 
         private void Update()
@@ -83,14 +82,16 @@ namespace Combat
                 m_targetLayer
             );
 
-            Transform bestTarget = CurrentTarget;
+            Transform bestTarget = null;
             float bestScore = float.MinValue;
 
             for (int i = 0; i < hitCount; i++)
             {
                 var hit = m_hitsBuffer[i];
+                if (hit.transform == transform)
+                    continue;
                 if (!hit) continue;
-
+                if(!hit.gameObject.activeInHierarchy) continue;
                 Vector3 toEnemy = hit.transform.position - transform.position;
                 float sqrDist = toEnemy.sqrMagnitude;
 
@@ -118,7 +119,7 @@ namespace Combat
                 }
             }
 
-            if (bestTarget != CurrentTarget)
+            if (bestTarget !=null && bestTarget != CurrentTarget)
             {
                 CurrentTarget = bestTarget;
                 OnTargetChanged.Emit(CurrentTarget);

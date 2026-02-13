@@ -19,7 +19,7 @@ MonoBehaviour:
   projectileStats: {fileID: 11400000, guid: 00c33154db21ba7419500608f7663382, type: 2}
   summonStats: {fileID: 11400000, guid: e3086e331a7556445a12b9104203263c, type: 2}
   attackDamage: 10
-  attackRate: 1
+  attackRate: 5
   attackAngle: 30
   detectionRange: 30
   moveSpeed: 8
