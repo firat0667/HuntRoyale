@@ -1,4 +1,4 @@
-using FiratGames.CampSimulator.Event;
+using FiratGames.WesternRoyale.Event;
 using Subsystems;
 using UnityEngine;
 

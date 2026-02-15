@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Summon_Slime
   m_EditorClassIdentifier: 
   summonID: 1
-  moveSpeed: 6
-  explosionRadius: 1
-  explosionTriggerDistance: 0.3
+  explosionRadius: 2
+  explosionTriggerDistance: 2
   spawnCount: 1
+  spawnRange: 15

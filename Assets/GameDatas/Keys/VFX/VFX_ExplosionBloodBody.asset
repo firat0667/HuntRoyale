@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6076d2ceb99d9b4b8b4e7262d70d6d8, type: 3}
-  m_Name: Summon_Spider
+  m_Script: {fileID: 11500000, guid: a623deceedc572d40a913de71ec78b6f, type: 3}
+  m_Name: VFX_ExplosionBloodBody
   m_EditorClassIdentifier: 
-  summonID: 0
-  explosionRadius: 2
-  explosionTriggerDistance: 2
-  spawnCount: 1
-  spawnRange: 25

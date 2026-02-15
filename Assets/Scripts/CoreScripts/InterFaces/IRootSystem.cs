@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FiratGames.CampSimulator.DI
+namespace FiratGames.WesternRoyale.DI
 {
     /// <summary>
     /// Root definition of a prefab system.

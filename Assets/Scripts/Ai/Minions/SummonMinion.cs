@@ -1,4 +1,5 @@
 using CoreScripts.ObjectPool;
+using FiratGames.WesternRoyale.Event;
 using Pathfinding;
 using States.EnemyStates;
 using States.SummonMinionStates;
@@ -51,18 +52,27 @@ namespace Combat
         public Transform CurrentTarget => m_currentTarget;
         public float ExplosionTriggerDistance => m_explosionTriggerDistance;
         public void ExplodeNow() => Explode();
+        public BaseEntity m_ownerEntity=>m_owner != null ? m_owner.GetComponentInParent<BaseEntity>() : null;
 
-        private IMovableEntity m_ownerEntity;
-        public IMovableEntity OwnerEntity
+        private IMovableEntity m_ownerMoveEntity;
+        public IMovableEntity OwnerMoveEntity
         {
             get
             {
-                if (m_ownerEntity == null && m_owner != null)
-                    m_ownerEntity = m_owner.GetComponent<IMovableEntity>();
-                return m_ownerEntity;
+                if (m_ownerMoveEntity == null && m_owner != null)
+                    m_ownerMoveEntity = m_owner.GetComponent<IMovableEntity>();
+                return m_ownerMoveEntity;
             }
         }
+
+
         #endregion
+
+        #region VFX
+        [SerializeField] private EventKey m_deathVFXKey;
+        #endregion
+
+
         protected override void Awake()
         {
             base.Awake();
@@ -91,7 +101,7 @@ namespace Combat
             m_explosionTriggerDistance= explosionTriggerDistance;
             m_targetLayer = targetLayer;
             m_ownerPool = pool;
-            m_ownerEntity = owner.GetComponent<IMovableEntity>();
+            m_ownerMoveEntity = owner.GetComponent<IMovableEntity>();
             Initialize();
             if (m_owner != null)
             {
@@ -115,7 +125,7 @@ namespace Combat
         {
             base.Update();
 
-            if (m_owner == null)
+            if (m_owner == null || m_ownerEntity.IsDead)
             {
                 ReturnToPool();
                 return;
@@ -166,7 +176,7 @@ namespace Combat
         {
             base.OnDied();
             ReturnToPool();
-
+            VFXManager.Instance.Play(m_deathVFXKey, transform.position, Quaternion.identity);
         }
         protected override void CreateStates()
         {
@@ -194,3 +204,4 @@ namespace Combat
 #endif
     }
 }
+

@@ -11,10 +11,7 @@ public class SummonSO : ScriptableObject
     public float explosionRadius;
     public float explosionTriggerDistance;
 
-    [Header("Attack")]
-    public float attackRange;
-
-
     [Header("Spawn")]
     public int spawnCount = 1;
+    public float spawnRange;
 }

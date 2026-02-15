@@ -2,7 +2,7 @@ using CoreScripts.ObjectPool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FiratGames.CampSimulator.Event;
+using FiratGames.WesternRoyale.Event;
 
 [System.Serializable]
 public class EnemySpawnEntry

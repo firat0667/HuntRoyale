@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae86cb67a6c8e584e9f7c3b0974762d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_deathVFXKey: {fileID: 11400000, guid: e3a75029502b83e429599114f681d831, type: 2}
 --- !u!114 &608180797581364828
 MonoBehaviour:
   m_ObjectHideFlags: 0

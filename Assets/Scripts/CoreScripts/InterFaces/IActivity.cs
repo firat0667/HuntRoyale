@@ -2,7 +2,7 @@ using Firat0667.WesternRoyaleLib.DI;
 using Firat0667.WesternRoyaleLib.Key;
 using UnityEngine;
 
-namespace FiratGames.CampSimulator.Service
+namespace FiratGames.WesternRoyale.Service
 {
     /// <summary>
     /// DI for Activity.

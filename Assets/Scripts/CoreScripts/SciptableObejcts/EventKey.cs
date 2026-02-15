@@ -1,7 +1,7 @@
 using Firat0667.WesternRoyaleLib.Key;
 using UnityEngine;
 
-namespace FiratGames.CampSimulator.Event
+namespace FiratGames.WesternRoyale.Event
 {
     /// <summary>
     /// Key definition for Events.

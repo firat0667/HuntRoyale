@@ -1,7 +1,7 @@
 using CoreScripts.ObjectPool;
 using Firat0667.WesternRoyaleLib.Key;
 using Firat0667.WesternRoyaleLib.Patterns;
-using FiratGames.CampSimulator.Event;
+using FiratGames.WesternRoyale.Event;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,6 +1,6 @@
 using CoreScripts.ObjectPool;
 using Firat0667.WesternRoyaleLib.Key;
-using FiratGames.CampSimulator.Event;
+using FiratGames.WesternRoyale.Event;
 using Pathfinding;
 using States.EnemyStates;
 using Subsystems;

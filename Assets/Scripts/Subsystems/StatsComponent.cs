@@ -35,7 +35,7 @@ public class StatsComponent : MonoBehaviour
     #region Summon Stats
     public int SummonID => m_baseStats.summonStats.summonID;
 
-    public float SummonAttackRange => m_baseStats.summonStats.attackRange;
+    public float SummonAttackRange => m_baseStats.summonStats.spawnRange;
     public float SummonExplosionRadius => m_baseStats.summonStats.explosionRadius;
     public float SummonExplosionTriggerDistance=> m_baseStats.summonStats.explosionTriggerDistance;
     public int SummonSpawnCount => m_baseStats.summonStats.spawnCount;
