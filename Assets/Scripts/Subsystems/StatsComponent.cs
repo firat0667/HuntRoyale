@@ -1,6 +1,7 @@
-using Combat;
+using Combat.Stats.ScriptableObjects;
+using Combat.Effects.ScriptableObjects;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class StatsComponent : MonoBehaviour
 {
@@ -23,7 +24,6 @@ public class StatsComponent : MonoBehaviour
     public float MoveAttackSpeedMult => m_baseStats.moveAttackSpeedMult;
     public float RotationSpeed => m_baseStats.rotationSpeed;
     #endregion
-
 
     #region Projectile Stats
     public float ProjectileSpeed => m_baseStats.projectileStats.speed;
@@ -60,6 +60,13 @@ public class StatsComponent : MonoBehaviour
 
     #endregion
 
+    #region On Hit Effects
+    public List<StatusEffectSO> OnHitEffects => m_baseStats.onHitEffects;
+    public List<StatusEffectSO> SelfEffects => m_baseStats.selfEffects;
+    // add upgrade system later to modify this value
+    public float LifeStealPercent => 0.1f;
+
+    #endregion
 }
 
 

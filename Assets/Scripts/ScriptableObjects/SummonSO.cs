@@ -1,17 +1,20 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Combat/Summon")]
-public class SummonSO : ScriptableObject
+namespace Combat.ScriptableObjects
 {
-    [Header("Pool")]
-    public int summonID;
+    [CreateAssetMenu(menuName = "Combat/Summon")]
+    public class SummonSO : ScriptableObject
+    {
+        [Header("Pool")]
+        public int summonID;
 
 
-    [Header("Explosion")]
-    public float explosionRadius;
-    public float explosionTriggerDistance;
+        [Header("Explosion")]
+        public float explosionRadius;
+        public float explosionTriggerDistance;
 
-    [Header("Spawn")]
-    public int spawnCount = 1;
-    public float spawnRange;
+        [Header("Spawn")]
+        public int spawnCount = 1;
+        public float spawnRange;
+    }
 }

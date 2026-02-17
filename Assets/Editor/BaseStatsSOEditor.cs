@@ -1,3 +1,4 @@
+using Combat.Stats.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,6 +27,9 @@ public class BaseStatsSOEditor : Editor
 
     SerializedProperty rotationSpeed;
 
+    SerializedProperty onHitEffects;
+    SerializedProperty selfEffects;
+
     private void OnEnable()
     {
         attackType = serializedObject.FindProperty("attackType");
@@ -48,6 +52,9 @@ public class BaseStatsSOEditor : Editor
         moveSpeed = serializedObject.FindProperty("moveSpeed");
         moveAttackSpeedMult = serializedObject.FindProperty("moveAttackSpeedMult");
         rotationSpeed = serializedObject.FindProperty("rotationSpeed");
+
+        onHitEffects = serializedObject.FindProperty("onHitEffects");
+        selfEffects = serializedObject.FindProperty("selfEffects");
     }
 
     public override void OnInspectorGUI()
@@ -59,7 +66,7 @@ public class BaseStatsSOEditor : Editor
         DrawCombatCommon();
         DrawAttackSpecific();
         DrawMovement();
-
+        DrawEffect();
         serializedObject.ApplyModifiedProperties();
     }
 
@@ -87,6 +94,13 @@ public class BaseStatsSOEditor : Editor
         EditorGUILayout.PropertyField(attackAngle);
 
         EditorGUILayout.Space(6);
+    }
+    void DrawEffect()
+    {
+        EditorGUILayout.LabelField("Effects", EditorStyles.boldLabel);
+
+        EditorGUILayout.PropertyField(onHitEffects);
+        EditorGUILayout.PropertyField(selfEffects);
     }
 
     void DrawAttackSpecific()

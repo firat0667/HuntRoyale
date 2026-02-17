@@ -46,15 +46,13 @@ namespace Subsystems.CoreComponents.AttackCores
                 if (dot < cosHalfAngle)
                     continue;
 
-                var dmg = hit.GetComponentInChildren<IDamageable>();
-                if (dmg == null)
+                var entity = hit.GetComponentInParent<BaseEntity>();
+                if (entity == null)
                     continue;
 
-                Transform damageSource = context.OwnerTransform;
-                dmg.TakeDamage(currentDamage, damageSource);
+                context.ApplyDamage(entity, currentDamage);
             }
         }
-
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {

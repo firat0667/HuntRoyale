@@ -50,7 +50,8 @@ namespace Subsystems.CoreComponents.AttackCores
                 context.OwnerTransform,
                 stats.SummonExplosionRadius,
                 stats.SummonExplosionTriggerDistance,
-                perception.TargetLayer
+                perception.TargetLayer,
+                context    
             );
             }
         }

@@ -43,7 +43,8 @@ namespace Firat0667.WesternRoyaleLib.Game
             Transform owner,
             float explosionRadius,
             float explosionTriggerDistance,
-            LayerMask targetLayer
+            LayerMask targetLayer,
+            IAttackContext context
         )
         {
             if (!_poolMap.TryGetValue(summonId, out var pool))
@@ -62,7 +63,8 @@ namespace Firat0667.WesternRoyaleLib.Game
                 explosionRadius,
                 explosionTriggerDistance,
                 targetLayer,
-                pool
+                pool,
+                context
             );
         }
 

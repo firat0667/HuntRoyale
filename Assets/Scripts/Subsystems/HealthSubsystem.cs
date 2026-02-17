@@ -47,7 +47,6 @@ namespace Subsystems
         }
         private void Start()
         {
-          
             m_core.Init(StatsComponent.MaxHP);
             m_core.OnDeath.Connect(HandleDeath);
         }
@@ -62,7 +61,6 @@ namespace Subsystems
             m_core.ApplyDamage(amount);
             OnDamaged.Emit(source);
         }
-  
         public void Heal(int amount)
         {
             if (!IsHealable)

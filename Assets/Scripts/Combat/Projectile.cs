@@ -14,14 +14,15 @@ namespace Combat
         private int m_index;
         private Vector3 m_dir;
         private ComponentPool<Projectile> m_ownerPool;
-
+        private IAttackContext m_context;
 
         public void Init(
             float damage,
             List<Transform> targets,
             Transform source,
-            float speed, 
-            ComponentPool<Projectile> ownerPool)
+            float speed,
+            ComponentPool<Projectile> ownerPool,
+            IAttackContext context)
         {
             m_damage = damage;
             m_targets = targets;
@@ -29,6 +30,7 @@ namespace Combat
             m_source = source;
             m_index = 0;
             m_ownerPool = ownerPool;
+            m_context = context;
         }
 
         private void Update()
@@ -66,11 +68,12 @@ namespace Combat
             if (other.transform != m_targets[m_index])
                 return;
 
-            var dmg = other.GetComponentInChildren<IDamageable>();
-            if (dmg == null)
+            var entity = other.GetComponent<BaseEntity>();
+            if (entity == null)
                 return;
 
-            dmg.TakeDamage((int)m_damage, m_source);
+            m_context.ApplyDamage(entity, (int)m_damage);
+
             m_index++;
         }
 

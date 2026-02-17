@@ -24,9 +24,7 @@ namespace States.PlayerStates
         public void Enter()
         {
             if (m_player.AllowWalkAttack)
-                m_movement.SetSpeedMultiplier(m_attackMoveMultiply);
-            else
-                m_movement.SetSpeedMultiplier(1f);
+                m_movement.AddSpeedMultiplier(this, m_attackMoveMultiply);
         }
         public void LogicUpdate()
         {
@@ -76,7 +74,7 @@ namespace States.PlayerStates
             }
         }
 
-        public void Exit() { m_movement.SetSpeedMultiplier(1f); }
+        public void Exit() { m_movement.RemoveSpeedMultiplier(this); }
         public void PhysicsUpdate() { }
     }
 }

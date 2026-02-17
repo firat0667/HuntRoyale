@@ -1,3 +1,5 @@
+using Combat.Effects;
+using Combat.Effects.ScriptableObjects;
 using Subsystems;
 using System.Linq;
 using UnityEngine;
@@ -5,9 +7,13 @@ using UnityEngine;
 public abstract class BaseEntity : MonoBehaviour
 {
     protected Subsystem[] subsystems;
+
     protected HealthSubsystem healthSubsystem;
-    public bool IsDead => healthSubsystem.IsDead;
+    protected EffectSubsystem effectSubsystem;
+
     public StateMachine SM { get; protected set; }
+    public bool IsDead => healthSubsystem.IsDead;
+    public HealthSubsystem Health => healthSubsystem;
   
     protected virtual void Awake()
     {
@@ -19,6 +25,8 @@ public abstract class BaseEntity : MonoBehaviour
     protected void Initialize()
     {
         healthSubsystem = GetSubsystem<HealthSubsystem>();
+        effectSubsystem = GetSubsystem<EffectSubsystem>();
+
         if (healthSubsystem != null)
             healthSubsystem.OnDied?.Connect(OnDied);
     }
@@ -49,7 +57,28 @@ public abstract class BaseEntity : MonoBehaviour
         if (healthSubsystem != null)
             healthSubsystem.OnDied?.Disconnect(OnDied);
     }
+    public virtual void ApplyEffect(StatusEffect effect, StatusEffectSO source)
+    {
+        if (effectSubsystem == null)
+            return;
 
+        effect.Init(this, source);
+        effectSubsystem.AddEffect(effect);
+    }
+    public virtual void OnDealDamage(int damage)
+{
+    if (effectSubsystem == null)
+        return;
+
+    foreach (var effect in effectSubsystem.ActiveEffects)
+    {
+        if (effect is ILifeStealProvider provider)
+        {
+            int heal = Mathf.RoundToInt(damage * provider.GetLifeStealPercent());
+            Health.Heal(heal);
+        }
+    }
+}
     protected virtual void OnDied() { }
     protected abstract void CreateStates();
     protected abstract IState GetEntryState();

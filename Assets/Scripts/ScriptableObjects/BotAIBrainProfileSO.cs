@@ -1,22 +1,26 @@
 using UnityEngine;
-public enum BotTargetingMode
+
+namespace AI.ScriptableObjects
 {
-    ClosestOnly,    
-    ClosestLowHP,    
-    SmartScore     
-}
+    public enum BotTargetingMode
+    {
+        ClosestOnly,
+        ClosestLowHP,
+        SmartScore
+    }
 
-[CreateAssetMenu(menuName = "AI/Bot Brain Profile")]
-public class BotAIBrainProfileSO : ScriptableObject
-{
-    [Header("Perception")]
-    public float viewRadius = 8f;
+    [CreateAssetMenu(menuName = "AI/Bot Brain Profile")]
+    public class BotAIBrainProfileSO : ScriptableObject
+    {
+        [Header("Perception")]
+        public float viewRadius = 8f;
 
-    public BotTargetingMode targetingMode;
+        public BotTargetingMode targetingMode;
 
-    [Range(0f, 1f)] public float awareness;      
-    [Range(0f, 1f)] public float aggressiveness; 
-    [Range(0f, 1f)] public float greed;          
-    [Range(0f, 1f)] public float intelligence;  
-    [Range(0f, 1f)] public float caution;       
+        [Range(0f, 1f)] public float awareness;
+        [Range(0f, 1f)] public float aggressiveness;
+        [Range(0f, 1f)] public float greed;
+        [Range(0f, 1f)] public float intelligence;
+        [Range(0f, 1f)] public float caution;
+    }
 }

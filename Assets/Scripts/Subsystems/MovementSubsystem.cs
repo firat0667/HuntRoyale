@@ -1,4 +1,5 @@
 using Subsystems.CoreComponents;
+using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -10,12 +11,13 @@ namespace Subsystems
 
         private MovementPhysicsCore m_physics;
         private Vector3 m_moveDir;
-        private float m_speedMultiplier = 1f;
+
+        private Dictionary<object, float> m_speedMultipliers = new();
 
         public Vector3 Velocity => m_physics.Velocity;
         public float MaxSpeed => StatsComponent.MoveSpeed;
         public float MoveAttackSpeedMult => StatsComponent.MoveAttackSpeedMult;
-
+        public float CurrentSpeed { get; private set; }
         public float Speed01
         {
             get
@@ -43,14 +45,27 @@ namespace Subsystems
 
         public override void LogicUpdate()
         {
-            float speed = StatsComponent.MoveSpeed * m_speedMultiplier;
+            float finalMultiplier = 1f;
+
+            foreach (var mult in m_speedMultipliers.Values)
+                finalMultiplier *= mult;
+
+            float speed = StatsComponent.MoveSpeed * finalMultiplier;
+
+            CurrentSpeed = speed;
             m_physics.Move(m_moveDir, speed);
         }
+        public void AddSpeedMultiplier(object source, float multiplier)
+        {
+            m_speedMultipliers[source] = multiplier;
+        }
 
-        public void 
-            
-            
-            RotateTowards(Vector3 dir)
+        public void RemoveSpeedMultiplier(object source)
+        {
+            if (m_speedMultipliers.ContainsKey(source))
+                m_speedMultipliers.Remove(source);
+        }
+        public void RotateTowards(Vector3 dir)
         {
             dir.y = 0f;
             if (dir.sqrMagnitude < 0.001f) return;
@@ -59,11 +74,6 @@ namespace Subsystems
             float t = 1f - Mathf.Exp(-StatsComponent.RotationSpeed * Time.deltaTime);
 
             m_visualRoot.rotation = Quaternion.Slerp(m_visualRoot.rotation, target, t);
-        }
-
-        public void SetSpeedMultiplier(float v)
-        {
-            m_speedMultiplier = v;
         }
     }
 

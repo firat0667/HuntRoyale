@@ -52,7 +52,9 @@ namespace Combat
         public Transform CurrentTarget => m_currentTarget;
         public float ExplosionTriggerDistance => m_explosionTriggerDistance;
         public void ExplodeNow() => Explode();
-        public BaseEntity m_ownerEntity=>m_owner != null ? m_owner.GetComponentInParent<BaseEntity>() : null;
+        public BaseEntity m_ownerEntity;
+
+        private IAttackContext m_context;
 
         private IMovableEntity m_ownerMoveEntity;
         public IMovableEntity OwnerMoveEntity
@@ -91,7 +93,8 @@ namespace Combat
             float explosionRadius,
             float explosionTriggerDistance,
             LayerMask targetLayer,
-            ComponentPool<SummonMinion> pool
+            ComponentPool<SummonMinion> pool,
+            IAttackContext context
         )
         {
             m_damage = damage;
@@ -102,6 +105,7 @@ namespace Combat
             m_targetLayer = targetLayer;
             m_ownerPool = pool;
             m_ownerMoveEntity = owner.GetComponent<IMovableEntity>();
+            m_context = context;
             Initialize();
             if (m_owner != null)
             {
@@ -110,6 +114,7 @@ namespace Combat
                 {
                     perception.OnTargetChanged.Connect(OnOwnerTargetChanged);
                 }
+                m_ownerEntity= m_owner.GetComponentInParent<BaseEntity>();
             }
         }
         private void OnOwnerTargetChanged(Transform newTarget)
@@ -164,12 +169,13 @@ namespace Combat
 
             foreach (var hit in hits)
             {
-                var damageable = hit.GetComponentInChildren<IDamageable>();
-                if (damageable != null)
-                    damageable.TakeDamage((int)m_damage, m_owner);
-                OnDied();
+                var entity = hit.GetComponentInParent<BaseEntity>();
+                if (entity == null)
+                    continue;
+
+                m_context.ApplyDamage(entity, (int)m_damage);
             }
-          
+            OnDied();
 
         }
         protected override void OnDied()

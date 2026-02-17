@@ -11,17 +11,17 @@ namespace Subsystems.Ai
 
         private float _stopDistance;
 
+        private MovementSubsystem m_movement;
+
         protected override void Awake()
         {
             base.Awake();
-
+            m_movement = Entity.GetSubsystem<MovementSubsystem>();
             m_aiPath = Entity.GetComponent<AIPath>();
             m_destinationSetter= Entity.GetComponent<AIDestinationSetter>();
             m_aiPath.gravity = Vector3.zero;
             m_aiPath.canMove = false;
             m_aiPath.canSearch = false;
-
-            m_aiPath.maxSpeed = StatsComponent.MoveSpeed;
             m_aiPath.rotationSpeed = StatsComponent.RotationSpeed;
         }
         public void SetTarget(Transform target)
@@ -33,7 +33,7 @@ namespace Subsystems.Ai
                 Stop();
                 return;
             }
-            m_aiPath.maxSpeed = StatsComponent.MoveSpeed;
+            m_aiPath.maxSpeed = m_movement.MaxSpeed;
             m_aiPath.canMove = true;
             m_aiPath.canSearch = true;
             m_destinationSetter.target = target;
@@ -57,6 +57,12 @@ namespace Subsystems.Ai
 
             if (m_target == null)
                 return;
+
+            if (m_movement != null)
+            {
+                m_aiPath.maxSpeed = m_movement.CurrentSpeed;
+            }
+
             float sqrDist =
                 (Entity.transform.position - m_target.position).sqrMagnitude;
 

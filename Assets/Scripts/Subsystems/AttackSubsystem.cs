@@ -1,7 +1,7 @@
 using Combat;
+using Combat.Stats.ScriptableObjects;
 using Subsystems.CoreComponents;
 using Subsystems.CoreComponents.AttackCores;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -27,7 +27,7 @@ namespace Subsystems
         public StatsComponent Stats => StatsComponent;
         public Transform OwnerTransform => transform;
         public Transform CurrentTarget => m_perception.CurrentTarget;
-
+        public BaseEntity OwnerEntity => GetComponentInParent<BaseEntity>();
         public float AttackStartRange => StatsComponent.AttackStartRange;
         public float AttackAngle => StatsComponent.AttackAngle;
         public float attackHitRange => StatsComponent.AttackHitRange;   
@@ -111,7 +111,30 @@ namespace Subsystems
         {
             m_core.OnAttackHit();
         }
+        public void ApplyDamage(BaseEntity target, int damage)
+        {
+            target.Health.TakeDamage(damage, OwnerTransform);
 
+            OwnerEntity?.OnDealDamage(damage);
+
+            if (Stats?.SelfEffects != null)
+            {
+                foreach (var so in Stats.SelfEffects)
+                {
+                    var effect = so.CreateEffect(damage);
+                    OwnerEntity.ApplyEffect(effect, so);
+                }
+            }
+
+            if (Stats?.OnHitEffects != null)
+            {
+                foreach (var so in Stats.OnHitEffects)
+                {
+                    var effect = so.CreateEffect(damage);
+                    target.ApplyEffect(effect, so);
+                }
+            }
+        }
         public bool TryAttack()
         {
             if (!CanAttack())

@@ -66,7 +66,8 @@ namespace Subsystems.CoreComponents.AttackCores
                 currentDamage,
                 finalTargets,
                 context.OwnerTransform,
-                stats.ProjectileSpeed
+                stats.ProjectileSpeed,
+                context       
             );
         }
 
