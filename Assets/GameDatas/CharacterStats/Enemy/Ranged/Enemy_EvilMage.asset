@@ -17,6 +17,7 @@ MonoBehaviour:
   attackStartRange: 0
   attackHitRange: 0
   projectileStats: {fileID: 11400000, guid: 00c33154db21ba7419500608f7663382, type: 2}
+  summonStats: {fileID: 0}
   attackDamage: 10
   attackRate: 0.5
   attackAngle: 30
@@ -24,3 +25,6 @@ MonoBehaviour:
   moveSpeed: 5
   moveAttackSpeedMult: 0
   rotationSpeed: 360
+  onHitEffects: []
+  selfEffects:
+  - {fileID: 11400000, guid: 8ad93c0e9ebc60c4eaa4bf030a8f69ff, type: 2}

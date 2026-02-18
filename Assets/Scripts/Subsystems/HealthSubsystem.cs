@@ -63,7 +63,7 @@ namespace Subsystems
         }
         public void Heal(int amount)
         {
-            if (!IsHealable)
+            if (!m_healable)
                 return;
              
             m_core.ApplyHeal(amount);

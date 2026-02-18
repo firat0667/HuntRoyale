@@ -16,9 +16,8 @@ MonoBehaviour:
   maxHP: 100
   attackStartRange: 4
   attackHitRange: 6
-  projectileSpeed: 0
-  projectilePierce: 0
-  projectilePrefab: {fileID: 0}
+  projectileStats: {fileID: 0}
+  summonStats: {fileID: 0}
   attackDamage: 7
   attackRate: 1
   attackAngle: 60
@@ -26,3 +25,6 @@ MonoBehaviour:
   moveSpeed: 7
   moveAttackSpeedMult: 0.7
   rotationSpeed: 9
+  onHitEffects: []
+  selfEffects:
+  - {fileID: 11400000, guid: 4a610d58a02692144ab604b204a538b5, type: 2}

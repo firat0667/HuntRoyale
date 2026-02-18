@@ -72,6 +72,7 @@ public abstract class BaseEntity : MonoBehaviour
 
     foreach (var effect in effectSubsystem.ActiveEffects)
     {
+
         if (effect is ILifeStealProvider provider)
         {
             int heal = Mathf.RoundToInt(damage * provider.GetLifeStealPercent());

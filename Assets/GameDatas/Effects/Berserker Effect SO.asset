@@ -15,4 +15,4 @@ MonoBehaviour:
   duration: 1
   tickInterval: 1
   icon: {fileID: 21300000, guid: 8dcf350259e68fb4eb57b304bf187ced, type: 3}
-  baseLifeStealPercent: 0.1
+  baseLifeStealPercent: 1

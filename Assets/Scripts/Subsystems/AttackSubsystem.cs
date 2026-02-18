@@ -115,8 +115,6 @@ namespace Subsystems
         {
             target.Health.TakeDamage(damage, OwnerTransform);
 
-            OwnerEntity?.OnDealDamage(damage);
-
             if (Stats?.SelfEffects != null)
             {
                 foreach (var so in Stats.SelfEffects)
@@ -125,6 +123,7 @@ namespace Subsystems
                     OwnerEntity.ApplyEffect(effect, so);
                 }
             }
+            OwnerEntity?.OnDealDamage(damage);
 
             if (Stats?.OnHitEffects != null)
             {
