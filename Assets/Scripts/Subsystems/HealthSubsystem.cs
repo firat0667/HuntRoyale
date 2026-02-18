@@ -1,4 +1,5 @@
-﻿using Firat0667.WesternRoyaleLib.Key;
+﻿using CoreScripts.ObjectPool;
+using Firat0667.WesternRoyaleLib.Key;
 using Subsystems.CoreComponents;
 using UnityEngine;
 
@@ -60,6 +61,7 @@ namespace Subsystems
             m_lastDamageSource = source;
             m_core.ApplyDamage(amount);
             OnDamaged.Emit(source);
+            DamagePopupPool.Instance.Spawn(amount, transform.position,false);
         }
         public void Heal(int amount)
         {
@@ -69,6 +71,7 @@ namespace Subsystems
             m_core.ApplyHeal(amount);
             OnHealed.Emit();
             Debug.Log($"{transform.parent.parent.name} healed {amount} health. current health{CurrentHP} ");
+            DamagePopupPool.Instance.Spawn(amount, transform.position,true);
         }
         public void SetHealable(bool value)
         {

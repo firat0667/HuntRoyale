@@ -16,5 +16,8 @@ namespace Combat.ScriptableObjects
         [Header("Spawn")]
         public int spawnCount = 1;
         public float spawnRange;
+
+        [Header("Lifetime")]
+        public float lifeTime = 4f;
     }
 }

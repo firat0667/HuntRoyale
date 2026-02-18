@@ -34,7 +34,7 @@ public class StatsComponent : MonoBehaviour
 
     #region Summon Stats
     public int SummonID => m_baseStats.summonStats.summonID;
-
+    public float SummonLifeTime => m_baseStats.summonStats.lifeTime;
     public float SummonAttackRange => m_baseStats.summonStats.spawnRange;
     public float SummonExplosionRadius => m_baseStats.summonStats.explosionRadius;
     public float SummonExplosionTriggerDistance=> m_baseStats.summonStats.explosionTriggerDistance;
@@ -62,8 +62,7 @@ public class StatsComponent : MonoBehaviour
 
     #region On Hit Effects
     public List<StatusEffectSO> OnHitEffects => m_baseStats.onHitEffects;
-    public List<StatusEffectSO> SelfEffects => m_baseStats.selfEffects;
-    // add upgrade system later to modify this value
+    public List<StatusEffectSO> SelfEffects=> m_baseStats.selfEffects;
     public float LifeStealPercent => 0.1f;
 
     #endregion

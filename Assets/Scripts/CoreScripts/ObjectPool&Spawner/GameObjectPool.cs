@@ -10,7 +10,7 @@ namespace Firat0667.WesternRoyaleLib.Pattern.Pool
     /// <summary>
     /// Generic pooling of gameobjects.
     /// </summary>
-    public class GameObjectPool : MonoBehaviour, IPool
+    public class GameObjectPool : MonoBehaviour
     {
         public PoolType PoolType;
 
