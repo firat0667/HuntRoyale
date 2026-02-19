@@ -1,6 +1,7 @@
 using CoreScripts.ObjectPool;
 using Firat0667.WesternRoyaleLib.Key;
 using FiratGames.WesternRoyale.Event;
+using Managers.VFX;
 using Pathfinding;
 using States.EnemyStates;
 using Subsystems;

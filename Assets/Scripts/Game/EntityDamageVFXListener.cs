@@ -1,4 +1,5 @@
 using FiratGames.WesternRoyale.Event;
+using Managers.VFX;
 using Subsystems;
 using UnityEngine;
 

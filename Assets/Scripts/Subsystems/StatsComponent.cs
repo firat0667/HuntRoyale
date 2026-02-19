@@ -7,6 +7,8 @@ public class StatsComponent : MonoBehaviour
 {
     [SerializeField] private BaseStatsSO m_baseStats;
 
+    public BaseStatsSO BaseStats => m_baseStats;
+
     public int MaxHP => m_baseStats.maxHP;
     public float DetectionRange => m_baseStats.detectionRange;
 

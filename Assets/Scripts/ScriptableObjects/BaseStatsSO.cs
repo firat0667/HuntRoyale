@@ -16,15 +16,13 @@ namespace Combat.Stats.ScriptableObjects
         public float attackStartRange;
         public float attackHitRange;
 
-        public ProjectileSO projectileStats;
-        public SummonSO summonStats;
-
-
         public int attackDamage;
         public float attackRate;
         public float attackAngle;
         public float detectionRange;
 
+        public ProjectileSO projectileStats;
+        public SummonSO summonStats;
 
         public float moveSpeed;
         public float moveAttackSpeedMult;

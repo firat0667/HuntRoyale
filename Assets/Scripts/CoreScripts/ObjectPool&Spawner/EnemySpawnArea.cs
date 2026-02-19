@@ -1,8 +1,8 @@
-using CoreScripts.ObjectPool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FiratGames.WesternRoyale.Event;
+using Managers.VFX;
 
 [System.Serializable]
 public class EnemySpawnEntry

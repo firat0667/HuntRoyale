@@ -1,9 +1,9 @@
 using CoreScripts.ObjectPool.Spawner;
 using Firat0667.WesternRoyaleLib.Diagnostics;
 using Firat0667.WesternRoyaleLib.Game;
+using Managers.Camera;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameLoopController : MonoBehaviour
 {
