@@ -29,7 +29,6 @@ namespace Combat.Upgrades.ScriptableObjects
         Duration,
         TickInterval,
         Percent,
-        SlowPercent
     }
 
     [CreateAssetMenu(menuName = "Upgrade/Upgrade")]
