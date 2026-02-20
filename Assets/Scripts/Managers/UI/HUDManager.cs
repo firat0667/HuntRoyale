@@ -13,6 +13,7 @@ namespace Managers.UI
         [SerializeField] private HUDView m_hudView;
         public Joystick MovementJoyStick => m_hudView.Joystick;
         public LevelHUD LevelHUD => m_hudView.LevelHUD;
+        public LevelUpPanel LevelUpPanel => m_hudView.LevelUpPanel;
 
         private void OnEnable()
         {

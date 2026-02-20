@@ -62,7 +62,6 @@ public abstract class BaseEntity : MonoBehaviour
         if (effectSubsystem == null)
             return;
 
-        effect.Init(this, source);
         effectSubsystem.AddEffect(effect);
     }
     public virtual void OnDealDamage(int damage)

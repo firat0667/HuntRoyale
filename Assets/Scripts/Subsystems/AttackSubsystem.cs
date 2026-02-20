@@ -1,7 +1,9 @@
 using Combat;
+using Combat.Effects.ScriptableObjects;
 using Combat.Stats.ScriptableObjects;
 using Subsystems.CoreComponents;
 using Subsystems.CoreComponents.AttackCores;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -114,24 +116,35 @@ namespace Subsystems
         public void ApplyDamage(BaseEntity target, int damage)
         {
             target.Health.TakeDamage(damage, OwnerTransform);
-
-            if (Stats?.SelfEffects != null)
-            {
-                foreach (var so in Stats.SelfEffects)
-                {
-                    var effect = so.CreateEffect(damage);
-                    OwnerEntity.ApplyEffect(effect, so);
-                }
-            }
+            ApplyEffects(OwnerEntity, Stats.SelfEffects, damage);
             OwnerEntity?.OnDealDamage(damage);
+            ApplyEffects(target, Stats.OnHitEffects, damage);
+        }
+        private void ApplyEffects(BaseEntity target,
+                          List<StatusEffectSO> effects,
+                          int damage)
+        {
+            if (effects == null) return;
 
-            if (Stats?.OnHitEffects != null)
+            foreach (var so in effects)
             {
-                foreach (var so in Stats.OnHitEffects)
-                {
-                    var effect = so.CreateEffect(damage);
-                    target.ApplyEffect(effect, so);
-                }
+                var effect = so.CreateEffect(damage);
+
+                float bonusDuration = 0f;
+                float bonusTick = 0f;
+                float bonusPercent = 0f;
+
+                StatsComponent.GetEffectBonuses(so,
+                    out bonusDuration,
+                    out bonusTick,
+                    out bonusPercent);
+
+                effect.Init(target, so,
+                    bonusDuration,
+                    bonusTick,
+                    bonusPercent);
+
+                target.ApplyEffect(effect, so);
             }
         }
         public bool TryAttack()

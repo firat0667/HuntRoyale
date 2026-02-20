@@ -29,7 +29,7 @@ namespace Subsystems
         {
             if (StatsComponent != null)
             {
-                //StatsComponent.ApplyUpgradeStat(upgrade);
+                StatsComponent.ApplyUpgradeStat(upgrade);
             }
         }
     }

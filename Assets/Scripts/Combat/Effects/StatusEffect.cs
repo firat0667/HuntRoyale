@@ -22,15 +22,23 @@ namespace Combat.Effects
         public bool IsFinished => m_remainingTime <= 0;
         public StatusEffectSO Source => m_source;
 
-        public void Init(BaseEntity target, StatusEffectSO source)
+
+        public void Init(BaseEntity target,
+                         StatusEffectSO source,
+                         float bonusDuration,
+                         float bonusTickInterval,
+                         float bonusPercent)
         {
             m_target = target;
             m_health = target.GetSubsystem<HealthSubsystem>();
             m_source = source;
 
-            m_duration = source.duration;
+            m_duration = source.duration + bonusDuration;
             m_remainingTime = m_duration;
-            m_tickInterval = source.tickInterval;
+
+            m_tickInterval = Mathf.Max(0.01f, source.tickInterval + bonusTickInterval);
+
+            ApplyPercentBonus(bonusPercent);
 
             OnApply();
         }
@@ -61,7 +69,7 @@ namespace Combat.Effects
             m_hasExpired = true;
             OnExpire();
         }
-
+        protected virtual void ApplyPercentBonus(float bonus) { }
         protected abstract void OnApply();
         protected abstract void OnTick(float tickInterval);
         protected abstract void OnExpire();

@@ -94,7 +94,8 @@ namespace Subsystems
             var exp = entity.GetSubsystem<ExperienceSubsystem>();
             if (exp != null)
             {
-                exp.AddExp(ExpReward);
+                int modified = StatsComponent.ModifyExp(ExpReward);
+                exp.AddExp(modified);
             }
         }
     }

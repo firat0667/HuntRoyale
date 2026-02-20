@@ -14,6 +14,7 @@ namespace Combat.Upgrades.ScriptableObjects
 
     public enum StatType
     {
+        Health,
         Damage,
         AttackSpeed,
         Range,

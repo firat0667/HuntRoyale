@@ -1,9 +1,13 @@
+using Combat.Stats.ScriptableObjects;
+using Managers.UI;
+using Managers.Upgrade;
 using States.PlayerStates;
 using Subsystems;
 using System;
 using UnityEngine;
+using Upgrades;
 
-public class Player : BaseEntity, IMovableEntity
+public class Player : BaseEntity, IMovableEntity,IUpgradeable
 {
     #region States
     public PlayerIdleState IdleState { get; private set; }
@@ -13,8 +17,10 @@ public class Player : BaseEntity, IMovableEntity
 
     #region Subsystems
     private MovementSubsystem m_movement;
-
     private AttackSubsystem m_attack;
+    private ExperienceSubsystem m_experience;
+    private UpgradeSubsystem m_upgradeSubsystem;
+
     #endregion
     #region Animator
     private AnimatorBridge m_animatorBridge;
@@ -32,6 +38,11 @@ public class Player : BaseEntity, IMovableEntity
     m_movement != null &&
     m_movement.Velocity.sqrMagnitude > 0.01f;
 
+    private BaseStatsSO m_baseStatSO;
+    public BaseStatsSO BaseStats => m_baseStatSO;
+
+    public UpgradeSubsystem UpgradeSubsystem => m_upgradeSubsystem;
+
 
     #endregion
 
@@ -39,16 +50,23 @@ public class Player : BaseEntity, IMovableEntity
     protected override void Awake()
     {
         base.Awake();
+
+        m_baseStatSO = GetComponent<StatsComponent>().BaseStats;
+
         m_movement = GetSubsystem<MovementSubsystem>();
         m_attack = GetSubsystem<AttackSubsystem>();
         m_animatorBridge = GetComponent<AnimatorBridge>();
-       
+
+        m_experience = GetSubsystem<ExperienceSubsystem>();
+        m_upgradeSubsystem = GetSubsystem<UpgradeSubsystem>();
+
     }
 
     protected override void Start()
     {
         base.Start();
         Initialize();
+        m_experience.OnLevelUp.Connect(HandleLevelUp);
     }
     protected override void Update()
     {
@@ -71,8 +89,21 @@ public class Player : BaseEntity, IMovableEntity
         EventManager.Instance.Trigger(EventTags.EVENT_PLAYER_DIED);
         m_movement.Stop();
         m_animatorBridge.TriggerDead();
+        if (m_experience != null)
+            m_experience.OnLevelUp.Disconnect(HandleLevelUp);
 
 
+    }
+    private void HandleLevelUp(int level)
+    {
+        var valid = UpgradeManager.Instance.GetValidUpgrades(this);
+
+        if (valid.Count == 0)
+            return;
+
+        var options = UpgradeManager.Instance.GetRandomWeighted(valid, 2);
+
+        HUDManager.Instance.LevelUpPanel.Show(options, this);
     }
     protected override void CreateStates()
     {
