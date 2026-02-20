@@ -955,6 +955,7 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
+  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -962,7 +963,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
-  m_Version: 2
 --- !u!114 &330585548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,23 +1105,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 4
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 2
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
 --- !u!1 &414008781
 GameObject:
   m_ObjectHideFlags: 0
@@ -3302,7 +3296,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4088,8 +4081,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4111,7 +4102,6 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -4578,22 +4568,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3218d3cda6d6ee74dad3b572e7dfa004, type: 2}
   - {fileID: 11400000, guid: a6587885f9d0a7d4ab49045ae1f9ba1b, type: 2}
   - {fileID: 11400000, guid: 125f244f50084004db53497c71773abb, type: 2}
-  - {fileID: 11400000, guid: 9b1e6f06013ec0a48bb46082acea6fe8, type: 2}
-  - {fileID: 11400000, guid: b58d5c5b514877f448e214523318d593, type: 2}
-  - {fileID: 11400000, guid: 513d0f913e4d22a45b3364eef1fae458, type: 2}
-  - {fileID: 11400000, guid: 86f99c3704e548749a63677e631f487b, type: 2}
-  - {fileID: 11400000, guid: fb0cc06395779f146ae736c2a68ac27b, type: 2}
-  - {fileID: 11400000, guid: 904093255f71410428c25f8f4a8cf640, type: 2}
-  - {fileID: 11400000, guid: e9d9eead63ac5824cb41ab6378745b3f, type: 2}
-  - {fileID: 11400000, guid: 61337ef137f1b4c4fa126d73076feba8, type: 2}
-  - {fileID: 11400000, guid: 11368349c4204af4ba20ec01b82ed542, type: 2}
   - {fileID: 11400000, guid: 36d189f1bccf01a4fa02e6b4d3acab63, type: 2}
   - {fileID: 11400000, guid: 0a5ff5f7b9da8164f90c00e0a2b4ba7d, type: 2}
   - {fileID: 11400000, guid: acde91e5860a64a4383abc0a83462bb2, type: 2}
-  - {fileID: 11400000, guid: 7b6919810c9c62249a6d589a69fa66da, type: 2}
-  - {fileID: 11400000, guid: 3e0aaa40d4f0ce24f9f8c599802923ca, type: 2}
-  - {fileID: 11400000, guid: 61867a3f38daf994a934bea5ce9cee39, type: 2}
-  - {fileID: 11400000, guid: 89345e45b32314f40b9d5af1a0943eab, type: 2}
 --- !u!1 &1913722813
 GameObject:
   m_ObjectHideFlags: 0
@@ -4849,7 +4826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc15a7d3159fb064ba999a976ff9caa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerPrefab: {fileID: 3604793363032988924, guid: c0670bc7faecb1d478d83fed2fc0e922, type: 3}
+  m_playerPrefab: {fileID: 6496050491397982029, guid: 846d9b31923dfba46ac5688c1845b9d2, type: 3}
   m_playerSpawnPoint: {fileID: 1943112081}
   m_matchDuration: 150
   m_autoStartMatch: 1
@@ -5492,8 +5469,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5515,7 +5490,6 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

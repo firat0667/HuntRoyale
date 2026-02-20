@@ -6,6 +6,7 @@ namespace Combat.Effects
     public class BerserkerEffect : StatusEffect, ILifeStealProvider
     {
         private float m_lifeStealPercent;
+        private float m_bonusPercent;
         protected override void OnApply()
         {
             var so = (BerserkerEffectSO)m_source;
@@ -14,7 +15,13 @@ namespace Combat.Effects
 
             float statMultiplier = stats != null ? stats.LifeStealPercent : 1f;
 
-            m_lifeStealPercent = so.baseLifeStealPercent * statMultiplier;
+            float baseValue = so.baseLifeStealPercent * statMultiplier;
+
+            m_lifeStealPercent = baseValue * (1f + m_bonusPercent / 100f);
+        }
+        protected override void ApplyPercentBonus(float bonus)
+        {
+            m_bonusPercent = bonus;
         }
         public float GetLifeStealPercent()
         {

@@ -16,12 +16,12 @@ MonoBehaviour:
   maxHP: 100
   attackStartRange: 0
   attackHitRange: 0
-  projectileStats: {fileID: 11400000, guid: 00c33154db21ba7419500608f7663382, type: 2}
-  summonStats: {fileID: 0}
-  attackDamage: 10
+  attackDamage: 25
   attackRate: 0.5
   attackAngle: 30
   detectionRange: 25
+  projectileStats: {fileID: 11400000, guid: 00c33154db21ba7419500608f7663382, type: 2}
+  summonStats: {fileID: 0}
   moveSpeed: 8
   moveAttackSpeedMult: 0.7
   rotationSpeed: 9

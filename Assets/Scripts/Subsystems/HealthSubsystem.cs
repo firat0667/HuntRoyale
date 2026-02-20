@@ -45,11 +45,17 @@ namespace Subsystems
             OnDied = new BasicSignal();
             OnHealed = new BasicSignal();
             GetCoreComponent(ref m_core);
+          
         }
         private void Start()
         {
             m_core.Init(StatsComponent.MaxHP);
             m_core.OnDeath.Connect(HandleDeath);
+            StatsComponent.OnMaxHealthChanged.Connect(ResetHealth);
+        }
+        private void OnDisable()
+        {
+            StatsComponent.OnMaxHealthChanged.Disconnect(ResetHealth);
         }
         public void ResetHealth()
         {
@@ -94,8 +100,11 @@ namespace Subsystems
             var exp = entity.GetSubsystem<ExperienceSubsystem>();
             if (exp != null)
             {
-                int modified = StatsComponent.ModifyExp(ExpReward);
-                exp.AddExp(modified);
+                var expSubsystem = entity.GetSubsystem<ExperienceSubsystem>();
+                var stats = entity.GetComponent<StatsComponent>();
+
+                int modified = stats.ModifyExp(ExpReward);
+                expSubsystem.AddExp(modified);
             }
         }
     }

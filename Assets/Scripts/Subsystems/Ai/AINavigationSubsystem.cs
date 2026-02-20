@@ -1,5 +1,6 @@
 using Pathfinding;
 using UnityEngine;
+using Game;
 
 namespace Subsystems.Ai
 {

@@ -69,8 +69,11 @@ namespace Managers.Upgrade
                     return baseStats.attackType == AttackType.Summon;
 
                 case UpgradeCategory.Effect:
-                    return baseStats.onHitEffects != null &&
-                           baseStats.onHitEffects.Contains(upgrade.targetEffect);
+                    return (baseStats.onHitEffects != null &&
+                            baseStats.onHitEffects.Contains(upgrade.targetEffect))
+                        ||
+                           (baseStats.selfEffects != null &&
+                            baseStats.selfEffects.Contains(upgrade.targetEffect));
 
                 default:
                     return false;

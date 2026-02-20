@@ -7,21 +7,32 @@ namespace Combat.Effects
     public class PoisonEffect : StatusEffect
     {
         private float m_damagePerSecond;
+        private float m_baseDamageDealt;
+        private float m_bonusPercent;
 
-        public PoisonEffect(float damageDealt, float percent, float duration)
+        public PoisonEffect(float damageDealt)
         {
-            float totalDamage = damageDealt * percent;
+            m_baseDamageDealt = damageDealt;
+        }
+
+        protected override void ApplyPercentBonus(float bonus)
+        {
+            m_bonusPercent = bonus;
+        }
+
+        protected override void OnApply()
+        {
+            var so = (PoisonEffectSO)m_source;
+
+            float totalDamage = m_baseDamageDealt * so.damagePercent;
+
+            totalDamage *= (1f + m_bonusPercent / 100f);
 
             if (totalDamage < 1f)
                 totalDamage = 1f;
 
-            m_damagePerSecond = totalDamage / duration;
-
-            m_duration = duration;
-            m_remainingTime = duration;
+            m_damagePerSecond = totalDamage / m_duration;
         }
-
-        protected override void OnApply() { }
 
         protected override void OnTick(float tickInterval)
         {

@@ -10,7 +10,7 @@ namespace Combat.Effects.ScriptableObjects
 
         public override StatusEffect CreateEffect(float damageDealt)
         {
-            return new PoisonEffect(damageDealt, damagePercent,duration);
+            return new PoisonEffect(damageDealt);
         }
     }
 }

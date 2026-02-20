@@ -11,7 +11,7 @@ namespace Combat.Effects.ScriptableObjects
 
         public override StatusEffect CreateEffect(float damageDealt)
         {
-            return new BurnEffect(damageDealt, percent, duration);
+            return new BurnEffect(damageDealt);
         }
     }
 }

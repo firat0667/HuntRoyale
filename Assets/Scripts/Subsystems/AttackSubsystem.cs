@@ -1,6 +1,7 @@
 using Combat;
 using Combat.Effects.ScriptableObjects;
 using Combat.Stats.ScriptableObjects;
+using Game;
 using Subsystems.CoreComponents;
 using Subsystems.CoreComponents.AttackCores;
 using System.Collections.Generic;

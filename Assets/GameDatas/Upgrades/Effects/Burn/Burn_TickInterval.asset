@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 48c0d4d6bebaa934384b07aa1e2f8184, type: 3}
   category: 4
-  statType: 10
+  statType: 12
   value: -0.25
   isPercentage: 0
   targetEffect: {fileID: 11400000, guid: 181637a302f76da49bff4ce2a59603a1, type: 2}

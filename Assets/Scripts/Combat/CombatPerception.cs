@@ -1,4 +1,5 @@
 using Firat0667.WesternRoyaleLib.Key;
+using Game;
 using UnityEngine;
 using UnityEngine.Timeline;
 
