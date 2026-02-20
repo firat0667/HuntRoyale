@@ -349,7 +349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7221772664090748885, guid: 585a0bf466f55794988b672f30892032, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 200
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7221772664090748885, guid: 585a0bf466f55794988b672f30892032, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1691,6 +1691,7 @@ MonoBehaviour:
   m_fadeDuration: 0.2
   m_levelHUD: {fileID: 511730674}
   m_joystick: {fileID: 1634642354}
+  m_levelUpPanel: {fileID: 1194682448}
 --- !u!1 &828168993
 GameObject:
   m_ObjectHideFlags: 0
@@ -4592,6 +4593,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7b6919810c9c62249a6d589a69fa66da, type: 2}
   - {fileID: 11400000, guid: 3e0aaa40d4f0ce24f9f8c599802923ca, type: 2}
   - {fileID: 11400000, guid: 61867a3f38daf994a934bea5ce9cee39, type: 2}
+  - {fileID: 11400000, guid: 89345e45b32314f40b9d5af1a0943eab, type: 2}
 --- !u!1 &1913722813
 GameObject:
   m_ObjectHideFlags: 0
