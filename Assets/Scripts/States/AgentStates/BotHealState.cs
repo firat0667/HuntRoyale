@@ -1,25 +1,37 @@
+using AI.Agents;
+using Subsystems;
+using Subsystems.Ai;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace States.AgentStates
 {
     public class BotHealState : IState
     {
         private Agent m_agent;
+        private AINavigationSubsystem m_navigation;
+        private AttackSubsystem m_attack;
+
 
         public BotHealState(Agent agent)
         {
             m_agent = agent;
+            m_navigation = agent.Navigation;
+            m_attack = agent.Attack;
         }
 
         public void Enter()
         {
-            m_agent.Input.SetAttack(false);
+            Transform healZone = m_agent.Brain.GetHealZone();
+
+            if (healZone != null)
+            {
+                m_navigation.SetTarget(healZone);
+            }
         }
 
         public void Exit()
         {
-            m_agent.Input.SetMove(Vector3.zero);
         }
 
         public void LogicUpdate()
@@ -29,9 +41,6 @@ namespace States.AgentStates
                 m_agent.SM.ChangeState(m_agent.IdleState);
                 return;
             }
-            Vector3 dir = m_agent.Brain.DirectionToHealZone;
-            m_agent.Input.SetMove(dir);
-            m_agent.Input.SetAim(dir);
         }
 
         public void PhysicsUpdate()

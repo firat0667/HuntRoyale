@@ -1,3 +1,6 @@
+using AI.Agents;
+using Subsystems;
+using Subsystems.Ai;
 using UnityEngine;
 
 namespace States.AgentStates
@@ -5,16 +8,19 @@ namespace States.AgentStates
     public class BotIdleState : IState
     {
         private Agent m_agent;
+        private AINavigationSubsystem m_navigation;
+        private AttackSubsystem m_attack;
 
         public BotIdleState(Agent agent)
         {
             m_agent = agent;
+            m_navigation =agent.Navigation;
+            m_attack = agent.Attack;
         }
-
         public void Enter()
         {
-            m_agent.Input.SetMove(Vector3.zero);
-            m_agent.Input.SetAttack(false);
+            Debug.Log("Enter Idle State");
+            m_navigation.Stop();
         }
 
         public void Exit()
@@ -34,7 +40,6 @@ namespace States.AgentStates
             {
                 m_agent.SM.ChangeState(m_agent.ChaseState);
             }
-
         }
 
         public void PhysicsUpdate()

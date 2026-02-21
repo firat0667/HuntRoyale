@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0431e45aefc2e48a655298245e00bc, type: 3}
   m_Name: BotBrain_Basic
   m_EditorClassIdentifier: 
-  viewRadius: 8
-  attackRange: 1.5
+  viewRadius: 20
   targetingMode: 0
-  awareness: 0
-  aggressiveness: 0
-  greed: 0
-  intelligence: 0
-  caution: 0
+  awareness: 0.45
+  aggressiveness: 0.5
+  greed: 0.3
+  intelligence: 0.4
+  caution: 0.35

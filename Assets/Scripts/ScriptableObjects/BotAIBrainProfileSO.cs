@@ -12,9 +12,6 @@ namespace AI.ScriptableObjects
     [CreateAssetMenu(menuName = "AI/Bot Brain Profile")]
     public class BotAIBrainProfileSO : ScriptableObject
     {
-        [Header("Perception")]
-        public float viewRadius = 8f;
-
         public BotTargetingMode targetingMode;
 
         [Range(0f, 1f)] public float awareness;

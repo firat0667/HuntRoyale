@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6382de310689d8949a07d3f52e268100, type: 3}
+  m_Name: Agent_Skeleton
+  m_EditorClassIdentifier: 
+  attackType: 0
+  maxHP: 100
+  attackStartRange: 3
+  attackHitRange: 5
+  attackDamage: 25
+  attackRate: 1
+  attackAngle: 60
+  detectionRange: 100
+  projectileStats: {fileID: 0}
+  summonStats: {fileID: 0}
+  moveSpeed: 5
+  moveAttackSpeedMult: 0.7
+  rotationSpeed: 270
+  onHitEffects: []
+  selfEffects: []

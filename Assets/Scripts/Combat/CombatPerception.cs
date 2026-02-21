@@ -7,10 +7,14 @@ namespace Combat
 {
     public class CombatPerception : MonoBehaviour
     {
+
+        [SerializeField] private bool m_scanOnStart = true;
         [SerializeField] private LayerMask m_targetLayer;
         [SerializeField] private LayerMask m_obstacleLayer;
         [SerializeField] private float m_scanInterval = 0.15f;
         [SerializeField] private float m_followInterval = 3.0f;
+
+
 
         private StatsComponent m_stats;
         private float m_scanTimer;
@@ -119,16 +123,19 @@ namespace Combat
                     bestTarget = hit.transform;
                 }
             }
-
-            if (bestTarget !=null && bestTarget != CurrentTarget)
+            if (m_scanOnStart)
             {
-                CurrentTarget = bestTarget;
-                OnTargetChanged.Emit(CurrentTarget);
+                if (bestTarget != null && bestTarget != CurrentTarget)
+                {
+                    CurrentTarget = bestTarget;
+                    OnTargetChanged.Emit(CurrentTarget);
+                }
+                else
+                {
+                    CurrentTarget = bestTarget;
+                }
             }
-            else
-            {
-                CurrentTarget = bestTarget;
-            }
+   
             CurrentTargetSqrDistance = bestTarget != null
                 ? (bestTarget.position - transform.position).sqrMagnitude
                 : float.MaxValue;

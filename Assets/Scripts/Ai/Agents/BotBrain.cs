@@ -1,157 +1,200 @@
+using AI.Agents;
 using AI.ScriptableObjects;
 using Game;
 using Subsystems;
 using UnityEngine;
 
-public class BotBrain : MonoBehaviour
+namespace AI.Brain 
 {
-    [SerializeField] private BotAIBrainProfileSO m_profile;
-    public Transform CurrentTarget { get; private set; }
-    private StatsComponent m_stats;
-    private HealthSubsystem m_health;
-    private Transform m_healZone;
-    public bool HasTarget => CurrentTarget != null;
-    private void Awake()
+    public class BotBrain : MonoBehaviour
     {
-        m_stats = GetComponent<StatsComponent>();
-        m_health = GetComponentInChildren<HealthSubsystem>();
+        [SerializeField] private BotAIBrainProfileSO m_profile;
+        [SerializeField] private float m_scanInterval = 0.3f;
 
-        GameObject zone = GameObject.FindGameObjectWithTag(Tags.HealZone_Tag);
-        if (zone != null)
-            m_healZone = zone.transform;
-    }
-    public Vector3 DirectionToHealZone
-    {
-        get
+        private StatsComponent m_stats;
+        private HealthSubsystem m_health;
+        private Transform m_healZone;
+
+        private float m_scanTimer;
+        private Agent m_agent;
+
+        public Transform CurrentTarget { get; private set; }
+        public bool HasTarget => CurrentTarget != null;
+
+        private void Awake()
         {
-            if (m_healZone == null) return Vector3.zero;
+            m_stats = GetComponent<StatsComponent>();
+            m_health = GetComponentInChildren<HealthSubsystem>();
+            m_agent = GetComponent<Agent>();
 
-            Vector3 dir = m_healZone.position - transform.position;
-            dir.y = 0;
-            return dir.normalized;
+            GameObject zone = GameObject.FindGameObjectWithTag(Tags.HealZone_Tag);
+            if (zone != null)
+                m_healZone = zone.transform;
+
+            m_scanTimer = Random.Range(0f, m_scanInterval);
         }
-    }
 
-    public bool ShouldHeal
-    {
-        get
+        private void Update()
         {
-            if (m_health == null) return false;
+            m_scanTimer -= Time.deltaTime;
 
-            float hpRatio = (float)m_health.CurrentHP / m_health.MaxHP;
-
-            float healThreshold =
-                0.4f
-                - m_profile.aggressiveness * 0.25f
-                + m_profile.caution * 0.35f;
-
-            return hpRatio <= healThreshold;
-        }
-    }
-    public bool InAttackRange
-    {
-        get
-        {
-            if (!HasTarget) return false;
-            return Vector3.Distance(
-                transform.position,
-                CurrentTarget.position
-            ) <= m_stats.AttackStartRange;
-        }
-    }
-
-    public Vector3 DirectionToTarget
-    {
-        get
-        {
-            if (!HasTarget) return Vector3.zero;
-
-            Vector3 dir = CurrentTarget.position - transform.position;
-            dir.y = 0;
-            return dir.normalized;
-        }
-    }
-
-    private void Update()
-    {
-        if(CurrentTarget != null)
-            return;
-        SelectTarget();
-    }
-    private void SelectTarget()
-    {
-        // we should find all enemies in the scene but on a list from a manager would be better
-        var targets = GameObject.FindGameObjectsWithTag(Tags.Enemy_Tag);
-
-        float bestScore = float.MinValue;
-        Transform best = null;
-
-        var myHealth = GetComponentInChildren<HealthSubsystem>();
-        float myHpRatio = myHealth != null
-            ? myHealth.CurrentHP / myHealth.MaxHP
-            : 1f;
-
-        foreach (var t in targets)
-        {
-            if (t.transform == transform) continue;
-
-            var targetHealth = t.GetComponentInChildren<HealthSubsystem>();
-            if (targetHealth == null) continue;
-
-            float distance = Vector3.Distance(transform.position, t.transform.position);
-            if (distance > m_profile.viewRadius) continue;
-
-            float score = CalculateScore(
-                t.transform,
-                targetHealth,
-                distance,
-                myHpRatio
-            );
-
-            if (score > bestScore)
+            if (CurrentTarget != null)
             {
-                bestScore = score;
-                best = t.transform;
+                if (!IsTargetValid(CurrentTarget))
+                    CurrentTarget = null;
+                else
+                    return;
+            }
+
+            if (m_scanTimer <= 0f)
+            {
+                m_scanTimer = m_scanInterval;
+                SelectTarget();
             }
         }
 
-        CurrentTarget = best;
-    }
+        #region Heal
 
-    private float CalculateScore(
-    Transform target,
-    HealthSubsystem targetHealth,
-    float distance,
-    float myHpRatio
-)
-    {
-        float distanceScore = 1f - (distance / m_profile.viewRadius);
-        float targetHpScore = 1f - targetHealth.CurrentHP / targetHealth.MaxHP;
-
-        switch (m_profile.targetingMode)
+        public bool ShouldHeal
         {
-            case BotTargetingMode.ClosestOnly:
-                return distanceScore;
+            get
+            {
+                if (m_health == null) return false;
 
-            case BotTargetingMode.ClosestLowHP:
-                return distanceScore * 0.4f + targetHpScore * 0.6f;
+                float hpRatio = (float)m_health.CurrentHP / m_health.MaxHP;
 
-            case BotTargetingMode.SmartScore:
-                {
-                    float riskPenalty = myHpRatio < 0.3f ? 1f : 0f;
+                float healThreshold =
+                    0.4f
+                    - m_profile.aggressiveness * 0.25f
+                    + m_profile.caution * 0.35f;
 
-                    return
-                        distanceScore * m_profile.awareness +
-                        targetHpScore * m_profile.intelligence -
-                        riskPenalty * m_profile.caution;
-                }
+                return hpRatio <= healThreshold;
+            }
         }
 
-        return 0f;
-    }
+        public Transform GetHealZone()
+        {
+            return m_healZone;
+        }
 
-    public void ClearTarget()
-    {
-        CurrentTarget = null;
+        #endregion
+
+        #region Combat
+
+        public bool InAttackRange
+        {
+            get
+            {
+                if (!HasTarget) return false;
+
+                float range = m_stats.EffectiveAttackRange;
+                return (CurrentTarget.position - transform.position).sqrMagnitude
+                       <= range * range;
+            }
+        }
+
+        public Vector3 DirectionToTarget
+        {
+            get
+            {
+                if (!HasTarget) return Vector3.zero;
+
+                Vector3 dir = CurrentTarget.position - transform.position;
+                dir.y = 0;
+                return dir.normalized;
+            }
+        }
+
+        #endregion
+
+        #region Target
+        public void ClearTarget()
+        {
+            CurrentTarget = null;
+        }
+        private bool IsTargetValid(Transform target)
+        {
+            if (target == null) return false;
+
+            float sqrDist = (target.position - transform.position).sqrMagnitude;
+
+            if (sqrDist > m_stats.DetectionRange * m_stats.DetectionRange)
+                return false;
+
+            var hp = target.GetComponentInChildren<HealthSubsystem>();
+            if (hp == null || hp.IsDead)
+                return false;
+
+            return true;
+        }
+
+        private void SelectTarget()
+        {
+            var targets = GameObject.FindGameObjectsWithTag(Tags.Enemy_Tag);
+
+            float bestScore = float.MinValue;
+            Transform best = null;
+
+            float myHpRatio = (float)m_health.CurrentHP / m_health.MaxHP;
+
+            foreach (var t in targets)
+            {
+                if (t.transform == transform) continue;
+
+                var targetHealth = t.GetComponentInChildren<HealthSubsystem>();
+                if (targetHealth == null || targetHealth.IsDead) continue;
+
+                float distance = Vector3.Distance(transform.position, t.transform.position);
+                if (distance > m_stats.DetectionRange) continue;
+
+                float score = CalculateScore(t.transform, targetHealth, distance, myHpRatio);
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    best = t.transform;
+                }
+            }
+
+            CurrentTarget = best;
+            if(CurrentTarget!=null)
+            m_agent.CombatPerception.SetCurrentTarget(CurrentTarget);
+        }
+        public void SetProfile(BotAIBrainProfileSO profile)
+        {
+            m_profile = profile;
+        }
+        private float CalculateScore(
+            Transform target,
+            HealthSubsystem targetHealth,
+            float distance,
+            float myHpRatio)
+        {
+            float distanceScore = 1f - (distance / m_stats.DetectionRange);
+            float targetHpScore = 1f - ((float)targetHealth.CurrentHP / targetHealth.MaxHP);
+            float riskPenalty = myHpRatio < 0.3f ? 1f : 0f;
+
+            switch (m_profile.targetingMode)
+            {
+                case BotTargetingMode.ClosestOnly:
+                    return distanceScore;
+
+                case BotTargetingMode.ClosestLowHP:
+                    return distanceScore * 0.4f + targetHpScore * 0.6f;
+
+                case BotTargetingMode.SmartScore:
+                    return
+                        distanceScore * m_profile.awareness +
+                        targetHpScore *
+                        (m_profile.intelligence +
+                         m_profile.aggressiveness +
+                         m_profile.greed) -
+                        riskPenalty * m_profile.caution;
+            }
+
+            return 0f;
+        }
+
+        #endregion
     }
 }
