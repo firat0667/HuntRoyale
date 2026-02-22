@@ -19,7 +19,7 @@ MonoBehaviour:
   attackDamage: 25
   attackRate: 1
   attackAngle: 60
-  detectionRange: 100
+  detectionRange: 200
   projectileStats: {fileID: 0}
   summonStats: {fileID: 0}
   moveSpeed: 7

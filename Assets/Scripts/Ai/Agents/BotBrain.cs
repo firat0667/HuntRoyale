@@ -3,6 +3,9 @@ using AI.ScriptableObjects;
 using Game;
 using Subsystems;
 using UnityEngine;
+using Managers.Enemies;
+using Managers.Game;
+using AI.Enemies;
 
 namespace AI.Brain 
 {
@@ -17,9 +20,9 @@ namespace AI.Brain
 
         private float m_scanTimer;
         private Agent m_agent;
-
-        public Transform CurrentTarget { get; private set; }
-        public bool HasTarget => CurrentTarget != null;
+        
+        public Transform CurrentTarget=> m_agent.CombatPerception.CurrentTarget;
+        public bool HasTarget => m_agent.CombatPerception.CurrentTarget != null;
 
         private void Awake()
         {
@@ -27,9 +30,7 @@ namespace AI.Brain
             m_health = GetComponentInChildren<HealthSubsystem>();
             m_agent = GetComponent<Agent>();
 
-            GameObject zone = GameObject.FindGameObjectWithTag(Tags.HealZone_Tag);
-            if (zone != null)
-                m_healZone = zone.transform;
+                m_healZone = GameManager.Instance.HealZone;
 
             m_scanTimer = Random.Range(0f, m_scanInterval);
         }
@@ -38,21 +39,23 @@ namespace AI.Brain
         {
             m_scanTimer -= Time.deltaTime;
 
-            if (CurrentTarget != null)
+            if (HasTarget && !IsTargetValid(CurrentTarget))
             {
-                if (!IsTargetValid(CurrentTarget))
-                    CurrentTarget = null;
-                else
-                    return;
+                ClearTargetAndPerception();
+                m_scanTimer = 0f; 
             }
-
-            if (m_scanTimer <= 0f)
+            if (!HasTarget && m_scanTimer <= 0f)
             {
                 m_scanTimer = m_scanInterval;
                 SelectTarget();
             }
         }
+        private void ClearTargetAndPerception()
+        {
 
+            if (m_agent != null && m_agent.CombatPerception != null)
+                m_agent.CombatPerception.SetCurrentTarget(null);
+        }
         #region Heal
 
         public bool ShouldHeal
@@ -93,25 +96,10 @@ namespace AI.Brain
             }
         }
 
-        public Vector3 DirectionToTarget
-        {
-            get
-            {
-                if (!HasTarget) return Vector3.zero;
-
-                Vector3 dir = CurrentTarget.position - transform.position;
-                dir.y = 0;
-                return dir.normalized;
-            }
-        }
 
         #endregion
 
         #region Target
-        public void ClearTarget()
-        {
-            CurrentTarget = null;
-        }
         private bool IsTargetValid(Transform target)
         {
             if (target == null) return false;
@@ -130,8 +118,8 @@ namespace AI.Brain
 
         private void SelectTarget()
         {
-            var targets = GameObject.FindGameObjectsWithTag(Tags.Enemy_Tag);
-
+            var targets = EnemyManager.Instance.Enemies;
+           
             float bestScore = float.MinValue;
             Transform best = null;
 
@@ -147,7 +135,7 @@ namespace AI.Brain
                 float distance = Vector3.Distance(transform.position, t.transform.position);
                 if (distance > m_stats.DetectionRange) continue;
 
-                float score = CalculateScore(t.transform, targetHealth, distance, myHpRatio);
+                float score = CalculateScore(t, targetHealth, distance, myHpRatio);
 
                 if (score > bestScore)
                 {
@@ -155,17 +143,28 @@ namespace AI.Brain
                     best = t.transform;
                 }
             }
+            Transform oldTarget = CurrentTarget;
 
-            CurrentTarget = best;
-            if(CurrentTarget!=null)
-            m_agent.CombatPerception.SetCurrentTarget(CurrentTarget);
+            if (oldTarget != null)
+            {
+                EnemyManager.Instance.ReleaseTarget(oldTarget);
+            }
+
+            m_agent.CombatPerception.SetCurrentTarget(best);
+
+            if (best != null)
+            {
+                EnemyManager.Instance.ClaimTarget(best);
+            }
+
+            m_agent.CombatPerception.SetCurrentTarget(best);
         }
         public void SetProfile(BotAIBrainProfileSO profile)
         {
             m_profile = profile;
         }
         private float CalculateScore(
-            Transform target,
+            Enemy target,
             HealthSubsystem targetHealth,
             float distance,
             float myHpRatio)
@@ -183,13 +182,20 @@ namespace AI.Brain
                     return distanceScore * 0.4f + targetHpScore * 0.6f;
 
                 case BotTargetingMode.SmartScore:
-                    return
+
+                    float baseScore =
                         distanceScore * m_profile.awareness +
                         targetHpScore *
                         (m_profile.intelligence +
                          m_profile.aggressiveness +
                          m_profile.greed) -
                         riskPenalty * m_profile.caution;
+
+                    int claimCount = EnemyManager.Instance.GetClaimCount(target.transform);
+                    float claimPenalty =
+                        claimCount * (1f - m_profile.greed) * 0.4f;
+
+                    return baseScore - claimPenalty;
             }
 
             return 0f;

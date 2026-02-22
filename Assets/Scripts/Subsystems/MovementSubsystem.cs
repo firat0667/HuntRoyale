@@ -15,9 +15,16 @@ namespace Subsystems
         private Dictionary<object, float> m_speedMultipliers = new();
 
         public Vector3 Velocity => m_physics.Velocity;
-        public float MaxSpeed => StatsComponent.MoveSpeed;
+        public float MaxSpeed;
         public float MoveAttackSpeedMult => StatsComponent.MoveAttackSpeedMult;
         public float CurrentSpeed { get; private set; }
+
+
+        protected virtual void OnEnable()
+        {
+            MaxSpeed=StatsComponent.MoveSpeed;
+        }
+
         public float Speed01
         {
             get

@@ -41,23 +41,32 @@ namespace Combat
                 return;
             }
 
-            if (m_index >= m_targets.Count)
+            while (m_index < m_targets.Count)
             {
-                Despawn();
+                Transform target = m_targets[m_index];
+
+                if (target == null)
+                {
+                    m_index++;
+                    continue;
+                }
+
+                // change it later its not good about performance
+                var entity = target.GetComponent<BaseEntity>();
+                if (entity == null || entity.IsDead)
+                {
+                    m_index++;
+                    continue;
+                }
+
+                Vector3 dir = target.position - transform.position;
+                dir.y = 0f;
+
+                transform.position += dir.normalized * m_speed * Time.deltaTime;
                 return;
             }
 
-            Transform target = m_targets[m_index];
-            if (target == null)
-            {
-                m_index++;
-                return;
-            }
-
-            Vector3 dir = target.position - transform.position;
-            dir.y = 0f;
-
-            transform.position += dir.normalized * m_speed * Time.deltaTime;
+            Despawn();
         }
 
         private void OnTriggerEnter(Collider other)

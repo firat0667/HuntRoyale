@@ -1,6 +1,7 @@
 using Subsystems;
 using Subsystems.Ai;
 using UnityEngine;
+using AI.Enemies;
 
 namespace States.EnemyStates
 {

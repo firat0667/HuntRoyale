@@ -2,6 +2,7 @@ using Subsystems.Ai;
 using Subsystems;
 using UnityEngine;
 using AI.Agents;
+using AI.Enemies;
 
 namespace States.AgentStates
 {
@@ -40,15 +41,23 @@ namespace States.AgentStates
                 m_agent.SM.ChangeState(m_agent.IdleState);
                 return;
             }
+            var target = m_agent.Brain.CurrentTarget;
 
-            if (!m_agent.Brain.InAttackRange)
+            if (!m_agent.Brain.InAttackRange || !m_attack.CanAttack())
             {
                 m_agent.SM.ChangeState(m_agent.ChaseState);
+                return;
             }
+
+            if (target == null)
+            {
+                m_agent.SM.ChangeState(m_agent.IdleState);
+                return;
+            }
+
             if (m_attack.TryAttack())
                 m_agent.AnimatorBridge.TriggerAttack();
 
-            Transform target = m_agent.Brain.CurrentTarget;
             Vector3 dir = target.position - m_agent.transform.position;
             dir.y = 0f;
 

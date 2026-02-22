@@ -2,6 +2,7 @@ using Subsystems;
 using Subsystems.Ai;
 using UnityEngine;
 using UnityEngine.UI;
+using AI.Enemies;
 
 
 namespace States.EnemyStates

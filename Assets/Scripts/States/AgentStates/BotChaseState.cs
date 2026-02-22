@@ -32,6 +32,7 @@ namespace States.AgentStates
         }
         public void LogicUpdate()
         {
+        
             if (m_agent.Brain.ShouldHeal)
             {
                 m_agent.SM.ChangeState(m_agent.HealState);
@@ -42,14 +43,24 @@ namespace States.AgentStates
             {
                 m_agent.SM.ChangeState(m_agent.IdleState);
                 return;
-            }
 
-            if (m_agent.Brain.InAttackRange)
+            }
+            UpdateNavigation();
+            if (m_agent.Brain.InAttackRange&& m_attack.CanAttack())
             {
                 m_agent.SM.ChangeState(m_agent.AttackState);
             }
+
         }
-        public void PhysicsUpdate()
+        private void UpdateNavigation()
+        {
+            var target = m_agent.Brain.CurrentTarget;
+
+            if (target != null)
+                m_navigation.SetTarget(target);
+        }
+
+            public void PhysicsUpdate()
         {
         }
     }

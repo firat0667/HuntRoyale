@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using FiratGames.WesternRoyale.Event;
 using Managers.VFX;
+using AI.Enemies;
+using Managers.Enemies;
 
 [System.Serializable]
 public class EnemySpawnEntry
@@ -97,6 +99,7 @@ namespace CoreScripts.ObjectPool.Spawner
 
             Enemy enemy = entry.Pool.Retrieve();
             enemy.ResetForSpawn(entry.Pool);
+            EnemyManager.Instance.EnemySpawnedSignal.Emit(enemy);
 
             enemy.transform.SetPositionAndRotation(
                 spawnPos,

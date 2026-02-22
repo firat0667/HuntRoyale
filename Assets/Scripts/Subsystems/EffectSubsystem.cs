@@ -39,6 +39,20 @@ namespace Subsystems
                 OnEffectRemoved.Emit(effect);
             }
         }
+        public void RemoveAllEffects()
+        {
+            if (m_activeEffects.Count == 0)
+                return;
+            for (int i = m_activeEffects.Count - 1; i >= 0; i--)
+            {
+                var effect = m_activeEffects[i];
+
+                effect.ForceExpire();         
+                OnEffectRemoved.Emit(effect);  
+            }
+
+            m_activeEffects.Clear();
+        }
         public override void LogicUpdate()
         {
             if (m_activeEffects.Count == 0)
