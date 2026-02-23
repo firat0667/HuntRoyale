@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 48c0d4d6bebaa934384b07aa1e2f8184, type: 3}
   category: 0
   statType: 5
-  value: 30
+  value: 10
   isPercentage: 0
   targetEffect: {fileID: 0}
   maxStack: 3
