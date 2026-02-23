@@ -418,6 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_visualRoot: {fileID: 4297639435389591208}
+  MaxSpeed: 0
 --- !u!1 &4514392419653459004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,50 +1137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d07f2dec75baa64e8abb79ee6a91421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7824469953594801683
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5592452109273631247}
-  - component: {fileID: 7540843049937572716}
-  m_Layer: 3
-  m_Name: ScoreSubsystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5592452109273631247
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7824469953594801683}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4827271760484417264}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7540843049937572716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7824469953594801683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2cb780a33503594b811eaa6676dbc61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8093928187483825468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,7 +1355,6 @@ Transform:
   - {fileID: 6314226481856199080}
   - {fileID: 6805179898462014366}
   - {fileID: 4755747597433066431}
-  - {fileID: 5592452109273631247}
   - {fileID: 6899227082574993682}
   - {fileID: 6191560814722516702}
   - {fileID: 6653090016964677790}

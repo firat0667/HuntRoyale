@@ -1,11 +1,13 @@
 using Combat.Stats.ScriptableObjects;
 using Game;
+using Managers.Leaderboard;
 using Managers.UI;
 using Managers.Upgrade;
 using States.PlayerStates;
 using Subsystems;
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Upgrades;
 
 public class Player : BaseEntity, IMovableEntity,IUpgradeable
@@ -61,6 +63,8 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
         m_experience = GetSubsystem<ExperienceSubsystem>();
         m_upgradeSubsystem = GetSubsystem<UpgradeSubsystem>();
 
+       LeaderboardManager.Instance.RegisterParticipant(this);
+        
     }
 
     protected override void Start()

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using AI.Enemies;
 using Firat0667.WesternRoyaleLib.Key;
+using Subsystems;
+using Managers.Score;
 
 namespace Managers.Enemies
 {
@@ -22,12 +24,14 @@ namespace Managers.Enemies
         {
             EnemyDiedSignal.Connect(UnregisterEnemy);
             EnemySpawnedSignal.Connect(RegisterEnemy);
+            EnemyDiedSignal.Connect(OnEnemyDied);
 
         }
         private void OnDisable()
         {
             EnemyDiedSignal.Disconnect(UnregisterEnemy);
             EnemySpawnedSignal.Disconnect(RegisterEnemy);
+            EnemyDiedSignal.Disconnect(OnEnemyDied);
         }
         public void RegisterEnemy(Enemy enemy)
         {
@@ -57,6 +61,36 @@ namespace Managers.Enemies
         public void UnregisterEnemy(Enemy enemy)
         {
             Enemies.Remove(enemy);
+        }
+
+        private void OnEnemyDied(Enemy enemy)
+        {
+            ProcessKillRewards(enemy);
+        }
+        private void ProcessKillRewards(Enemy enemy)
+        {
+            var health = enemy.GetSubsystem<HealthSubsystem>();
+            if (health.LastDamageSource == null)
+                return;
+
+            var killer = health.LastDamageSource.GetComponentInParent<BaseEntity>();
+            if (killer == null)
+                return;
+
+            var rewards = enemy.KillRewards;
+            if (rewards == null)
+                return;
+
+            var exp = killer.GetSubsystem<ExperienceSubsystem>();
+            if (exp != null)
+            {
+                var stats = killer.GetComponent<StatsComponent>();
+                int modified = stats.ModifyExp(rewards.expReward);
+                exp.AddExp(modified);
+            }
+            ScoreManager.Instance.AddScore(killer, rewards.scoreReward);
+
+            //SpawnDrops(enemy.transform.position, rewards);
         }
     }
 }

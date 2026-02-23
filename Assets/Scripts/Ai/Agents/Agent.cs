@@ -1,6 +1,7 @@
 using AI.Brain;
 using Combat;
 using Combat.Stats.ScriptableObjects;
+using Managers.Leaderboard;
 using Managers.Upgrade;
 using Pathfinding;
 using States.AgentStates;
@@ -124,6 +125,7 @@ namespace AI.Agents
         }
         protected override void OnDied()
         {
+            LeaderboardManager.Instance.UnregisterParticipant(this);
             AnimatorBridge.TriggerDead();
             m_aiPath.canMove = false;
             m_aiPath.SetPath(null);

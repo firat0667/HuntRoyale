@@ -10,6 +10,7 @@ using System.Collections;
 using UnityEngine;
 using AI.Enemies;
 using Managers.Enemies;
+using Combat.ScriptableObjects;
 
 
 namespace AI.Enemies
@@ -29,6 +30,9 @@ namespace AI.Enemies
         public AttackSubsystem Attack { get; private set; }
         public MovementSubsystem Movement { get; private set; }
         public EffectSubsystem EffectSubsystem { get; private set; }
+        public ExperienceSubsystem ExperienceSubsystem { get; private set; }
+
+
 
         #endregion
 
@@ -67,12 +71,16 @@ namespace AI.Enemies
         #region VFX
         [Header("VFX KEY")]
         [SerializeField] private EventKey m_deathVFXKey;
-
         #endregion
 
         #region Signal Handlers
 
         public BasicSignal<Enemy> OnDeath { get; private set; }
+        #endregion
+
+        #region Kill Rewards
+        [SerializeField] private KillRewardsSO m_killRewards;
+        public KillRewardsSO KillRewards => m_killRewards;
         #endregion
 
         private void OnEnable()
@@ -88,6 +96,7 @@ namespace AI.Enemies
             Attack = GetSubsystem<AttackSubsystem>();
             Movement = GetSubsystem<MovementSubsystem>();
             EffectSubsystem = GetSubsystem<EffectSubsystem>();
+            ExperienceSubsystem = GetSubsystem<ExperienceSubsystem>();
 
             m_animatorBridge = GetComponent<AnimatorBridge>();
 
@@ -163,10 +172,10 @@ namespace AI.Enemies
             Movement.Stop();
             StartCoroutine(DespawnAfterDelay(3f));
 
-
             // particle effects, sound effects, etc. can be triggered here
             // xp for who killed the enemy can be awarded here
         }
+
         protected override void CreateStates()
         {
             IdleState = new EnemyIdleState(this);

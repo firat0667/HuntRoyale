@@ -16,6 +16,7 @@ namespace Subsystems
         public int MaxHP => m_core.MaxHP;
 
         private Transform m_lastDamageSource;
+        public Transform LastDamageSource => m_lastDamageSource;
         #endregion
         #region Signals
         public BasicSignal OnDied;
@@ -90,22 +91,6 @@ namespace Subsystems
         private void HandleDeath()
         {
             OnDied.Emit();
-
-            if (m_lastDamageSource == null)
-                return;
-            var entity = m_lastDamageSource.GetComponentInParent<BaseEntity>();
-            if (entity == null)
-                return;
-
-            var exp = entity.GetSubsystem<ExperienceSubsystem>();
-            if (exp != null)
-            {
-                var expSubsystem = entity.GetSubsystem<ExperienceSubsystem>();
-                var stats = entity.GetComponent<StatsComponent>();
-
-                int modified = stats.ModifyExp(ExpReward);
-                expSubsystem.AddExp(modified);
-            }
         }
     }
 }

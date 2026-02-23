@@ -2,6 +2,7 @@ using CoreScripts.ObjectPool.Spawner;
 using Firat0667.WesternRoyaleLib.Diagnostics;
 using Firat0667.WesternRoyaleLib.Game;
 using Managers.Camera;
+using Managers.Score;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -74,6 +75,7 @@ public class GameLoopController : MonoBehaviour
     }
     public void StartMatch()
     {
+        ScoreManager.Instance.ResetAll();
         GameStateManager.Instance.SetState(GameState.Playing);
 
         SpawnPlayer();
@@ -102,6 +104,7 @@ public class GameLoopController : MonoBehaviour
     }
     public void RestartGame()
     {
+        ScoreManager.Instance.ResetAll();
         GameStateManager.Instance.SetState(GameState.Playing);
 
         // Respawn player

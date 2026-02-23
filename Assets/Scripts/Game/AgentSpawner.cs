@@ -1,5 +1,6 @@
 using AI.Brain;
 using AI.ScriptableObjects;
+using Managers.Leaderboard;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,6 +51,11 @@ namespace Game
                 Instantiate(randomPrefab, spawnPoint.position, randomRotation);
 
             AssignRandomProfile(bot);
+            var agent = bot.GetComponent<BaseEntity>();
+            if (agent != null)
+            {
+                LeaderboardManager.Instance.RegisterParticipant(agent);
+            }
         }
         private void AssignRandomProfile(GameObject bot)
         {
