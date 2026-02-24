@@ -1,5 +1,6 @@
 using AI.Brain;
 using AI.ScriptableObjects;
+using CoreScripts.Helper;
 using Managers.Leaderboard;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,8 @@ namespace Game
 
             GameObject bot =
                 Instantiate(randomPrefab, spawnPoint.position, randomRotation);
+
+            bot.name = BotNameGenerator.GetRandomName();
 
             AssignRandomProfile(bot);
             var agent = bot.GetComponent<BaseEntity>();

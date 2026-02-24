@@ -8,6 +8,7 @@ using States.AgentStates;
 using Subsystems;
 using Subsystems.Ai;
 using System.Xml;
+using TMPro;
 using UnityEngine;
 using Upgrades;
 
@@ -59,15 +60,11 @@ namespace AI.Agents
         private AIDestinationSetter m_destinationSetter;
         #endregion
 
-   
-
- 
-
         protected override void Awake()
         {
             base.Awake();
 
-            m_baseStatSO= GetComponent<StatsComponent>().BaseStats;
+            m_baseStatSO = GetComponent<StatsComponent>().BaseStats;
 
             Brain = GetComponent<BotBrain>();
             AnimatorBridge = GetComponentInChildren<AnimatorBridge>();
@@ -80,13 +77,13 @@ namespace AI.Agents
             m_experience = GetSubsystem<ExperienceSubsystem>();
             m_upgrade= GetSubsystem<UpgradeSubsystem>();
             m_aiPath = GetComponent<AIPath>();
+            Initialize();
 
-            
         }
         protected override void Start()
         {
             base.Start();
-            Initialize();
+           
             m_experience.OnLevelUp.Connect(OnLevelUp);
         }
         protected override void Update()

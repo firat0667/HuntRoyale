@@ -7,11 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TCP2_Demo_Unity_HuntRoyale_Obstacles 1
+  m_Name: TCP2_Demo_Unity_HuntRoyale 1
   m_Shader: {fileID: 4800000, guid: 5a0f72e4076ab264b945f5714a575613, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - TCP2_TANGENT_AS_NORMALS
   m_InvalidKeywords: []
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -24,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: ada4e259cde4d50469d095e99a1acc25, type: 3}
+        m_Texture: {fileID: 2800000, guid: 68805ce992c44391896061e7e9c1b40f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BlendTex1:
@@ -80,7 +81,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowColor:
-        m_Texture: {fileID: 2800000, guid: ada4e259cde4d50469d095e99a1acc25, type: 3}
+        m_Texture: {fileID: 2800000, guid: 956b49f59147498aa59dff0c107cac03, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SketchTex:
@@ -109,17 +110,17 @@ Material:
     - _Offset1: 0
     - _Offset2: 0
     - _Outline: 0.2
-    - _OutlineWidth: 0.2
+    - _OutlineWidth: 0.1
     - _Parallax: 0.02
     - _RampSmooth: 0.05
     - _RampSmoothOtherLights: 0.5
     - _RampSmoothing: 1
     - _RampSmoothingOtherLights: 0.5
-    - _RampThreshold: 0.01
+    - _RampThreshold: 0.105
     - _RampThresholdOtherLights: 0.5
     - _ReceiveShadowsOff: 1
-    - _RimMax: 1.21
-    - _RimMin: 0.67
+    - _RimMax: 1.2
+    - _RimMin: 0.66
     - _Shadow_HSV_H: 0
     - _Shadow_HSV_S: 0
     - _Shadow_HSV_V: 0
@@ -145,7 +146,7 @@ Material:
     - _OutlineColor: {r: 0.1882353, g: 0.1882353, b: 0.1882353, a: 1}
     - _OutlineColorVertex: {r: 0.18823531, g: 0.18823531, b: 0.18823531, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 0.6}
-    - _SColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
+    - _SColor: {r: 0, g: 0, b: 0, a: 1}
     - _SketchColor: {r: 1, g: 0.66809875, b: 0.6313726, a: 1}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _VColorBlendOffset: {r: 0, g: 0, b: 0, a: 0}

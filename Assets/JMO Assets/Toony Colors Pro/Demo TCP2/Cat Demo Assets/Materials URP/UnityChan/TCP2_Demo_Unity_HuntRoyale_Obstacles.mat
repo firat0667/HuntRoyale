@@ -113,13 +113,13 @@ Material:
     - _Parallax: 0.02
     - _RampSmooth: 0.05
     - _RampSmoothOtherLights: 0.5
-    - _RampSmoothing: 1
+    - _RampSmoothing: 0.05
     - _RampSmoothingOtherLights: 0.5
-    - _RampThreshold: 0.01
+    - _RampThreshold: 0.5
     - _RampThresholdOtherLights: 0.5
     - _ReceiveShadowsOff: 1
-    - _RimMax: 1.21
-    - _RimMin: 0.33
+    - _RimMax: 1
+    - _RimMin: 0.5
     - _Shadow_HSV_H: 0
     - _Shadow_HSV_S: 0
     - _Shadow_HSV_V: 0
@@ -144,8 +144,8 @@ Material:
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0.1882353, g: 0.1882353, b: 0.1882353, a: 1}
     - _OutlineColorVertex: {r: 0.18823531, g: 0.18823531, b: 0.18823531, a: 1}
-    - _RimColor: {r: 0.41568628, g: 0.50980395, b: 0.7647059, a: 0.6}
-    - _SColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
+    - _RimColor: {r: 0.4, g: 0.4, b: 0.4, a: 0.6}
+    - _SColor: {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
     - _SketchColor: {r: 1, g: 0.66809875, b: 0.6313726, a: 1}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _VColorBlendOffset: {r: 0, g: 0, b: 0, a: 0}

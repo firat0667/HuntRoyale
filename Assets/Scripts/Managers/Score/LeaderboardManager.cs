@@ -38,7 +38,8 @@ namespace Managers.Leaderboard
                     Score = ScoreManager.Instance.GetScore(p),
                     Entity = p
                 })
-                .OrderByDescending(x => x.Score)
+                .OrderBy(x => x.Entity.IsDead)              
+                .ThenByDescending(x => x.Score)           
                 .ToList();
         }
         public class LeaderboardEntry

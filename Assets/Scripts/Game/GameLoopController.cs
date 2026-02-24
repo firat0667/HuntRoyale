@@ -3,7 +3,9 @@ using Firat0667.WesternRoyaleLib.Diagnostics;
 using Firat0667.WesternRoyaleLib.Game;
 using Managers.Camera;
 using Managers.Score;
+using Managers.UI;
 using System.Collections.Generic;
+using UI.Game;
 using UnityEngine;
 
 public class GameLoopController : MonoBehaviour
@@ -18,7 +20,6 @@ public class GameLoopController : MonoBehaviour
     [SerializeField] private float m_matchDuration = 150f;
     [SerializeField] private bool m_autoStartMatch = true;
 
-    private ManualStopwatch m_matchTimer = new ManualStopwatch();
     private bool m_isMatchActive = false;
 
     private GameObject m_playerInstance;
@@ -57,20 +58,10 @@ public class GameLoopController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!m_isMatchActive)
             return;
-
-        m_matchTimer.Tick();
-        EventManager.Instance.Trigger(EventTags.EVENT_MATCH_TIME_UPDATED, m_matchTimer.Time);
-
-        if (m_matchTimer.Time >= m_matchDuration)
-        {
-            GameWin();
-            //EvaluateMatchResult();
-        }
 
     }
     public void StartMatch()
@@ -82,9 +73,10 @@ public class GameLoopController : MonoBehaviour
 
         ActiveSpawners();
 
-        m_matchTimer.RestartClock();
         m_isMatchActive = true;
 
+        // its bad for game timer to be in hud manager but for now its the easiest way to implement it, we can refactor it later
+        HUDManager.Instance.GameTimer.StartTimer(m_matchDuration);
         EventManager.Instance.Trigger(EventTags.EVENT_GAME_STARTED);
 
     }
@@ -94,13 +86,11 @@ public class GameLoopController : MonoBehaviour
             return;
         GameStateManager.Instance.SetState(GameState.Paused);
         m_isMatchActive = false;
-        m_matchTimer.StopClock();
     }
     public void ResumeGame()
     {
         GameStateManager.Instance.SetState(GameState.Playing);
         m_isMatchActive = true;
-        m_matchTimer.StartClock();
     }
     public void RestartGame()
     {
@@ -122,7 +112,6 @@ public class GameLoopController : MonoBehaviour
 
         ActiveSpawners();
 
-        m_matchTimer.RestartClock();
         m_isMatchActive = true;
 
         EventManager.Instance.Trigger(EventTags.EVENT_GAME_RESTARTED);
@@ -145,6 +134,7 @@ public class GameLoopController : MonoBehaviour
             return;
         }
         m_playerInstance = Instantiate(m_playerPrefab, m_playerSpawnPoint.position, Quaternion.identity);
+        m_playerInstance.name = NameTags.Player_Name;
         GameRegistry.Instance.Register(KeyTags.KEY_PLAYER, m_playerInstance);
         EventManager.Instance.Trigger(EventTags.EVENT_PLAYER_SPAWNED, m_playerInstance.GetComponent<Player>());
         CameraController.Instance.SetCamera(m_playerInstance.transform);
@@ -180,13 +170,12 @@ public class GameLoopController : MonoBehaviour
     }
     public void GameWin()
     {
-        if (!m_isMatchActive) return;
+        if (!m_isMatchActive) return; 
 
         m_isMatchActive = false;
-        m_matchTimer.StopClock();
 
         GameStateManager.Instance.SetState(GameState.GameWin);
-
+        HUDManager.Instance.GameTimer.StopTimer();
         DeactiveAllSpawners();
 
         EventManager.Instance.Trigger(EventTags.EVENT_GAME_WIN);
@@ -196,10 +185,9 @@ public class GameLoopController : MonoBehaviour
         if (!m_isMatchActive) return;
 
         m_isMatchActive = false;
-        m_matchTimer.StopClock();
 
         GameStateManager.Instance.SetState(GameState.GameLose);
-
+        HUDManager.Instance.GameTimer.StopTimer();
         DeactiveAllSpawners();
 
         if (m_playerInstance != null)

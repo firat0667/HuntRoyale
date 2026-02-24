@@ -64,13 +64,14 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
         m_upgradeSubsystem = GetSubsystem<UpgradeSubsystem>();
 
        LeaderboardManager.Instance.RegisterParticipant(this);
-        
+
+       Initialize();
     }
 
     protected override void Start()
     {
         base.Start();
-        Initialize();
+      
         m_experience.OnLevelUp.Connect(HandleLevelUp);
     }
     protected override void Update()

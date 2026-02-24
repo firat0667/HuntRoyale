@@ -2,6 +2,7 @@ using DG.Tweening;
 using Firat0667.WesternRoyaleLib.Patterns;
 using Game.UI;
 using Subsystems;
+using UI.Game;
 using UnityEngine;
 
 namespace Managers.UI
@@ -14,6 +15,7 @@ namespace Managers.UI
         public Joystick MovementJoyStick => m_hudView.Joystick;
         public LevelHUD LevelHUD => m_hudView.LevelHUD;
         public LevelUpPanel LevelUpPanel => m_hudView.LevelUpPanel;
+        public GameTimer GameTimer => m_hudView.GameTimer;
 
         private void OnEnable()
         {

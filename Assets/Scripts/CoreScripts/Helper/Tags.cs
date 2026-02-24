@@ -87,3 +87,7 @@ public static class PlayerPrefsTag
 {
     public static string TutorialCheck_Prefs = "Tutorial";
 }
+public static class NameTags
+{
+    public static string Player_Name = "Player";
+}

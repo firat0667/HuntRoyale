@@ -19,8 +19,8 @@ namespace UI.Leaderboard
         {
             var participants = LeaderboardManager.Instance.GetParticipants();
             var sorted = LeaderboardManager.Instance.Build(participants);
-            UpdateLeaderboard(sorted);
             ScoreManager.Instance.OnScoreChanged.Connect(OnScoreChanged);
+            UpdateLeaderboard(sorted);
         }
         private void OnDisable()
         {
@@ -44,7 +44,7 @@ namespace UI.Leaderboard
                 {
                     var row = Instantiate(m_rowPrefab, m_contentRoot);
                     m_rows.Add(id, row);
-                    row.SetName(entry.Name);
+                    row.Init(entry.Entity);
                 }
 
                 m_rows[id].SetScore(entry.Score);
