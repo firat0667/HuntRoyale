@@ -74,8 +74,7 @@ public class GameLoopController : MonoBehaviour
         ActiveSpawners();
 
         m_isMatchActive = true;
-
-        // its bad for game timer to be in hud manager but for now its the easiest way to implement it, we can refactor it later
+        // TODO: HudManager cant be accessed here because of circular dependency, need to find a way to decouple them
         HUDManager.Instance.GameTimer.StartTimer(m_matchDuration);
         EventManager.Instance.Trigger(EventTags.EVENT_GAME_STARTED);
 
@@ -174,7 +173,8 @@ public class GameLoopController : MonoBehaviour
 
         m_isMatchActive = false;
 
-        GameStateManager.Instance.SetState(GameState.GameWin);
+        GameStateManager.Instance.SetState(GameState.Finished);
+        // TODO: HudManager cant be accessed here because of circular dependency, need to find a way to decouple them
         HUDManager.Instance.GameTimer.StopTimer();
         DeactiveAllSpawners();
 
@@ -187,6 +187,7 @@ public class GameLoopController : MonoBehaviour
         m_isMatchActive = false;
 
         GameStateManager.Instance.SetState(GameState.GameLose);
+        // TODO: HudManager cant be accessed here because of circular dependency, need to find a way to decouple them
         HUDManager.Instance.GameTimer.StopTimer();
         DeactiveAllSpawners();
 

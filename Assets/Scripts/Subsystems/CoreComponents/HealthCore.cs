@@ -35,7 +35,7 @@ namespace Subsystems.CoreComponents
             OnHealthChanged.Emit(m_currentHealth, m_maxHealth);
         }
         public void ApplyDamage(int amount)
-        {
+        { 
             m_currentHealth -= amount;
             if (m_currentHealth <= 0)
             {

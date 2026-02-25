@@ -35,7 +35,7 @@ public class UIStateController : MonoBehaviour
                 m_hud.Show();
                 break;
 
-            case GameState.GameWin:
+            case GameState.Finished:
                 m_win.Show();
                 break;
 

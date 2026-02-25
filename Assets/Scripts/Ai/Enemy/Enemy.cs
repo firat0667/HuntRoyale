@@ -133,7 +133,6 @@ namespace AI.Enemies
         }
         public void ResetForSpawn(ComponentPool<Enemy> enemyPool)
         {
-            Initialize();
             healthSubsystem.ResetHealth();
             m_collider.enabled = true;
             m_aiPath.canMove = true;
@@ -155,7 +154,7 @@ namespace AI.Enemies
         }
         protected override void OnDied()
         {
-            base.OnDied();
+            base.OnDied(); 
             OnDeath.Emit(this);
             EnemyManager.Instance.EnemyDiedSignal.Emit(this);
             m_aiPath.canMove = false;

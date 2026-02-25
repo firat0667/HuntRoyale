@@ -35,7 +35,7 @@ namespace Managers.Enemies
         }
         public void RegisterEnemy(Enemy enemy)
         {
-            if (!Enemies.Contains(enemy))
+            if (!Enemies.Contains(enemy)) { }
                 Enemies.Add(enemy);
         }
         public void ClaimTarget(Transform target)

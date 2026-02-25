@@ -255,6 +255,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7044250513939243250, guid: c60e8986de2a7514baa99e75dd33421a, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8187789270459935400, guid: c60e8986de2a7514baa99e75dd33421a, type: 3}
       propertyPath: m_Name
       value: Projectile_Mage Variant

@@ -9,7 +9,7 @@ public enum GameState
     Paused,
     GameOver,
     GameLose,
-    GameWin
+    Finished
 }
 
 public class GameStateManager : FoundationSingleton<GameStateManager>, IFoundationSingleton

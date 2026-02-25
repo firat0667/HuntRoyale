@@ -6,27 +6,27 @@ namespace CoreScripts.Helper
     {
         private static readonly string[] names =
         {
-    "Dusty Bill",
-    "Slim Hank",
-    "Deadeye Joe",
-    "Lucky Pete",
-    "Crazy Cactus",
-    "Wild Buck",
-    "Whiskey Sam",
-    "Rusty Colt",
-    "Tiny Tex",
-    "Dirty Dalton",
-    "Bandit Bob",
-    "Iron Gus",
-    "Trigger Tom",
-    "Old Man Oak",
-    "Cactus Jack",
-    "One-Eyed Roy",
-    "Quickdraw Ned",
-    "Barrel Ben",
-    "Snake Ryder",
-    "Goldtooth Greg"
-        };
+    "Hank",
+    "Tex",
+    "Gus",
+    "Buck",
+    "Roy",
+    "Ned",
+    "Jack",
+    "Cole",
+    "Clint",
+    "Wade",
+    "Rex",
+    "Zane",
+    "Jett",
+    "Blaze",
+    "Dusty",
+    "Colt",
+    "Wyatt",
+    "Ryder",
+    "Boone",
+    "Cash"
+};
 
         public static string GetRandomName()
         {

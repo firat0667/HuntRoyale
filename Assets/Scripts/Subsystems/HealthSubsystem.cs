@@ -12,6 +12,7 @@ namespace Subsystems
         public int ExpReward = 5; // change this value as needed for balancing  also add xp starts to the enemy prefab
 
         private HealthCore m_core;
+        private bool m_deathHandled;
         public int CurrentHP => m_core.CurrentHP;
         public int MaxHP => m_core.MaxHP;
 

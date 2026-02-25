@@ -60,7 +60,7 @@ namespace UI.Leaderboard
                 {
                     var row = Instantiate(m_rowPrefab, m_contentRoot);
                     m_rows.Add(id, row);
-                    row.Init(entry.Entity);
+                    row.Init(entry.Name);
                     if (entry.Entity.Health != null)
                         entry.Entity.Health.OnDied.Connect(OnAnyEntityDied);
                 }

@@ -22,7 +22,7 @@ namespace Subsystems
 
         protected virtual void OnEnable()
         {
-            MaxSpeed=StatsComponent.MoveSpeed;
+            ClearAllSpeedMultipliers();
         }
 
         public float Speed01
@@ -33,7 +33,12 @@ namespace Subsystems
                 return Mathf.Clamp01(Velocity.magnitude / max);
             }
         }
-
+        public void ClearAllSpeedMultipliers()
+        {
+            m_speedMultipliers.Clear();
+            MaxSpeed = StatsComponent.MoveSpeed;
+            CurrentSpeed = StatsComponent.MoveSpeed;
+        }
         protected override void Awake()
         {
             base.Awake();

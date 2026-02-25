@@ -130,7 +130,6 @@ namespace Combat
 
             m_isReturning = false;
 
-            Initialize();
 
             if (m_owner != null)
             {

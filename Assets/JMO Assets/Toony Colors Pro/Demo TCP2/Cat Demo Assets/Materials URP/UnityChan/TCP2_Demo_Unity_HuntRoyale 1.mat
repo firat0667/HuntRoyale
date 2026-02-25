@@ -145,7 +145,7 @@ Material:
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0.1882353, g: 0.1882353, b: 0.1882353, a: 1}
     - _OutlineColorVertex: {r: 0.18823531, g: 0.18823531, b: 0.18823531, a: 1}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 0.6}
+    - _RimColor: {r: 0.5019608, g: 0.39607844, b: 0.1764706, a: 0.6}
     - _SColor: {r: 0, g: 0, b: 0, a: 1}
     - _SketchColor: {r: 1, g: 0.66809875, b: 0.6313726, a: 1}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

@@ -30,7 +30,7 @@ public abstract class BaseEntity : MonoBehaviour
         
     }
 
-    protected void Initialize()
+    private void Initialize()
     {
         healthSubsystem = GetSubsystem<HealthSubsystem>();
         effectSubsystem = GetSubsystem<EffectSubsystem>();
@@ -41,7 +41,6 @@ public abstract class BaseEntity : MonoBehaviour
 
     protected virtual void Start()
     {
-        Initialize();
         CreateStates();
         SM.ChangeState(GetEntryState());
     }

@@ -15,7 +15,10 @@ namespace UI.Leaderboard
         private Color m_nameOriginalColor;
         private Color m_scoreOriginalColor;
         private Color m_bgOriginalColor;
-
+        private void OnEnable()
+        {
+            transform.localScale = Vector3.one;
+        }
         private void Awake()
         {
             m_nameOriginalColor = m_nameText.color;
@@ -23,10 +26,9 @@ namespace UI.Leaderboard
             if (m_background != null) m_bgOriginalColor = m_background.color;
         }
 
-        public void Init(BaseEntity entity)
+        public void Init(string name)
         {
-            m_entity = entity;
-            m_nameText.text = entity.name;
+            m_nameText.text = name;
         }
 
         public void OnEntityDied()
