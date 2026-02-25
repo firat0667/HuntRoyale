@@ -49,10 +49,6 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
 
     #endregion
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-    }
     protected override void Awake()
     {
         base.Awake();
@@ -73,7 +69,8 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
 
     protected override void Start()
     {
-        base.Start();
+        base.Start(); 
+        Initialize();
         m_experience.OnLevelUp.Connect(HandleLevelUp);
     }
     protected override void Update()
@@ -93,10 +90,10 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
 
     protected override void OnDied()
     {
-        base.OnDied();
+        base.OnDied(); 
+        m_animatorBridge.TriggerDead();
         EventManager.Instance.Trigger(EventTags.EVENT_PLAYER_DIED);
         m_movement.Stop();
-        m_animatorBridge.TriggerDead();
         if (m_experience != null)
             m_experience.OnLevelUp.Disconnect(HandleLevelUp);
 

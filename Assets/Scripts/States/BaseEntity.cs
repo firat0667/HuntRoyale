@@ -17,11 +17,6 @@ public abstract class BaseEntity : MonoBehaviour
                       && healthSubsystem.IsDead;
     public HealthSubsystem Health => healthSubsystem;
 
-
-    protected virtual void OnEnable()
-    {
-        Initialize();
-    }
   
     protected virtual void Awake()
     {
@@ -30,7 +25,7 @@ public abstract class BaseEntity : MonoBehaviour
         
     }
 
-    private void Initialize()
+    protected void Initialize()
     {
         healthSubsystem = GetSubsystem<HealthSubsystem>();
         effectSubsystem = GetSubsystem<EffectSubsystem>();

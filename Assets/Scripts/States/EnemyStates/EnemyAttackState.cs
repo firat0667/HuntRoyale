@@ -24,10 +24,12 @@ namespace States.EnemyStates
         public void Enter()
         {
             m_navigation.Stop();
+            
         }
 
         public void Exit()
         {
+            m_attack.Perception.ClearTarget();
         }
 
         public void LogicUpdate()

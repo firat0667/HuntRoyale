@@ -17,11 +17,6 @@ namespace Managers.Leaderboard
                 m_participants.Add(entity);
         }
 
-        public void UnregisterParticipant(BaseEntity entity)
-        {
-            m_participants.Remove(entity);
-        }
-
         public List<BaseEntity> GetParticipants()
         {
             return m_participants;

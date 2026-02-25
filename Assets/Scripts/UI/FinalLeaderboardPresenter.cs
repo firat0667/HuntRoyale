@@ -11,7 +11,7 @@ namespace UI.Leaderboard
 
         private readonly List<LeaderboardRow> m_rows = new();
 
-        private void OnEnable()
+        private void Start()
         {
             Build();
         }

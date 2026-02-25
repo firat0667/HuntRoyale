@@ -133,6 +133,7 @@ namespace AI.Enemies
         }
         public void ResetForSpawn(ComponentPool<Enemy> enemyPool)
         {
+            Initialize();
             healthSubsystem.ResetHealth();
             m_collider.enabled = true;
             m_aiPath.canMove = true;
@@ -166,9 +167,6 @@ namespace AI.Enemies
             m_animatorBridge.TriggerDead();
             Movement.Stop();
             StartCoroutine(DespawnAfterDelay(3f));
-
-            // particle effects, sound effects, etc. can be triggered here
-            // xp for who killed the enemy can be awarded here
         }
 
         protected override void CreateStates()

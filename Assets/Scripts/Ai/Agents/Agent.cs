@@ -7,8 +7,7 @@ using Pathfinding;
 using States.AgentStates;
 using Subsystems;
 using Subsystems.Ai;
-using System.Xml;
-using TMPro;
+using UnityEditor;
 using UnityEngine;
 using Upgrades;
 
@@ -59,11 +58,6 @@ namespace AI.Agents
         private AIPath m_aiPath;
         private AIDestinationSetter m_destinationSetter;
         #endregion
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-        }
         protected override void Awake()
         {
             base.Awake();
@@ -84,8 +78,8 @@ namespace AI.Agents
         }
         protected override void Start()
         {
-            base.Start();
-           
+            base.Start(); 
+            Initialize();
             m_experience.OnLevelUp.Connect(OnLevelUp);
         }
         protected override void Update()
@@ -125,7 +119,6 @@ namespace AI.Agents
         protected override void OnDied()
         {
             base.OnDied();
-            LeaderboardManager.Instance.UnregisterParticipant(this);
             AnimatorBridge.TriggerDead();
             m_aiPath.canMove = false;
             m_aiPath.SetPath(null);

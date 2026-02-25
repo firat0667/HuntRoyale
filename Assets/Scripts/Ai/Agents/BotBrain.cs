@@ -150,8 +150,6 @@ namespace AI.Brain
                 EnemyManager.Instance.ReleaseTarget(oldTarget);
             }
 
-            m_agent.CombatPerception.SetCurrentTarget(best);
-
             if (best != null)
             {
                 EnemyManager.Instance.ClaimTarget(best);

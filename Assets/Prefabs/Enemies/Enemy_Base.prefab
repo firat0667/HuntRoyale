@@ -170,13 +170,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec2815c04ece0448bb3e4ad8a78d4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_scanOnStart: 1
   m_targetLayer:
     serializedVersion: 2
     m_Bits: 136
   m_obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
-  m_scanInterval: 0.15
+  m_scanInterval: 0.35
   m_followInterval: 3
 --- !u!136 &4088254522143655321
 CapsuleCollider:
@@ -214,6 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_deathVFXKey: {fileID: 11400000, guid: cf2e089628a47994cafe0395b731c5fa, type: 2}
+  m_killRewards: {fileID: 0}
 --- !u!114 &1609756722349831372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,6 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_visualRoot: {fileID: 5140422621813453498}
+  MaxSpeed: 0
 --- !u!1 &3463119181276465971
 GameObject:
   m_ObjectHideFlags: 0
