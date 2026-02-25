@@ -22,11 +22,27 @@ namespace UI.Leaderboard
             ScoreManager.Instance.OnScoreChanged.Connect(OnScoreChanged);
             UpdateLeaderboard(sorted);
         }
+
+        private void OnAnyEntityDied()
+        {
+            var participants = LeaderboardManager.Instance.GetParticipants();
+            var sorted = LeaderboardManager.Instance.Build(participants);
+            UpdateLeaderboard(sorted);
+        }
         private void OnDisable()
         {
             if (ScoreManager.Instance != null)
                 ScoreManager.Instance.OnScoreChanged.Disconnect(OnScoreChanged);
+
+            var participants = LeaderboardManager.Instance.GetParticipants();
+
+            foreach (var p in participants)
+            {
+                if (p.Health != null)
+                    p.Health.OnDied.Disconnect(OnAnyEntityDied);
+            }
         }
+    
         private void OnScoreChanged(int id, int score)
         {
             var participants = LeaderboardManager.Instance.GetParticipants();
@@ -45,9 +61,16 @@ namespace UI.Leaderboard
                     var row = Instantiate(m_rowPrefab, m_contentRoot);
                     m_rows.Add(id, row);
                     row.Init(entry.Entity);
+                    if (entry.Entity.Health != null)
+                        entry.Entity.Health.OnDied.Connect(OnAnyEntityDied);
                 }
 
-                m_rows[id].SetScore(entry.Score);
+                var currentRow = m_rows[id];
+                currentRow.SetScore(entry.Score);
+                if (entry.Entity.IsDead)
+                    currentRow.OnEntityDied();
+                else
+                    currentRow.SetAliveStyleBackToOriginal();
             }
 
             AnimateReorder(entries);

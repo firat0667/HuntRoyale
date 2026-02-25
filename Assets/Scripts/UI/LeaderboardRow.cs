@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Subsystems; // HealthSubsystem için
 
 namespace UI.Leaderboard
 {
@@ -28,18 +27,9 @@ namespace UI.Leaderboard
         {
             m_entity = entity;
             m_nameText.text = entity.name;
-
-            if (m_entity.Health != null)
-                m_entity.Health.OnDied.Connect(OnEntityDied);
         }
 
-        private void OnDisable()
-        {
-            if (m_entity != null && m_entity.Health != null)
-                m_entity.Health.OnDied.Disconnect(OnEntityDied);
-        }
-
-        private void OnEntityDied()
+        public void OnEntityDied()
         {
             SetDeadStyle();
         }

@@ -187,15 +187,32 @@ namespace AI.Brain
                         distanceScore * m_profile.awareness +
                         targetHpScore *
                         (m_profile.intelligence +
-                         m_profile.aggressiveness +
-                         m_profile.greed) -
+                         m_profile.aggressiveness) -
                         riskPenalty * m_profile.caution;
+
+                    float rewardWeight = m_profile.greed;
+
+                    float rewardScore = 0f;
+
+                    if (target.KillRewards != null)
+                    {
+                        var rewards = target.KillRewards;
+
+                        rewardScore += rewards.expReward * 0.02f;
+                        rewardScore += rewards.scoreReward * 0.01f;
+
+                        float starChanceTotal = 0f;
+                        foreach (var entry in rewards.killRewardEntries)
+                            starChanceTotal += entry.spawnChance;
+
+                        rewardScore += starChanceTotal * 2f;
+                    }
 
                     int claimCount = EnemyManager.Instance.GetClaimCount(target.transform);
                     float claimPenalty =
                         claimCount * (1f - m_profile.greed) * 0.4f;
 
-                    return baseScore - claimPenalty;
+                    return baseScore + rewardScore * rewardWeight - claimPenalty;
             }
 
             return 0f;

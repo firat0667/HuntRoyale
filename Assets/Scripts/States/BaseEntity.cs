@@ -12,8 +12,16 @@ public abstract class BaseEntity : MonoBehaviour
     protected EffectSubsystem effectSubsystem;
 
     public StateMachine SM { get; protected set; }
-    public bool IsDead => healthSubsystem.IsDead;
+    public bool IsDead => healthSubsystem != null
+                      && healthSubsystem.MaxHP > 0
+                      && healthSubsystem.IsDead;
     public HealthSubsystem Health => healthSubsystem;
+
+
+    protected virtual void OnEnable()
+    {
+        Initialize();
+    }
   
     protected virtual void Awake()
     {
@@ -33,6 +41,7 @@ public abstract class BaseEntity : MonoBehaviour
 
     protected virtual void Start()
     {
+        Initialize();
         CreateStates();
         SM.ChangeState(GetEntryState());
     }

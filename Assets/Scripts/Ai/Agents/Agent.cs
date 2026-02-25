@@ -60,6 +60,10 @@ namespace AI.Agents
         private AIDestinationSetter m_destinationSetter;
         #endregion
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+        }
         protected override void Awake()
         {
             base.Awake();
@@ -77,8 +81,6 @@ namespace AI.Agents
             m_experience = GetSubsystem<ExperienceSubsystem>();
             m_upgrade= GetSubsystem<UpgradeSubsystem>();
             m_aiPath = GetComponent<AIPath>();
-            Initialize();
-
         }
         protected override void Start()
         {
@@ -122,6 +124,7 @@ namespace AI.Agents
         }
         protected override void OnDied()
         {
+            base.OnDied();
             LeaderboardManager.Instance.UnregisterParticipant(this);
             AnimatorBridge.TriggerDead();
             m_aiPath.canMove = false;

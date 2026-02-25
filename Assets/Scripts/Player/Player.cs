@@ -49,7 +49,10 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
 
     #endregion
 
-
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -65,13 +68,12 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
 
        LeaderboardManager.Instance.RegisterParticipant(this);
 
-       Initialize();
+      
     }
 
     protected override void Start()
     {
         base.Start();
-      
         m_experience.OnLevelUp.Connect(HandleLevelUp);
     }
     protected override void Update()

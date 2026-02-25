@@ -28,8 +28,6 @@ namespace Managers.Leaderboard
         }
         public List<LeaderboardEntry> Build(List<BaseEntity> participants)
         {
-            if (participants == null) return new List<LeaderboardEntry>();
-
             return participants
                 .Where(p => p != null)
                 .Select(p => new LeaderboardEntry
@@ -38,8 +36,8 @@ namespace Managers.Leaderboard
                     Score = ScoreManager.Instance.GetScore(p),
                     Entity = p
                 })
-                .OrderBy(x => x.Entity.IsDead)              
-                .ThenByDescending(x => x.Score)           
+                .OrderBy(x => x.Entity.IsDead ? 1 : 0) 
+                .ThenByDescending(x => x.Score)
                 .ToList();
         }
         public class LeaderboardEntry

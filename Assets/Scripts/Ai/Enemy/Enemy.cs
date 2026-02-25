@@ -83,11 +83,6 @@ namespace AI.Enemies
         public KillRewardsSO KillRewards => m_killRewards;
         #endregion
 
-        private void OnEnable()
-        {
-            Initialize();
-        }
-
         protected override void Awake()
         {
             base.Awake();
@@ -138,6 +133,7 @@ namespace AI.Enemies
         }
         public void ResetForSpawn(ComponentPool<Enemy> enemyPool)
         {
+            Initialize();
             healthSubsystem.ResetHealth();
             m_collider.enabled = true;
             m_aiPath.canMove = true;
