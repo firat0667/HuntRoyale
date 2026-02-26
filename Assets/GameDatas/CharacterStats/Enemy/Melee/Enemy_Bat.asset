@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Enemy_Bat
   m_EditorClassIdentifier: 
   attackType: 0
-  maxHP: 100
+  maxHP: 75
   attackStartRange: 4
   attackHitRange: 6
-  projectileStats: {fileID: 0}
-  summonStats: {fileID: 0}
   attackDamage: 7
   attackRate: 1
   attackAngle: 60
   detectionRange: 15
+  projectileStats: {fileID: 0}
+  summonStats: {fileID: 0}
   moveSpeed: 5
   moveAttackSpeedMult: 0
   rotationSpeed: 270

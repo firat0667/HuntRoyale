@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_EvilMage
   m_EditorClassIdentifier: 
   attackType: 1
-  maxHP: 100
+  maxHP: 80
   attackStartRange: 0
   attackHitRange: 0
   attackDamage: 15

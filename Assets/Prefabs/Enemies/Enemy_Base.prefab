@@ -179,7 +179,7 @@ MonoBehaviour:
     m_Bits: 256
   m_scanInterval: 0.35
   m_followInterval: 3
-  m_aggroDuration: 3
+  m_aggroDuration: 2
 --- !u!136 &4088254522143655321
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -362,7 +362,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1

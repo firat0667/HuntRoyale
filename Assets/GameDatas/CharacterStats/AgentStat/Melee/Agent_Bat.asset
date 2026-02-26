@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Agent_Bat
   m_EditorClassIdentifier: 
   attackType: 0
-  maxHP: 100
+  maxHP: 75
   attackStartRange: 4
   attackHitRange: 6
   attackDamage: 15

@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Enemy_NagaWizard
   m_EditorClassIdentifier: 
   attackType: 2
-  maxHP: 100
+  maxHP: 90
   attackStartRange: 0
   attackHitRange: 0
-  projectileStats: {fileID: 11400000, guid: 00c33154db21ba7419500608f7663382, type: 2}
-  summonStats: {fileID: 11400000, guid: c59d07d22b3d4014092cb7bd1b08d1a1, type: 2}
   attackDamage: 10
   attackRate: 0.5
   attackAngle: 30
   detectionRange: 30
+  projectileStats: {fileID: 11400000, guid: 00c33154db21ba7419500608f7663382, type: 2}
+  summonStats: {fileID: 11400000, guid: c59d07d22b3d4014092cb7bd1b08d1a1, type: 2}
   moveSpeed: 5
   moveAttackSpeedMult: 0.7
   rotationSpeed: 360

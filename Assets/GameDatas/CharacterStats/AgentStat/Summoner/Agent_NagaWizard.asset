@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Agent_NagaWizard
   m_EditorClassIdentifier: 
   attackType: 2
-  maxHP: 100
+  maxHP: 90
   attackStartRange: 0
   attackHitRange: 0
   attackDamage: 15
