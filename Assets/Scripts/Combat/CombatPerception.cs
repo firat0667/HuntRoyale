@@ -1,5 +1,7 @@
 using Firat0667.WesternRoyaleLib.Key;
 using Game;
+using Subsystems;
+using Unity.Hierarchy;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -7,19 +9,23 @@ namespace Combat
 {
     public class CombatPerception : MonoBehaviour
     {
-
         [SerializeField] private bool m_scanOnStart = true;
+
         [SerializeField] private LayerMask m_targetLayer;
         [SerializeField] private LayerMask m_obstacleLayer;
+
+
         [SerializeField] private float m_scanInterval = 0.15f;
         [SerializeField] private float m_followInterval = 3.0f;
-
-
+        [SerializeField] private float m_aggroDuration = 1.5f;
 
         private StatsComponent m_stats;
         private float m_scanTimer;
         private float m_followTimer;
 
+        private Transform m_recentAttacker;
+        private float m_aggroTimer;
+   
         private float m_currentDetectionRange;
         private float m_defaultDetectionRange => m_stats.DetectionRange;
 
@@ -38,8 +44,15 @@ namespace Combat
             m_scanTimer = Random.Range(0f, m_scanInterval);
             m_followTimer = m_followInterval;
             m_currentDetectionRange = m_defaultDetectionRange;
+            m_aggroTimer = 0;
         }
-
+        public void OnDamaged(Transform attacker)
+        {
+            if(m_aggroTimer>0)
+                return;
+            m_recentAttacker = attacker;
+            m_aggroTimer = m_aggroDuration;
+        }
         private void Update()
         {
             m_followTimer -= Time.deltaTime;
@@ -47,6 +60,11 @@ namespace Combat
             {
                 m_currentDetectionRange = m_defaultDetectionRange;
             }
+
+            if (m_aggroTimer > 0f)
+                m_aggroTimer -= Time.deltaTime;
+            else
+                m_recentAttacker = null;
 
             m_scanTimer -= Time.deltaTime;
             if (m_scanTimer <= 0f)
@@ -89,6 +107,14 @@ namespace Combat
 
         private void Scan()
         {
+            if (m_recentAttacker != null)
+            {
+                SetCurrentTarget(m_recentAttacker);
+                CurrentTargetSqrDistance =
+                    (m_recentAttacker.position - transform.position).sqrMagnitude;
+
+                return;
+            }
             float scanRange = Mathf.Max(m_stats.EffectiveAttackRange, m_currentDetectionRange);
             float scanRangeSqr = scanRange * scanRange;
 
@@ -135,6 +161,10 @@ namespace Combat
                     bestTarget = hit.transform;
                 }
             }
+            // TODO: Change it later to make it more robust. For example,
+            // if the recent attacker is still valid but not the best target,
+            // it should still be the current target instead of switching to the best target.
+  
             if (m_scanOnStart)
             {
                 if (bestTarget != null && bestTarget != CurrentTarget)
@@ -147,10 +177,9 @@ namespace Combat
                     CurrentTarget = bestTarget;
                 }
             }
-   
             CurrentTargetSqrDistance = bestTarget != null
-                ? (bestTarget.position - transform.position).sqrMagnitude
-                : float.MaxValue;
+             ? (bestTarget.position - transform.position).sqrMagnitude
+             : float.MaxValue;
         }
         public bool HasClearLineOfSight(Transform target)
         {

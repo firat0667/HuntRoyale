@@ -179,6 +179,7 @@ MonoBehaviour:
     m_Bits: 256
   m_scanInterval: 0.35
   m_followInterval: 3
+  m_aggroDuration: 3
 --- !u!136 &4088254522143655321
 CapsuleCollider:
   m_ObjectHideFlags: 0

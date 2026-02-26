@@ -11,6 +11,7 @@ using UnityEngine;
 using AI.Enemies;
 using Managers.Enemies;
 using Combat.ScriptableObjects;
+using Combat;
 
 
 namespace AI.Enemies
@@ -66,6 +67,9 @@ namespace AI.Enemies
 
         private ComponentPool<Enemy> m_ownerPool;
         private Collider m_collider;
+
+        private CombatPerception m_perception;
+
         #endregion
 
         #region VFX
@@ -100,6 +104,8 @@ namespace AI.Enemies
             m_destinationSetter = GetComponent<AIDestinationSetter>();
             m_collider = GetComponent<Collider>();
 
+            m_perception = GetComponent<CombatPerception>();
+
         }
         protected override void Start()
         {
@@ -128,8 +134,7 @@ namespace AI.Enemies
             if (source == null)
                 return;
 
-            Attack.Perception.SetCurrentTarget(source);
-
+            m_perception.OnDamaged(source);
         }
         public void ResetForSpawn(ComponentPool<Enemy> enemyPool)
         {

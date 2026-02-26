@@ -12,6 +12,8 @@ namespace Subsystems
 {
     public class AttackSubsystem : Subsystem, IAttackContext
     {
+
+        #region Core Components
         private AttackCore m_core;
 
         private MeleeAttackCore m_meleeCore;
@@ -19,22 +21,24 @@ namespace Subsystems
         private RangedAttackCore m_rangedCore;
 
         private SummonAttackCore m_summonCore;
-
+        #endregion
 
         private float m_nextAttackTime;
-
         public bool IsTargetInAttackRange { get; private set; }
 
         private CombatPerception m_perception;
         public CombatPerception Perception => m_perception;
+        #region Properties
         public StatsComponent Stats => StatsComponent;
-        public Transform OwnerTransform => transform;
+        public Transform OwnerTransform => OwnerEntity != null ? 
+         OwnerEntity.transform : transform.root;
         public Transform CurrentTarget => m_perception.CurrentTarget;
         public BaseEntity OwnerEntity => GetComponentInParent<BaseEntity>();
         public float AttackStartRange => StatsComponent.AttackStartRange;
         public float AttackAngle => StatsComponent.AttackAngle;
         public float attackHitRange => StatsComponent.AttackHitRange;   
         public float DetectRange => StatsComponent.DetectionRange;
+        #endregion
 
         public float EffectiveAttackRange { get; private set; }
         protected override void Awake()

@@ -16,7 +16,7 @@ MonoBehaviour:
   maxHP: 100
   attackStartRange: 4
   attackHitRange: 6
-  attackDamage: 25
+  attackDamage: 15
   attackRate: 1
   attackAngle: 60
   detectionRange: 200

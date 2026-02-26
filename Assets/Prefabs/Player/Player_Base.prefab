@@ -880,6 +880,8 @@ MonoBehaviour:
     m_Bits: 768
   m_scanInterval: 0.15
   m_followInterval: 3
+  m_revengeBonus: 25
+  m_revengeWindow: 1.5
 --- !u!136 &197991073106699518
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -910,10 +912,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6750284031784131631}
-  serializedVersion: 5
+  serializedVersion: 4
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Drag: 0
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1497,7 +1499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8934360189242262259, guid: 242c9c29ace936e4f9a77c7013c29423, type: 3}
       propertyPath: m_FontData.m_FontSize
-      value: 33
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -32,7 +32,6 @@ namespace Subsystems
         public bool IsDead => CurrentHP <= 0;
 
         #region Heal Zone
-
         private bool m_healable  = true;
         private bool m_inHealZone;
         public bool IsHealable => CurrentHP<MaxHP && m_inHealZone && m_healable ;
@@ -67,6 +66,7 @@ namespace Subsystems
         public void TakeDamage(int amount, Transform source)
         {
             Debug.Log($"{transform.parent.parent.name} took {amount} damage. current health{CurrentHP} ");
+            Debug.Log($"[DMG] {name} source={(source ? source.name : "NULL")} amount={amount}");
             m_lastDamageSource = source;
             m_core.ApplyDamage(amount);
             OnDamaged.Emit(source);

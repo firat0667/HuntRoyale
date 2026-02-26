@@ -63,7 +63,6 @@ namespace AI.Agents
             base.Awake();
 
             m_baseStatSO = GetComponent<StatsComponent>().BaseStats;
-
             Brain = GetComponent<BotBrain>();
             AnimatorBridge = GetComponentInChildren<AnimatorBridge>();
             

@@ -16,11 +16,14 @@ MonoBehaviour:
   maxHP: 100
   attackStartRange: 3
   attackHitRange: 5
-  projectileStats: {fileID: 0}
-  attackDamage: 25
+  attackDamage: 15
   attackRate: 1
   attackAngle: 60
   detectionRange: 0
+  projectileStats: {fileID: 0}
+  summonStats: {fileID: 0}
   moveSpeed: 5
   moveAttackSpeedMult: 0.7
   rotationSpeed: 9
+  onHitEffects: []
+  selfEffects: []
