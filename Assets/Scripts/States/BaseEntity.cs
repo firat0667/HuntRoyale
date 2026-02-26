@@ -15,9 +15,18 @@ public abstract class BaseEntity : MonoBehaviour
     public bool IsDead => healthSubsystem != null
                       && healthSubsystem.MaxHP > 0
                       && healthSubsystem.IsDead;
-    public HealthSubsystem Health => healthSubsystem;
+    public HealthSubsystem Health
+    {
+        get
+        {
+            if (healthSubsystem == null)
+                healthSubsystem = GetComponentInChildren<HealthSubsystem>();
 
-  
+            return healthSubsystem;
+        }
+    }
+
+
     protected virtual void Awake()
     {
         SM = new StateMachine();

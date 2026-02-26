@@ -38,8 +38,11 @@ namespace UI.Leaderboard
 
             foreach (var p in participants)
             {
-                if (p.Health != null)
-                    p.Health.OnDied.Disconnect(OnAnyEntityDied);
+                if (p == null) continue;       
+                var health = p.Health;            
+                if (health == null) continue;
+
+                health.OnDied?.Disconnect(OnAnyEntityDied);
             }
         }
     
