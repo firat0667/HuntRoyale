@@ -1,6 +1,7 @@
 using CoreScripts.ObjectPool.Spawner;
 using Firat0667.WesternRoyaleLib.Diagnostics;
 using Firat0667.WesternRoyaleLib.Game;
+using Game;
 using Managers.Camera;
 using Managers.Score;
 using Managers.UI;
@@ -35,6 +36,7 @@ public class GameLoopController : MonoBehaviour
 
         // add all spawners in the scene to the list
         m_spawners.AddRange(FindObjectsOfType<EnemySpawnArea>(true));
+
 
         //when player dead trigger game over
         EventManager.Instance.Subscribe(EventTags.EVENT_PLAYER_DIED, OnPlayerDied);

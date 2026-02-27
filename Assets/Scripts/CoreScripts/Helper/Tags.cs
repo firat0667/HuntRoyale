@@ -86,6 +86,7 @@ public static class GameRegistryTags
 public static class PlayerPrefsTag
 {
     public static string TutorialCheck_Prefs = "Tutorial";
+    public static string Gold_Prefs = "Gold";
 }
 public static class NameTags
 {
