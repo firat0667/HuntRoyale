@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Combat.ScriptableObjects.KillRewardsSO
   scoreReward: 3
   expReward: 3
-  killRewardEntries: []
+  killRewardEntries:
+  - starPrefab: {fileID: 0}
+    spawnChance: 0

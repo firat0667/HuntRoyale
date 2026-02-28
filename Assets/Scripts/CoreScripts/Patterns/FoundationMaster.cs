@@ -28,7 +28,7 @@ namespace Firat0667.WesternRoyaleLib.Patterns
             else
             {
                 _instance = this;
-                //DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
             }
 
             if (_findAllSingletonsAtAwake)

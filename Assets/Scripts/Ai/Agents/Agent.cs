@@ -132,7 +132,6 @@ namespace AI.Agents
             AttackState = new BotAttackState(this);
             HealState = new BotHealState(this);
         }
-
         protected override IState GetEntryState()
         {
             return IdleState;

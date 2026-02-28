@@ -28,7 +28,7 @@ namespace Firat0667.WesternRoyaleLib.Game
         /// </summary>
         public void Register<T>(string key, T obj, bool isPersistent = false)
         {
-            GameKey regKey = new GameKey(key); // GameKey kullanılıyor
+            GameKey regKey = new GameKey(key); 
             if (_registry.ContainsKey(regKey))
             {
                 Debug.LogWarning($"[GameRegistry] {key} is already registered!");
@@ -50,7 +50,7 @@ namespace Firat0667.WesternRoyaleLib.Game
         /// </summary>
         public T Get<T>(string key)
         {
-            GameKey regKey = new GameKey(key); // GameKey kullanılıyor
+            GameKey regKey = new GameKey(key); 
             if (_registry.TryGetValue(regKey, out object obj))
             {
                 Debug.Log($"[GameRegistry] {key} successfully retrieved!");
@@ -67,7 +67,7 @@ namespace Firat0667.WesternRoyaleLib.Game
         /// </summary>
         public void Unregister(string key)
         {
-            GameKey regKey = new GameKey(key); // GameKey kullanılıyor
+            GameKey regKey = new GameKey(key); 
             if (_registry.ContainsKey(regKey))
             {
                 _registry.Remove(regKey);

@@ -35,7 +35,7 @@ namespace Managers.Enemies
         }
         public void RegisterEnemy(Enemy enemy)
         {
-            if (!Enemies.Contains(enemy)) { }
+            if (!Enemies.Contains(enemy))
                 Enemies.Add(enemy);
         }
         public void ClaimTarget(Transform target)
@@ -67,6 +67,7 @@ namespace Managers.Enemies
         {
             ProcessKillRewards(enemy);
         }
+        // TODO: kill rewards shouldnt be here change it later 
         private void ProcessKillRewards(Enemy enemy)
         {
             var health = enemy.GetSubsystem<HealthSubsystem>();
@@ -88,6 +89,7 @@ namespace Managers.Enemies
                 int modified = stats.ModifyExp(rewards.expReward);
                 exp.AddExp(modified);
             }
+            // TODO: that code is not that good for SRP We should chance it later 
             ScoreManager.Instance.AddScore(killer, rewards.scoreReward);
 
             //SpawnDrops(enemy.transform.position, rewards);

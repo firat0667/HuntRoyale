@@ -25,8 +25,6 @@ public abstract class BaseEntity : MonoBehaviour
             return healthSubsystem;
         }
     }
-
-
     protected virtual void Awake()
     {
         SM = new StateMachine();
@@ -94,7 +92,6 @@ public abstract class BaseEntity : MonoBehaviour
     protected virtual void OnDied() { }
     protected abstract void CreateStates();
     protected abstract IState GetEntryState();
-
     public T GetSubsystem<T>() where T : Subsystem
     {
         return subsystems.OfType<T>().FirstOrDefault();

@@ -12,7 +12,7 @@ public class UIStateController : MonoBehaviour
     private void Start()
     {
         GameStateManager.Instance.OnStateChanged.Connect(HandleGameState);
-        HandleGameState(GameStateManager.Instance.GetCurrentState());
+        //HandleGameState(GameStateManager.Instance.GetCurrentState());
     }
     private void OnDisable()
     {

@@ -25,6 +25,6 @@ MonoBehaviour:
   moveSpeed: 5
   moveAttackSpeedMult: 0
   rotationSpeed: 360
-  onHitEffects: []
-  selfEffects:
+  onHitEffects:
   - {fileID: 11400000, guid: 8ad93c0e9ebc60c4eaa4bf030a8f69ff, type: 2}
+  selfEffects: []

@@ -10,15 +10,6 @@ namespace Managers.Camera
 
         [SerializeField] private CinemachineCamera m_playerCamera;
 
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
         public void SetCamera(Transform target)
         {
             m_playerCamera.Follow = target;

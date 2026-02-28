@@ -49,7 +49,7 @@ public class GameLoopController : MonoBehaviour
     {
         if(m_autoStartMatch)
         {
-            StartMatch();
+            //StartMatch();
         }
     }
     private void OnDestroy()
