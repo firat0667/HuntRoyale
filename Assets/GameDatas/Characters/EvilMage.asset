@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299dd9a4382a23947900f11c62e81d81, type: 3}
+  m_Name: EvilMage
+  m_EditorClassIdentifier: 
+  characterName: EvilMage
+  gameplayPrefab: {fileID: 6496050491397982029, guid: 846d9b31923dfba46ac5688c1845b9d2, type: 3}
+  menuPreviewPrefab: {fileID: 7584730342945540222, guid: 8d1f9f99cbbcc6a4ea1d5457379811ab, type: 3}
+  baseStats: {fileID: 11400000, guid: 6bcdb70105fa6cd43b3d9155ecb49173, type: 2}
+  unlockCost: 150
+  isDefaultUnlocked: 0

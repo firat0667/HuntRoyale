@@ -1,3 +1,4 @@
+using Firat0667.WesternRoyaleLib.Key;
 using Firat0667.WesternRoyaleLib.Patterns;
 using UnityEngine;
 
@@ -13,23 +14,32 @@ namespace Managers.Game
         public int CurrentGold => m_currentGold;
 
         public Transform HealZone { get; private set; }
-
         private string KEY_GOLD => PlayerPrefsTag.Gold_Prefs;
+
+        public BasicSignal<int> GoldChanged { get; private set; }
+
 
         private void Awake()
         {
             GameObject zone = GameObject.FindGameObjectWithTag(Tags.HealZone_Tag);
             if (zone != null)
                 HealZone = zone.transform;
-
+            GoldChanged = new BasicSignal<int>();
             LoadGold(); 
         }
-
-        public void AddGold(int amount)
+        private void Update()
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                AddGold(100);
+            }
+        }
+        private void AddGold(int amount)
         {
             if (amount <= 0) return;
 
             m_currentGold += amount;
+            GoldChanged.Emit(m_currentGold);
             SaveGold();
         }
 
@@ -40,6 +50,7 @@ namespace Managers.Game
 
             m_currentGold -= amount;
             SaveGold();
+            GoldChanged.Emit(m_currentGold);
             return true;
         }
 
@@ -52,6 +63,7 @@ namespace Managers.Game
         public void LoadGold()
         {
             m_currentGold = PlayerPrefs.GetInt(KEY_GOLD, m_startGold);
+            GoldChanged.Emit(m_currentGold);
         }
         public void ResetGold()
         {
