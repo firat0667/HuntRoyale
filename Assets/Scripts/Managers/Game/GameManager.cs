@@ -24,8 +24,13 @@ namespace Managers.Game
             GameObject zone = GameObject.FindGameObjectWithTag(Tags.HealZone_Tag);
             if (zone != null)
                 HealZone = zone.transform;
+
             GoldChanged = new BasicSignal<int>();
-            LoadGold(); 
+
+        }
+        private void Start()
+        {
+            LoadGold();
         }
         private void Update()
         {
@@ -34,12 +39,11 @@ namespace Managers.Game
                 AddGold(100);
             }
         }
-        private void AddGold(int amount)
+        public void AddGold(int amount)
         {
             if (amount <= 0) return;
 
             m_currentGold += amount;
-            GoldChanged.Emit(m_currentGold);
             SaveGold();
         }
 
@@ -50,19 +54,18 @@ namespace Managers.Game
 
             m_currentGold -= amount;
             SaveGold();
-            GoldChanged.Emit(m_currentGold);
             return true;
         }
 
         public void SaveGold()
         {
-            PlayerPrefs.SetInt(KEY_GOLD, m_currentGold);
-            PlayerPrefs.Save();
+            GoldChanged.Emit(m_currentGold);
+            SaveManager.Instance.Save(KEY_GOLD, m_currentGold);
         }
 
         public void LoadGold()
         {
-            m_currentGold = PlayerPrefs.GetInt(KEY_GOLD, m_startGold);
+            m_currentGold = SaveManager.Instance.Load<int>(KEY_GOLD);
             GoldChanged.Emit(m_currentGold);
         }
         public void ResetGold()

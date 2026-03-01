@@ -2,6 +2,7 @@ using CoreScripts.ObjectPool.Spawner;
 using Firat0667.WesternRoyaleLib.Diagnostics;
 using Firat0667.WesternRoyaleLib.Game;
 using Game;
+using Helper.MatchResults;
 using Managers.Camera;
 using Managers.Score;
 using Managers.UI;
@@ -14,7 +15,7 @@ public class GameLoopController : MonoBehaviour
 
     [Header("Player Settings")]
 
-    [SerializeField] private GameObject m_playerPrefab;
+     private GameObject m_playerPrefab;
     [SerializeField] private Transform m_playerSpawnPoint;
 
     [Header("Match Settings")]
@@ -26,7 +27,8 @@ public class GameLoopController : MonoBehaviour
     private GameObject m_playerInstance;
 
     private readonly List<EnemySpawnArea> m_spawners = new List<EnemySpawnArea>();
-
+    private MatchResultService m_resultService = new MatchResultService();
+    public MatchResult LastMatchResult { get; private set; }
 
 
     private void Awake()
@@ -49,7 +51,7 @@ public class GameLoopController : MonoBehaviour
     {
         if(m_autoStartMatch)
         {
-            //StartMatch();
+           StartMatch();
         }
     }
     private void OnDestroy()
@@ -65,6 +67,10 @@ public class GameLoopController : MonoBehaviour
         if (!m_isMatchActive)
             return;
 
+    }
+    public void SetPlayerPrefab(GameObject prefab)
+    {
+        m_playerPrefab = prefab;
     }
     public void StartMatch()
     {
@@ -174,7 +180,9 @@ public class GameLoopController : MonoBehaviour
         if (!m_isMatchActive) return; 
 
         m_isMatchActive = false;
-
+        MatchResult result = m_resultService.Evaluate();
+        LastMatchResult = result;
+        EventManager.Instance.Trigger(EventTags.EVENT_MATCH_RESULT, result);
         GameStateManager.Instance.SetState(GameState.Finished);
         // TODO: HudManager cant be accessed here because of circular dependency, need to find a way to decouple them
         HUDManager.Instance.GameTimer.StopTimer();
@@ -188,15 +196,16 @@ public class GameLoopController : MonoBehaviour
 
         m_isMatchActive = false;
 
+        MatchResult result = m_resultService.Evaluate();
+        LastMatchResult = result;
+        EventManager.Instance.Trigger(EventTags.EVENT_MATCH_RESULT, result);
+
         GameStateManager.Instance.SetState(GameState.GameLose);
-        // TODO: HudManager cant be accessed here because of circular dependency, need to find a way to decouple them
         HUDManager.Instance.GameTimer.StopTimer();
         DeactiveAllSpawners();
 
         if (m_playerInstance != null)
             m_playerInstance.SetActive(false);
-
-        EventManager.Instance.Trigger(EventTags.EVENT_GAME_LOSE);
     }
 
 

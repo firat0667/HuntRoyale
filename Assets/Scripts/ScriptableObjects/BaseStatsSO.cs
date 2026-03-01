@@ -36,6 +36,6 @@ namespace Combat.Stats.ScriptableObjects
     {
         Melee,
         Ranged,
-        Summon
+        Summoner
     }
 }

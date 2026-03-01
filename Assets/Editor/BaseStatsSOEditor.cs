@@ -120,7 +120,7 @@ public class BaseStatsSOEditor : Editor
 
             EditorGUILayout.PropertyField(projectileStats);
         }
-        else if (type == AttackType.Summon)
+        else if (type == AttackType.Summoner)
         {
             EditorGUILayout.LabelField("Summon Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(summonStats);

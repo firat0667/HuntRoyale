@@ -1,6 +1,7 @@
 using Firat0667.WesternRoyaleLib.Key;
 using Firat0667.WesternRoyaleLib.Patterns;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Managers.Score
@@ -80,9 +81,10 @@ namespace Managers.Score
                 });
             }
 
-            list.Sort((a, b) => b.Score.CompareTo(a.Score));
-
-            return list;
+            return list
+                .OrderBy(x => x.IsDead ? 1 : 0)
+                .ThenByDescending(x => x.Score)
+                .ToList();
         }
         public int GetScore(BaseEntity entity)
         {
@@ -91,6 +93,19 @@ namespace Managers.Score
             int id = entity.GetInstanceID();
             _scores.TryGetValue(id, out int score);
             return score;
+        }
+        public int GetPlayerRank(BaseEntity player)
+        {
+            var ranking = GetRanking();
+            int playerId = player.GetInstanceID();
+
+            for (int i = 0; i < ranking.Count; i++)
+            {
+                if (ranking[i].Id == playerId)
+                    return i + 1;
+            }
+
+            return -1;
         }
     }
 }

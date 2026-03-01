@@ -65,7 +65,7 @@ namespace Subsystems
                     m_core = m_rangedCore;
                     break;
 
-                case AttackType.Summon:
+                case AttackType.Summoner:
                     m_core = m_summonCore;
                     break;
             }

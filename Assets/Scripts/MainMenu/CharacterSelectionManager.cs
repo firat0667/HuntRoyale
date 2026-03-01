@@ -20,8 +20,9 @@ namespace MainMenu.CharacterSelection
         [SerializeField] private Image m_actionButtonImage;
         #endregion
 
-        private const string KEY_UNLOCKED = "unlocked_characters";
+        private static string KEY_UNLOCKED = PlayerPrefsTag.UnlockedCharacters_Prefs;
         private List<int> m_unlockedIndexes = new();
+        private int m_selectedIndex = 0;
 
         private List<GameObject> spawnedPreviews = new();
         private int currentIndex = 0;
@@ -31,7 +32,13 @@ namespace MainMenu.CharacterSelection
             m_unlockedIndexes = SaveManager.Instance.LoadList<int>(KEY_UNLOCKED);
 
             if (!m_unlockedIndexes.Contains(0))
+            {
                 m_unlockedIndexes.Add(0);
+                SaveManager.Instance.SaveList(KEY_UNLOCKED, m_unlockedIndexes);
+            }
+
+            m_selectedIndex = SaveManager.Instance.Load<int>(PlayerPrefsTag.SelectedCharacter_Prefs);
+            currentIndex = m_selectedIndex;
 
             SpawnAllPreviews();
             ActivateCharacter(currentIndex);
@@ -82,32 +89,32 @@ namespace MainMenu.CharacterSelection
             UpdateInfoPanel(m_characters[index]);
             UpdateButtonState(m_characters[index]);
         }
+        public CharacterDataSO GetSelectedCharacter()
+        {
+            return m_characters[m_selectedIndex];
+        }
         public void OnActionButtonPressed()
         {
             var data = m_characters[currentIndex];
             bool isUnlocked = m_unlockedIndexes.Contains(currentIndex);
 
-            if (isUnlocked)
+            if (!isUnlocked)
             {
-                SaveManager.Instance.Save("selected_character", currentIndex);
+                if (!GameManager.Instance.TrySpendGold(data.unlockCost))
+                    return;
+
+                m_unlockedIndexes.Add(currentIndex);
+                SaveManager.Instance.SaveList(KEY_UNLOCKED, m_unlockedIndexes);
             }
-            else
-            {
-                if (GameManager.Instance.TrySpendGold(data.unlockCost))
-                {
-                    m_unlockedIndexes.Add(currentIndex);
-                    SaveManager.Instance.SaveList(KEY_UNLOCKED, m_unlockedIndexes);
-                    SaveManager.Instance.Save("selected_character", currentIndex);
-                }
-            }
+            m_selectedIndex = currentIndex;
+            SaveManager.Instance.Save(PlayerPrefsTag.SelectedCharacter_Prefs, m_selectedIndex);
 
             ActivateCharacter(currentIndex);
         }
         private void UpdateButtonState(CharacterDataSO data)
         {
             bool isUnlocked = m_unlockedIndexes.Contains(currentIndex);
-            int selectedIndex = SaveManager.Instance.Load<int>("selected_character");
-            bool isSelected = selectedIndex == currentIndex;
+            bool isSelected = m_selectedIndex == currentIndex;
 
             int gold = GameManager.Instance.CurrentGold;
 
@@ -156,7 +163,7 @@ namespace MainMenu.CharacterSelection
                     range = stats.projectileStats.range;
                     break;
 
-                case AttackType.Summon:
+                case AttackType.Summoner:
                     range = stats.summonStats.spawnRange;
                     break;
 

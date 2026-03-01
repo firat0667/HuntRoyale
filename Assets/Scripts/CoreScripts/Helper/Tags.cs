@@ -65,7 +65,7 @@ public static class EventTags
     public static string EVENT_GAME_STARTED = "GameStarted";
     public static string EVENT_GAME_RESTARTED = "GameRestarted";
     public static string EVENT_MATCH_TIME_UPDATED = "MatchTimeUpdated";
-
+    public const string EVENT_MATCH_RESULT = "EVENT_MATCH_RESULT";
 }
 
 public static class GameRegistryTags
@@ -87,6 +87,8 @@ public static class PlayerPrefsTag
 {
     public static string TutorialCheck_Prefs = "Tutorial";
     public static string Gold_Prefs = "Gold";
+    public static string SelectedCharacter_Prefs = "selected_character";
+    public static string UnlockedCharacters_Prefs = "unlocked_characters";
 }
 public static class NameTags
 {

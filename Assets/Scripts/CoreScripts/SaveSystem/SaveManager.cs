@@ -175,19 +175,22 @@ public class SaveData : ISerializationCallbackReceiver
     public struct Entry { public string key; public string value; }
 
     [SerializeField] private List<Entry> entries = new List<Entry>();
-
     private Dictionary<string, string> map = new Dictionary<string, string>();
+
+    [System.Serializable]
+    private class Box<T> { public T value; }
 
     public void StoreData<T>(string key, T data)
     {
-        string json = JsonUtility.ToJson(data);
+        string json = JsonUtility.ToJson(new Box<T> { value = data }); 
         map[key] = json;
     }
 
     public T RetrieveData<T>(string key)
     {
         if (!map.TryGetValue(key, out var json)) return default;
-        return JsonUtility.FromJson<T>(json);
+        var box = JsonUtility.FromJson<Box<T>>(json); 
+        return box != null ? box.value : default;
     }
 
     public bool HasKey(string key) => map.ContainsKey(key);

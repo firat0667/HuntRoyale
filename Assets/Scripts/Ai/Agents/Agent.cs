@@ -7,6 +7,7 @@ using Pathfinding;
 using States.AgentStates;
 using Subsystems;
 using Subsystems.Ai;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using Upgrades;
@@ -123,7 +124,7 @@ namespace AI.Agents
             m_aiPath.SetPath(null);
             m_destinationSetter.target = null;
             Movement.Stop();
-            Destroy(gameObject, 3f);
+            StartCoroutine(IwaitAfterDead(3));
         }
         protected override void CreateStates()
         {
@@ -131,6 +132,11 @@ namespace AI.Agents
             ChaseState = new BotChaseState(this);
             AttackState = new BotAttackState(this);
             HealState = new BotHealState(this);
+        }
+        IEnumerator IwaitAfterDead(float timer)
+        {
+            yield return new WaitForSeconds(timer);
+            gameObject.SetActive(false);
         }
         protected override IState GetEntryState()
         {

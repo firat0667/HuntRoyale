@@ -91,6 +91,7 @@ namespace UI.Leaderboard
 
                 int oldIndex = m_previousIndexes.ContainsKey(id) ? m_previousIndexes[id] : i;
                 int newIndex = i;
+                rect.DOKill(true);
                 rect.DOAnchorPos(targetPos, 0.45f)
                     .SetEase(Ease.InOutCubic);
 

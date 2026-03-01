@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Managers.Score;
+using Managers.Leaderboard;
 
 namespace UI.Leaderboard
 {
@@ -11,7 +12,7 @@ namespace UI.Leaderboard
 
         private readonly List<LeaderboardRow> m_rows = new();
 
-        private void Start()
+        private void OnEnable()
         {
             Build();
         }
@@ -33,7 +34,7 @@ namespace UI.Leaderboard
                 else
                     row.SetAliveStyleBackToOriginal();
 
-                m_rows.Add(row); 
+                m_rows.Add(row);
             }
         }
 

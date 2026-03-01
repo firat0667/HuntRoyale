@@ -66,7 +66,7 @@ namespace Managers.Upgrade
                     return baseStats.attackType == AttackType.Ranged;
 
                 case UpgradeCategory.Summon:
-                    return baseStats.attackType == AttackType.Summon;
+                    return baseStats.attackType == AttackType.Summoner;
 
                 case UpgradeCategory.Effect:
                     return (baseStats.onHitEffects != null &&

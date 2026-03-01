@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c5a83ee222144944a1c22614c9f5f40, type: 3}
   m_Name: Berseker_Percent
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 48c0d4d6bebaa934384b07aa1e2f8184, type: 3}
+  icon: {fileID: 21300000, guid: cbdf90b0737d041c397576ec7a3bcf6a, type: 3}
   category: 4
   statType: 12
   value: 50

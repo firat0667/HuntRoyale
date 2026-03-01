@@ -14,6 +14,7 @@ public class UIStateController : MonoBehaviour
         GameStateManager.Instance.OnStateChanged.Connect(HandleGameState);
         HandleGameState(GameStateManager.Instance.GetCurrentState());
     }
+
     private void OnDisable()
     {
         GameStateManager.Instance.OnStateChanged.Disconnect(HandleGameState);

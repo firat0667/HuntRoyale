@@ -65,7 +65,7 @@ public class StatsComponent : MonoBehaviour
                 case AttackType.Ranged:
                     return ProjectileRange;
 
-                case AttackType.Summon:
+                case AttackType.Summoner:
                     return SummonAttackRange;
 
                 default:
