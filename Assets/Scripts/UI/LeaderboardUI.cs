@@ -15,18 +15,22 @@ namespace UI.Leaderboard
         private Dictionary<int, LeaderboardRow> m_rows = new();
         private Dictionary<int, int> m_previousIndexes = new();
 
-        private void Start()
+        private void OnEnable()
         {
             ScoreManager.Instance.OnScoreChanged.Connect(OnScoreChanged);
+            EventManager.Instance.Subscribe(EventTags.EVENT_PARTICIPANT_REGISTERED, OnParticipantRegistered);
             Refresh();
         }
 
         private void OnDisable()
         {
-            if (ScoreManager.Instance != null)
-                ScoreManager.Instance.OnScoreChanged.Disconnect(OnScoreChanged);
+            ScoreManager.Instance.OnScoreChanged.Disconnect(OnScoreChanged);
+            EventManager.Instance.Unsubscribe(EventTags.EVENT_PARTICIPANT_REGISTERED, OnParticipantRegistered);
         }
-
+        private void OnParticipantRegistered(object _)
+        {
+            Refresh();
+        }
         private void OnScoreChanged(int id, int score)
         {
             Refresh();

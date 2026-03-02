@@ -4,6 +4,7 @@ using Firat0667.WesternRoyaleLib.Game;
 using Game;
 using Helper.MatchResults;
 using Managers.Camera;
+using Managers.Leaderboard;
 using Managers.Score;
 using Managers.UI;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ public class GameLoopController : MonoBehaviour
     private GameObject m_playerInstance;
 
     private readonly List<EnemySpawnArea> m_spawners = new List<EnemySpawnArea>();
+    private AgentSpawner m_agentSpawner;
     private MatchResultService m_resultService = new MatchResultService();
     public MatchResult LastMatchResult { get; private set; }
 
@@ -35,7 +37,8 @@ public class GameLoopController : MonoBehaviour
     {
         // save game loop controller reference
         GameRegistry.Instance.Register(KeyTags.KEY_GAME_LOOP_CONTROLLER, this);
-
+        m_agentSpawner=FindAnyObjectByType<AgentSpawner>();
+        m_agentSpawner.gameObject.SetActive(false);
         // add all spawners in the scene to the list
         m_spawners.AddRange(FindObjectsOfType<EnemySpawnArea>(true));
 
@@ -77,8 +80,9 @@ public class GameLoopController : MonoBehaviour
         ScoreManager.Instance.ResetAll();
         GameStateManager.Instance.SetState(GameState.Playing);
 
+   
+        m_agentSpawner.gameObject.SetActive(true);
         SpawnPlayer();
-
         ActiveSpawners();
 
         m_isMatchActive = true;
@@ -145,6 +149,7 @@ public class GameLoopController : MonoBehaviour
         GameRegistry.Instance.Register(KeyTags.KEY_PLAYER, m_playerInstance);
         EventManager.Instance.Trigger(EventTags.EVENT_PLAYER_SPAWNED, m_playerInstance.GetComponent<Player>());
         CameraController.Instance.SetCamera(m_playerInstance.transform);
+        LeaderboardManager.Instance.RegisterParticipant(m_playerInstance.GetComponent<BaseEntity>());
     }
     private void ActiveSpawners()
     {

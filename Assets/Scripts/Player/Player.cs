@@ -62,10 +62,6 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
 
         m_experience = GetSubsystem<ExperienceSubsystem>();
         m_upgradeSubsystem = GetSubsystem<UpgradeSubsystem>();
-
-       LeaderboardManager.Instance.RegisterParticipant(this);
-
-      
     }
 
     protected override void Start()

@@ -5,6 +5,7 @@ using Managers.Leaderboard;
 using Managers.Score;
 using Managers.Upgrade;
 using Pathfinding;
+using Pathfinding.RVO.Sampled;
 using States.AgentStates;
 using Subsystems;
 using Subsystems.Ai;

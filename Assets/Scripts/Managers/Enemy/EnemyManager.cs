@@ -25,13 +25,18 @@ namespace Managers.Enemies
             EnemyDiedSignal.Connect(UnregisterEnemy);
             EnemySpawnedSignal.Connect(RegisterEnemy);
             EnemyDiedSignal.Connect(OnEnemyDied);
-
+        
+        }
+        private void Start()
+        {
+            GameStateManager.Instance.OnStateChanged.Connect(HandleStateChange);
         }
         private void OnDisable()
         {
             EnemyDiedSignal.Disconnect(UnregisterEnemy);
             EnemySpawnedSignal.Disconnect(RegisterEnemy);
             EnemyDiedSignal.Disconnect(OnEnemyDied);
+            GameStateManager.Instance.OnStateChanged.Disconnect(HandleStateChange);
         }
         public void RegisterEnemy(Enemy enemy)
         {
@@ -53,6 +58,11 @@ namespace Managers.Enemies
 
             if (m_targetClaims[target] <= 0)
                 m_targetClaims.Remove(target);
+        }
+        private void HandleStateChange(GameState newState)
+        {
+            if (newState !=GameState.Playing)
+                DespawnAllEnemies();
         }
         public int GetClaimCount(Transform target)
         {
@@ -93,6 +103,29 @@ namespace Managers.Enemies
             ScoreManager.Instance.AddScore(killer, rewards.scoreReward);
 
             //SpawnDrops(enemy.transform.position, rewards);
+        }
+        public void DespawnAllEnemies()
+        {
+            for (int i = Enemies.Count - 1; i >= 0; i--)
+            {
+                var enemy = Enemies[i];
+
+                if (enemy == null) continue;
+
+                // Eðer düzgün ölüm sistemi varsa
+                var health = enemy.GetSubsystem<HealthSubsystem>();
+                if (health != null && !health.IsDead)
+                {
+                    health.ForceKill(); 
+                }
+                else
+                {
+                    Destroy(enemy.gameObject);
+                }
+            }
+
+            Enemies.Clear();
+            m_targetClaims.Clear();
         }
     }
 }

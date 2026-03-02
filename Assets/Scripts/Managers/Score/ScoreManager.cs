@@ -31,6 +31,7 @@ namespace Managers.Score
         public void AddScore(BaseEntity entity, int amount)
         {
             if (GameStateManager.Instance.GetCurrentState() != GameState.Playing) return;
+
             if (entity == null) return;
 
             EnsureEntry(entity);

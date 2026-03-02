@@ -2,6 +2,7 @@ using AI.Brain;
 using AI.ScriptableObjects;
 using CoreScripts.Helper;
 using Managers.Leaderboard;
+using Managers.Score;
 using System.Collections.Generic;
 using UnityEngine;
 

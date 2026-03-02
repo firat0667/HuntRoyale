@@ -66,6 +66,7 @@ public static class EventTags
     public static string EVENT_GAME_RESTARTED = "GameRestarted";
     public static string EVENT_MATCH_TIME_UPDATED = "MatchTimeUpdated";
     public const string EVENT_MATCH_RESULT = "EVENT_MATCH_RESULT";
+    public const string EVENT_PARTICIPANT_REGISTERED = "EVENT_PARTICIPANT_REGISTERED";
 }
 
 public static class GameRegistryTags

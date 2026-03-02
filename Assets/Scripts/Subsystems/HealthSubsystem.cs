@@ -82,6 +82,12 @@ namespace Subsystems
             Debug.Log($"{transform.parent.parent.name} healed {amount} health. current health{CurrentHP} ");
             DamagePopupPool.Instance.Spawn(amount, transform.position,true);
         }
+        public void ForceKill()
+        {
+            if (IsDead) return;
+
+           TakeDamage(MaxHP*2,null); 
+        }
         public void SetHealable(bool value)
         {
             m_healable = value;

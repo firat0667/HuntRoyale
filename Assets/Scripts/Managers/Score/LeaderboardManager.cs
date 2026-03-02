@@ -19,6 +19,7 @@ namespace Managers.Leaderboard
                 m_participants.Add(entity);
 
             ScoreManager.Instance.RegisterParticipant(entity);
+            EventManager.Instance.Trigger(EventTags.EVENT_PARTICIPANT_REGISTERED);
         }
 
         public List<BaseEntity> GetParticipants()
