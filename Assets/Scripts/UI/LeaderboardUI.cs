@@ -1,7 +1,7 @@
 using DG.Tweening;
-using Managers.Leaderboard;
 using Managers.Score;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace UI.Leaderboard
@@ -17,73 +17,80 @@ namespace UI.Leaderboard
 
         private void Start()
         {
-            var participants = LeaderboardManager.Instance.GetParticipants();
-            var sorted = LeaderboardManager.Instance.Build(participants);
             ScoreManager.Instance.OnScoreChanged.Connect(OnScoreChanged);
-            UpdateLeaderboard(sorted);
+            Refresh();
         }
 
-        private void OnAnyEntityDied()
-        {
-            var participants = LeaderboardManager.Instance.GetParticipants();
-            var sorted = LeaderboardManager.Instance.Build(participants);
-            UpdateLeaderboard(sorted);
-        }
         private void OnDisable()
         {
             if (ScoreManager.Instance != null)
                 ScoreManager.Instance.OnScoreChanged.Disconnect(OnScoreChanged);
-
-            var participants = LeaderboardManager.Instance.GetParticipants();
-
-            foreach (var p in participants)
-            {
-                if (p == null) continue;       
-                var health = p.Health;            
-                if (health == null) continue;
-
-                health.OnDied?.Disconnect(OnAnyEntityDied);
-            }
         }
-    
+
         private void OnScoreChanged(int id, int score)
         {
-            var participants = LeaderboardManager.Instance.GetParticipants();
-            var sorted = LeaderboardManager.Instance.Build(participants);
-            UpdateLeaderboard(sorted);
+            Refresh();
         }
-        public void UpdateLeaderboard(List<LeaderboardManager.LeaderboardEntry> entries)
+
+        private void Refresh()
         {
+            var ranking = ScoreManager.Instance.GetRanking();
+            UpdateFromRanking(ranking);
+        }
+
+        private void UpdateFromRanking(List<ScoreManager.RankingEntry> entries)
+        {
+            var validIds = new HashSet<int>(entries.Select(e => e.Id));
+            var keysToRemove = new List<int>();
+
+            foreach (var kvp in m_rows)
+            {
+                if (!validIds.Contains(kvp.Key))
+                {
+                    Destroy(kvp.Value.gameObject);
+                    keysToRemove.Add(kvp.Key);
+                }
+            }
+
+            foreach (var key in keysToRemove)
+            {
+                m_rows.Remove(key);
+                m_previousIndexes.Remove(key);
+            }
+
             for (int i = 0; i < entries.Count; i++)
             {
                 var entry = entries[i];
-                int id = entry.Entity.GetInstanceID();
+                int id = entry.Id;
 
                 if (!m_rows.ContainsKey(id))
                 {
                     var row = Instantiate(m_rowPrefab, m_contentRoot);
                     m_rows.Add(id, row);
                     row.Init(entry.Name);
-                    if (entry.Entity.Health != null)
-                        entry.Entity.Health.OnDied.Connect(OnAnyEntityDied);
                 }
 
                 var currentRow = m_rows[id];
                 currentRow.SetScore(entry.Score);
-                if (entry.Entity.IsDead)
+
+                if (entry.IsDead)
                     currentRow.OnEntityDied();
                 else
                     currentRow.SetAliveStyleBackToOriginal();
             }
 
-            AnimateReorder(entries);
+            AnimateReorder(entries.Select(e => e.Id).ToList());
         }
 
-        private void AnimateReorder(List<LeaderboardManager.LeaderboardEntry> entries)
+        private void AnimateReorder(List<int> orderedIds)
         {
-            for (int i = 0; i < entries.Count; i++)
+            for (int i = 0; i < orderedIds.Count; i++)
             {
-                int id = entries[i].Entity.GetInstanceID();
+                int id = orderedIds[i];
+
+                if (!m_rows.ContainsKey(id))
+                    continue;
+
                 var row = m_rows[id];
                 var rect = row.GetComponent<RectTransform>();
 
@@ -91,21 +98,21 @@ namespace UI.Leaderboard
 
                 int oldIndex = m_previousIndexes.ContainsKey(id) ? m_previousIndexes[id] : i;
                 int newIndex = i;
+
                 rect.DOKill(true);
-                rect.DOAnchorPos(targetPos, 0.45f)
-                    .SetEase(Ease.InOutCubic);
+                rect.DOAnchorPos(targetPos, 0.45f).SetEase(Ease.InOutCubic);
 
                 if (newIndex < oldIndex)
                 {
-                    Sequence seq = DOTween.Sequence();
-                    seq.Append(rect.DOPunchScale(Vector3.one * 0.12f, 0.25f, 1, 0.4f));
-                    seq.Join(rect.DOPunchAnchorPos(Vector2.up * 15f, 0.3f, 1, 0.5f));
+                    DOTween.Sequence()
+                        .Append(rect.DOPunchScale(Vector3.one * 0.12f, 0.25f, 1, 0.4f))
+                        .Join(rect.DOPunchAnchorPos(Vector2.up * 15f, 0.3f, 1, 0.5f));
                 }
                 else if (newIndex > oldIndex)
                 {
-                    Sequence seq = DOTween.Sequence();
-                    seq.Append(rect.DOScale(0.92f, 0.15f));
-                    seq.Append(rect.DOScale(1f, 0.2f));
+                    DOTween.Sequence()
+                        .Append(rect.DOScale(0.92f, 0.15f))
+                        .Append(rect.DOScale(1f, 0.2f));
                 }
 
                 m_previousIndexes[id] = newIndex;

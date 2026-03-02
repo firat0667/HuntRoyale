@@ -2,6 +2,7 @@ using AI.Brain;
 using Combat;
 using Combat.Stats.ScriptableObjects;
 using Managers.Leaderboard;
+using Managers.Score;
 using Managers.Upgrade;
 using Pathfinding;
 using States.AgentStates;
@@ -124,6 +125,7 @@ namespace AI.Agents
             m_aiPath.SetPath(null);
             m_destinationSetter.target = null;
             Movement.Stop();
+            ScoreManager.Instance.MarkDead(this);
             StartCoroutine(IwaitAfterDead(3));
         }
         protected override void CreateStates()

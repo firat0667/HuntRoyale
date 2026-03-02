@@ -15567,8 +15567,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1656059010}
-  - component: {fileID: 1656059012}
   - component: {fileID: 1656059011}
+  - component: {fileID: 1656059012}
   m_Layer: 5
   m_Name: List
   m_TagString: Untagged
@@ -15630,11 +15630,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1656059009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dcbbc48297d3d540ba62257adaff1ec, type: 3}
+  m_Script: {fileID: 11500000, guid: d1cf9987282a69c46a4140883ef1b3c5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  m_content: {fileID: 1656059010}
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Leaderboard.LeaderboardUI
+  m_contentRoot: {fileID: 1656059010}
   m_rowPrefab: {fileID: 781704852421318540, guid: bb8144e1f2ae75747921478723c50a31, type: 3}
+  rowHeight: 70
 --- !u!1001 &1667985020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16494,8 +16495,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1802544346}
-  - component: {fileID: 1802544347}
   - component: {fileID: 1802544348}
+  - component: {fileID: 1802544349}
   m_Layer: 5
   m_Name: List
   m_TagString: Untagged
@@ -16522,20 +16523,6 @@ RectTransform:
   m_AnchoredPosition: {x: -400, y: 200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1802544347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802544345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dcbbc48297d3d540ba62257adaff1ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_content: {fileID: 1802544346}
-  m_rowPrefab: {fileID: 781704852421318540, guid: bb8144e1f2ae75747921478723c50a31, type: 3}
 --- !u!114 &1802544348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16562,6 +16549,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1802544349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802544345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1cf9987282a69c46a4140883ef1b3c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Leaderboard.LeaderboardUI
+  m_contentRoot: {fileID: 1802544346}
+  m_rowPrefab: {fileID: 781704852421318540, guid: bb8144e1f2ae75747921478723c50a31, type: 3}
+  rowHeight: 70
 --- !u!1 &1806492552
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,12 +11,17 @@ namespace Helper.MatchResults
 
         public MatchResult Evaluate()
         {
-            var player = GameRegistry.Instance
-                .Get<GameObject>(KeyTags.KEY_PLAYER)
-                .GetComponent<BaseEntity>();
-            int playerRank = ScoreManager.Instance.GetPlayerRank(player);
-            int reward = 0;
+            var playerGO = GameRegistry.Instance.Get<GameObject>(KeyTags.KEY_PLAYER);
+            if (playerGO == null)
+                return new MatchResult(-1, 0);
 
+            var player = playerGO.GetComponent<BaseEntity>();
+            if (player == null)
+                return new MatchResult(-1, 0);
+
+            int playerRank = ScoreManager.Instance.GetPlayerRank(player);
+
+            int reward = 0;
             if (playerRank > 0 && playerRank <= rewardTable.Length)
                 reward = rewardTable[playerRank - 1];
 

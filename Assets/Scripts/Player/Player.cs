@@ -1,6 +1,7 @@
 using Combat.Stats.ScriptableObjects;
 using Game;
 using Managers.Leaderboard;
+using Managers.Score;
 using Managers.UI;
 using Managers.Upgrade;
 using States.PlayerStates;
@@ -96,6 +97,7 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
         m_movement.Stop();
         if (m_experience != null)
             m_experience.OnLevelUp.Disconnect(HandleLevelUp);
+        ScoreManager.Instance.MarkDead(this);
 
 
     }

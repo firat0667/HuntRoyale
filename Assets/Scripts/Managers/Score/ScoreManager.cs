@@ -30,13 +30,12 @@ namespace Managers.Score
 
         public void AddScore(BaseEntity entity, int amount)
         {
+            if (GameStateManager.Instance.GetCurrentState() != GameState.Playing) return;
             if (entity == null) return;
 
+            EnsureEntry(entity);
+
             int id = entity.GetInstanceID();
-
-            _names[id] = entity.name;
-            _deadStates[id] = entity.IsDead;
-
             _scores.TryGetValue(id, out int current);
             current += Mathf.Max(0, amount);
             _scores[id] = current;
@@ -47,6 +46,8 @@ namespace Managers.Score
         public void MarkDead(BaseEntity entity)
         {
             if (entity == null) return;
+
+            EnsureEntry(entity);
 
             int id = entity.GetInstanceID();
             _deadStates[id] = true;
@@ -62,15 +63,15 @@ namespace Managers.Score
 
         public List<RankingEntry> GetRanking()
         {
-            var list = new List<RankingEntry>(_scores.Count);
+            var list = new List<RankingEntry>(_names.Count);
 
-            foreach (var kv in _scores)
+            foreach (var kv in _names)
             {
                 int id = kv.Key;
-                int score = kv.Value;
+                string name = kv.Value;
 
-                _names.TryGetValue(id, out var name);
-                _deadStates.TryGetValue(id, out var dead);
+                _scores.TryGetValue(id, out int score);
+                _deadStates.TryGetValue(id, out bool dead);
 
                 list.Add(new RankingEntry
                 {
@@ -80,11 +81,29 @@ namespace Managers.Score
                     IsDead = dead
                 });
             }
-
             return list
                 .OrderBy(x => x.IsDead ? 1 : 0)
                 .ThenByDescending(x => x.Score)
                 .ToList();
+        }
+        public void RegisterParticipant(BaseEntity entity)
+        {
+            if (entity == null) return;
+
+            int id = entity.GetInstanceID();
+
+            _names[id] = entity.name;
+
+            if (!_scores.ContainsKey(id))
+                _scores[id] = 0;
+            if (!_deadStates.ContainsKey(id))
+                _deadStates[id] = entity.IsDead;
+        }
+
+        private void EnsureEntry(BaseEntity entity)
+        {
+            if (entity == null) return;
+            RegisterParticipant(entity);
         }
         public int GetScore(BaseEntity entity)
         {

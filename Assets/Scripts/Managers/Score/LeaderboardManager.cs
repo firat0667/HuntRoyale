@@ -13,8 +13,12 @@ namespace Managers.Leaderboard
 
         public void RegisterParticipant(BaseEntity entity)
         {
+            if (entity == null) return;
+
             if (!m_participants.Contains(entity))
                 m_participants.Add(entity);
+
+            ScoreManager.Instance.RegisterParticipant(entity);
         }
 
         public List<BaseEntity> GetParticipants()
