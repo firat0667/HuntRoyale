@@ -37,6 +37,8 @@ namespace AI.Agents
         
         public CombatPerception CombatPerception => Attack.Perception;
 
+        private bool _handledDeath;
+
         public bool IsMoving =>
         Movement != null &&
         Movement.Velocity.sqrMagnitude > 0.01f;
@@ -61,6 +63,7 @@ namespace AI.Agents
         private AIPath m_aiPath;
         private AIDestinationSetter m_destinationSetter;
         #endregion
+
         protected override void Awake()
         {
             base.Awake();
@@ -77,12 +80,17 @@ namespace AI.Agents
             m_experience = GetSubsystem<ExperienceSubsystem>();
             m_upgrade= GetSubsystem<UpgradeSubsystem>();
             m_aiPath = GetComponent<AIPath>();
+   
         }
         protected override void Start()
         {
             base.Start(); 
             Initialize();
             m_experience.OnLevelUp.Connect(OnLevelUp);
+        }
+        private void OnDestroy()
+        {
+            EventManager.Instance.Unsubscribe(EventTags.EVENT_MATCH_RESULT, OnForceDied);
         }
         protected override void Update()
         {
@@ -118,8 +126,15 @@ namespace AI.Agents
 
             m_upgrade.ApplyUpgrade(chosen);
         }
+        public void OnForceDied(object _)
+        {
+             StopAllCoroutines();
+             Destroy(gameObject);
+        }
         protected override void OnDied()
         {
+            if (_handledDeath) return;
+            _handledDeath = true;
             base.OnDied();
             AnimatorBridge.TriggerDead();
             m_aiPath.canMove = false;
@@ -128,6 +143,13 @@ namespace AI.Agents
             Movement.Stop();
             ScoreManager.Instance.MarkDead(this);
             StartCoroutine(IwaitAfterDead(3));
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            if (EventManager.Instance != null)
+                EventManager.Instance.Unsubscribe(EventTags.EVENT_MATCH_RESULT, OnForceDied);
         }
         protected override void CreateStates()
         {
@@ -139,7 +161,7 @@ namespace AI.Agents
         IEnumerator IwaitAfterDead(float timer)
         {
             yield return new WaitForSeconds(timer);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
         protected override IState GetEntryState()
         {

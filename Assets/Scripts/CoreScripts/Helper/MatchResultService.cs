@@ -9,13 +9,8 @@ namespace Helper.MatchResults
     {
         private readonly int[] rewardTable = { 50, 30, 15 };
 
-        public MatchResult Evaluate()
+        public MatchResult Evaluate(BaseEntity player)
         {
-            var playerGO = GameRegistry.Instance.Get<GameObject>(KeyTags.KEY_PLAYER);
-            if (playerGO == null)
-                return new MatchResult(-1, 0);
-
-            var player = playerGO.GetComponent<BaseEntity>();
             if (player == null)
                 return new MatchResult(-1, 0);
 

@@ -19,6 +19,7 @@ namespace UI.Leaderboard
         {
             ScoreManager.Instance.OnScoreChanged.Connect(OnScoreChanged);
             EventManager.Instance.Subscribe(EventTags.EVENT_PARTICIPANT_REGISTERED, OnParticipantRegistered);
+            ScoreManager.Instance.OnRankingChanged.Connect(Refresh);
             Refresh();
         }
 
@@ -26,6 +27,7 @@ namespace UI.Leaderboard
         {
             ScoreManager.Instance.OnScoreChanged.Disconnect(OnScoreChanged);
             EventManager.Instance.Unsubscribe(EventTags.EVENT_PARTICIPANT_REGISTERED, OnParticipantRegistered);
+            ScoreManager.Instance.OnRankingChanged.Disconnect(Refresh);
         }
         private void OnParticipantRegistered(object _)
         {

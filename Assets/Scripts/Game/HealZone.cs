@@ -43,8 +43,16 @@ namespace Game
 
             m_tickTimer = 0f;
 
+            var toRemove = new List<HealthSubsystem>();
+
             foreach (var health in m_targets)
             {
+                if (health == null) 
+                {
+                    toRemove.Add(health);
+                    continue;
+                }
+
                 if (!health.IsHealable)
                     continue;
 
@@ -54,6 +62,9 @@ namespace Game
 
                 health.Heal(amount);
             }
+
+            foreach (var h in toRemove)
+                m_targets.Remove(h);
         }
     }
 }

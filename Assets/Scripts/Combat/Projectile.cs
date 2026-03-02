@@ -51,7 +51,7 @@ namespace Combat
                     continue;
                 }
 
-                // change it later its not good about performance
+                // TODO : change it later its not good about performance
                 var entity = target.GetComponent<BaseEntity>();
                 if (entity == null || entity.IsDead)
                 {
@@ -60,7 +60,6 @@ namespace Combat
                 }
 
                 Vector3 dir = target.position - transform.position;
-                dir.y = 0f;
 
                 transform.position += dir.normalized * m_speed * Time.deltaTime;
                 return;
@@ -68,21 +67,30 @@ namespace Combat
 
             Despawn();
         }
-
+        private bool IsContextAlive()
+        {
+            var obj = m_context as UnityEngine.Object;
+            return obj != null; 
+        }
         private void OnTriggerEnter(Collider other)
         {
-            if (m_index >= m_targets.Count)
+            if (m_targets == null || m_index >= m_targets.Count)
                 return;
+
+            if (!IsContextAlive())
+            {
+                Despawn(); 
+                return;
+            }
 
             if (other.transform != m_targets[m_index])
                 return;
 
             var entity = other.GetComponent<BaseEntity>();
-            if (entity == null)
+            if (entity == null || entity.IsDead)
                 return;
 
             m_context.ApplyDamage(entity, (int)m_damage);
-
             m_index++;
         }
 

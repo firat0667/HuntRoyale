@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 252533199102699002}
   - component: {fileID: 4405168225808359823}
-  - component: {fileID: 7044250513939243250}
+  - component: {fileID: 8312727726123494044}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -77,8 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e18073616d10964288d303cfd16b037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &7044250513939243250
-BoxCollider:
+--- !u!135 &8312727726123494044
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,5 +96,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}

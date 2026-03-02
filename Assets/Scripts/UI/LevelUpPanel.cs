@@ -19,12 +19,18 @@ public class LevelUpPanel : MonoBehaviour
     {
         m_onUpgradeSelectedSignal.Connect(OnUpgradeSelected);
     }
+    private void OnEnable()
+    {
+        for (int i = 0; i < m_cards.Length; i++)
+        {
+           m_cards[i].gameObject.SetActive(false);
+        }
+    }
 
     public void Show(List<UpgradeSO> upgrades, IUpgradeable entity)
     {
         m_entity = entity;
         m_root.SetActive(true);
-        Time.timeScale = 0;
 
         for (int i = 0; i < m_cards.Length; i++)
         {

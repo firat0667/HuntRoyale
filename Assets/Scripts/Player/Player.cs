@@ -88,12 +88,13 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
     protected override void OnDied()
     {
         base.OnDied(); 
+        ScoreManager.Instance.MarkDead(this);
         m_animatorBridge.TriggerDead();
         EventManager.Instance.Trigger(EventTags.EVENT_PLAYER_DIED);
         m_movement.Stop();
         if (m_experience != null)
             m_experience.OnLevelUp.Disconnect(HandleLevelUp);
-        ScoreManager.Instance.MarkDead(this);
+   
 
 
     }

@@ -86,7 +86,6 @@ namespace AI.Enemies
         [SerializeField] private KillRewardsSO m_killRewards;
         public KillRewardsSO KillRewards => m_killRewards;
         #endregion
-
         protected override void Awake()
         {
             base.Awake();
@@ -110,8 +109,7 @@ namespace AI.Enemies
         protected override void Start()
         {
             base.Start();
-            healthSubsystem.SetHealable(false);
-
+            healthSubsystem.HealZoneBlocker();
         }
         protected override void Update()
         {
@@ -158,6 +156,10 @@ namespace AI.Enemies
             Despawn();
 
         }
+        public void OnForceDied(object _)
+        {
+            OnDied();
+        }
         protected override void OnDied()
         {
             base.OnDied(); 
@@ -171,7 +173,8 @@ namespace AI.Enemies
             healthSubsystem.OnDamaged.Disconnect(OnDamaged);
             m_animatorBridge.TriggerDead();
             Movement.Stop();
-            StartCoroutine(DespawnAfterDelay(3f));
+            EventManager.Instance.Unsubscribe(EventTags.EVENT_MATCH_RESULT, OnForceDied);
+            StartCoroutine(DespawnAfterDelay(1f));
         }
 
         protected override void CreateStates()

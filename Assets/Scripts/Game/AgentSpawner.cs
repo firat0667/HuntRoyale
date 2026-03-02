@@ -1,3 +1,4 @@
+using AI.Agents;
 using AI.Brain;
 using AI.ScriptableObjects;
 using CoreScripts.Helper;
@@ -19,7 +20,7 @@ namespace Game
         [Header("Spawn Points")]
         [SerializeField] private Transform[] m_spawnPoints;
 
-        private void Start()
+        public void SpawnBotsManually()
         {
             SpawnBots();
         }
@@ -52,14 +53,17 @@ namespace Game
             GameObject bot =
                 Instantiate(randomPrefab, spawnPoint.position, randomRotation);
 
+
             bot.name = BotNameGenerator.GetRandomName();
 
             AssignRandomProfile(bot);
-            var agent = bot.GetComponent<BaseEntity>();
-            if (agent != null)
+            var entity = bot.GetComponent<BaseEntity>();
+            var agent = entity.GetComponent<Agent>();
+            if (entity != null)
             {
-                LeaderboardManager.Instance.RegisterParticipant(agent);
+                LeaderboardManager.Instance.RegisterParticipant(entity);
             }
+            EventManager.Instance.Subscribe(EventTags.EVENT_MATCH_RESULT, agent.OnForceDied);
         }
         private void AssignRandomProfile(GameObject bot)
         {

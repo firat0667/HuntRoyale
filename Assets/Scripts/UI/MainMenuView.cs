@@ -20,11 +20,12 @@ namespace MainMenu.UI
         private GameLoopController m_gameLoopController;
         private void Start()
         {
-            GameManager.Instance.GoldChanged.Connect(GoldChanged);
+        
 
             m_playButton.onClick.AddListener(OnPlayButton);
             m_exitButton.onClick.AddListener(OnExitButton);
             m_gameLoopController = FindObjectOfType<GameLoopController>();
+            GameManager.Instance.GoldChanged.Connect(GoldChanged);
         }
         private void OnDisable()
         {
@@ -45,7 +46,8 @@ namespace MainMenu.UI
             }
 
             m_gameLoopController.SetPlayerPrefab(selectedData.gameplayPrefab);
-            m_gameLoopController.StartMatch();
+
+            m_gameLoopController.RestartGame();
         }
         public void OnExitButton()
         {

@@ -7,7 +7,7 @@ public class TimerUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI m_timerText;
     private GameTimer m_gameTimer;
-    public void Start()
+    public void OnEnable()
     {
         m_gameTimer=GetComponent<GameTimer>();
         m_gameTimer.OnTimeUpdated.Connect(UpdateTimerText);

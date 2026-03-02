@@ -41,6 +41,7 @@ namespace CoreScripts.ObjectPool.Spawner
 
         private int m_totalWeight;
         private int m_aliveCount;
+        private Coroutine m_spawnRoutine;
 
         private void Awake()
         {
@@ -51,13 +52,26 @@ namespace CoreScripts.ObjectPool.Spawner
 
         private void OnEnable()
         {
-            StartCoroutine(SpawnLoop());
+            m_spawnRoutine = StartCoroutine(SpawnLoop());
         }
-
+        private void OnDisable()
+        {
+            if (m_spawnRoutine != null)
+            {
+                StopCoroutine(m_spawnRoutine);
+                m_spawnRoutine = null;
+            }
+        }
         private IEnumerator SpawnLoop()
         {
-            while (true)
+            while (gameObject.activeInHierarchy)
             {
+                if (GameStateManager.Instance.GetCurrentState() != GameState.Playing)
+                {
+                    yield return null;
+                    continue;
+                }
+
                 float wait = Random.Range(
                     m_spawnIntervalRange.x,
                     m_spawnIntervalRange.y
@@ -98,6 +112,7 @@ namespace CoreScripts.ObjectPool.Spawner
             yield return new WaitForSeconds(m_spawnDelay);
 
             Enemy enemy = entry.Pool.Retrieve();
+            EventManager.Instance.Subscribe(EventTags.EVENT_MATCH_RESULT, enemy.OnForceDied);
             enemy.ResetForSpawn(entry.Pool);
             EnemyManager.Instance.EnemySpawnedSignal.Emit(enemy);
 

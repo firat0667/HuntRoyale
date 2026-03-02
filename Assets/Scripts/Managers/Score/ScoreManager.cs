@@ -15,10 +15,15 @@ namespace Managers.Score
         private readonly Dictionary<int, bool> _deadStates = new();
 
         public BasicSignal<int, int> OnScoreChanged;
+        public BasicSignal OnRankingChanged;
+
+        private readonly Dictionary<int, int> _deathOrder = new();
+        private int _deathCounter = 0;
 
         private void Awake()
         {
             OnScoreChanged = new BasicSignal<int, int>();
+            OnRankingChanged = new BasicSignal();
         }
 
         public void ResetAll()
@@ -26,6 +31,9 @@ namespace Managers.Score
             _scores.Clear();
             _names.Clear();
             _deadStates.Clear();
+
+            _deathOrder.Clear();     
+            _deathCounter = 0;       
         }
 
         public void AddScore(BaseEntity entity, int amount)
@@ -46,12 +54,18 @@ namespace Managers.Score
 
         public void MarkDead(BaseEntity entity)
         {
+            if (GameStateManager.Instance.GetCurrentState() != GameState.Playing)
+                return;
             if (entity == null) return;
 
             EnsureEntry(entity);
 
             int id = entity.GetInstanceID();
             _deadStates[id] = true;
+
+            _deathCounter++;
+            _deathOrder[id] = _deathCounter;
+            OnRankingChanged.Emit();
         }
 
         public struct RankingEntry
@@ -69,7 +83,6 @@ namespace Managers.Score
             foreach (var kv in _names)
             {
                 int id = kv.Key;
-                string name = kv.Value;
 
                 _scores.TryGetValue(id, out int score);
                 _deadStates.TryGetValue(id, out bool dead);
@@ -77,14 +90,18 @@ namespace Managers.Score
                 list.Add(new RankingEntry
                 {
                     Id = id,
-                    Name = string.IsNullOrEmpty(name) ? $"Player {id}" : name,
+                    Name = kv.Value,
                     Score = score,
                     IsDead = dead
                 });
             }
+
             return list
                 .OrderBy(x => x.IsDead ? 1 : 0)
-                .ThenByDescending(x => x.Score)
+                .ThenByDescending(x => !x.IsDead ? x.Score : 0)
+                .ThenByDescending(x => x.IsDead && _deathOrder.ContainsKey(x.Id)
+                    ? _deathOrder[x.Id]
+                    : int.MinValue)
                 .ToList();
         }
         public void RegisterParticipant(BaseEntity entity)

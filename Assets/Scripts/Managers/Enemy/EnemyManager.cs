@@ -109,19 +109,9 @@ namespace Managers.Enemies
             for (int i = Enemies.Count - 1; i >= 0; i--)
             {
                 var enemy = Enemies[i];
-
                 if (enemy == null) continue;
 
-                // Eðer düzgün ölüm sistemi varsa
-                var health = enemy.GetSubsystem<HealthSubsystem>();
-                if (health != null && !health.IsDead)
-                {
-                    health.ForceKill(); 
-                }
-                else
-                {
-                    Destroy(enemy.gameObject);
-                }
+                Destroy(enemy.gameObject);
             }
 
             Enemies.Clear();

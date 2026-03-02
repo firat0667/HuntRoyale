@@ -33,8 +33,9 @@ namespace Subsystems
 
         #region Heal Zone
         private bool m_healable  = true;
+        private bool m_canUseHealZone = true;
         private bool m_inHealZone;
-        public bool IsHealable => CurrentHP<MaxHP && m_inHealZone && m_healable ;
+        public bool IsHealable => CurrentHP<MaxHP && m_inHealZone && m_healable && m_canUseHealZone&&!IsDead;
 
         #endregion
 
@@ -63,6 +64,10 @@ namespace Subsystems
         {
              m_core.Init(StatsComponent.MaxHP);
         }
+        public void HealZoneBlocker()
+        {
+            m_canUseHealZone = false;
+        }
         public void TakeDamage(int amount, Transform source)
         {
             Debug.Log($"{transform.parent.parent.name} took {amount} damage. current health{CurrentHP} ");
@@ -81,16 +86,6 @@ namespace Subsystems
             OnHealed.Emit();
             Debug.Log($"{transform.parent.parent.name} healed {amount} health. current health{CurrentHP} ");
             DamagePopupPool.Instance.Spawn(amount, transform.position,true);
-        }
-        public void ForceKill()
-        {
-            if (IsDead) return;
-
-           TakeDamage(MaxHP*2,null); 
-        }
-        public void SetHealable(bool value)
-        {
-            m_healable = value;
         }
         public void SetInHealZone(bool value)
         {

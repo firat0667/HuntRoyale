@@ -1,3 +1,4 @@
+using AI.Agents;
 using CoreScripts.ObjectPool.Spawner;
 using Firat0667.WesternRoyaleLib.Diagnostics;
 using Firat0667.WesternRoyaleLib.Game;
@@ -23,6 +24,8 @@ public class GameLoopController : MonoBehaviour
     [SerializeField] private float m_matchDuration = 150f;
     [SerializeField] private bool m_autoStartMatch = true;
 
+    private float m_matchDefaultDuration;
+
     private bool m_isMatchActive = false;
 
     private GameObject m_playerInstance;
@@ -42,6 +45,7 @@ public class GameLoopController : MonoBehaviour
         // add all spawners in the scene to the list
         m_spawners.AddRange(FindObjectsOfType<EnemySpawnArea>(true));
 
+        m_matchDefaultDuration = m_matchDuration;
 
         //when player dead trigger game over
         EventManager.Instance.Subscribe(EventTags.EVENT_PLAYER_DIED, OnPlayerDied);
@@ -79,8 +83,6 @@ public class GameLoopController : MonoBehaviour
     {
         ScoreManager.Instance.ResetAll();
         GameStateManager.Instance.SetState(GameState.Playing);
-
-   
         m_agentSpawner.gameObject.SetActive(true);
         SpawnPlayer();
         ActiveSpawners();
@@ -105,38 +107,37 @@ public class GameLoopController : MonoBehaviour
     }
     public void RestartGame()
     {
+        m_isMatchActive = false;
+
+        if (m_playerInstance != null)
+            Destroy(m_playerInstance);
+
+ 
+
         ScoreManager.Instance.ResetAll();
-        GameStateManager.Instance.SetState(GameState.Playing);
-
-        // Respawn player
-        if (m_playerInstance == null)
-        {
-            SpawnPlayer();
-        }
-        else
-        {
-            m_playerInstance.SetActive(true);
-            m_playerInstance.transform.SetPositionAndRotation(m_playerSpawnPoint.position, m_playerSpawnPoint.rotation);
-        }
-        // Remove All Enemies
-        ClearEnemies();
-
+        LeaderboardManager.Instance.GetParticipants().Clear();
+        SpawnPlayer();
         ActiveSpawners();
+        GameStateManager.Instance.SetState(GameState.Playing);
+        m_agentSpawner.gameObject.SetActive(true);
 
+   
         m_isMatchActive = true;
-
-        EventManager.Instance.Trigger(EventTags.EVENT_GAME_RESTARTED);
+        ClearAllAgents();
+        m_agentSpawner.SpawnBotsManually();
+        HUDManager.Instance.GameTimer.StartTimer(m_matchDefaultDuration);
+        EventManager.Instance.Trigger(EventTags.EVENT_GAME_STARTED); 
     }
-    //private void EvaluateMatchResult()
-    //{
-    //    int myScore = ScoreManager.Instance.GetPlayerScore();
-    //    int maxScore = ScoreManager.Instance.GetHighestScoreAmongAllPlayers();
+    private void ClearAllAgents()
+    {
+        var agents = FindObjectsOfType<Agent>();
 
-    //    if (myScore >= maxScore)
-    //        GameWin();
-    //    else
-    //        GameLose();
-    //}
+        foreach (var agent in agents)
+        {
+            Destroy(agent.gameObject);
+        }
+    }
+
     private void SpawnPlayer()
     {
        if(!m_playerPrefab || !m_playerSpawnPoint)
@@ -171,11 +172,6 @@ public class GameLoopController : MonoBehaviour
             }
         }
     }
-    private void ClearEnemies()
-    {
-        // TODO : Implement enemy clearing logic
-        // ALL active should return to object pool or be destroyed
-    }
     private void OnPlayerDied(object _)
     {
         GameLose();
@@ -185,14 +181,13 @@ public class GameLoopController : MonoBehaviour
         if (!m_isMatchActive) return; 
 
         m_isMatchActive = false;
-        MatchResult result = m_resultService.Evaluate();
+        var playerEntity = m_playerInstance.GetComponent<BaseEntity>();
+        MatchResult result = m_resultService.Evaluate(playerEntity);
         LastMatchResult = result;
         EventManager.Instance.Trigger(EventTags.EVENT_MATCH_RESULT, result);
         GameStateManager.Instance.SetState(GameState.Finished);
-        // TODO: HudManager cant be accessed here because of circular dependency, need to find a way to decouple them
         HUDManager.Instance.GameTimer.StopTimer();
         DeactiveAllSpawners();
-
         EventManager.Instance.Trigger(EventTags.EVENT_GAME_WIN);
     }
     public void GameLose()
@@ -201,7 +196,8 @@ public class GameLoopController : MonoBehaviour
 
         m_isMatchActive = false;
 
-        MatchResult result = m_resultService.Evaluate();
+        var playerEntity = m_playerInstance.GetComponent<BaseEntity>();
+        MatchResult result = m_resultService.Evaluate(playerEntity);
         LastMatchResult = result;
         EventManager.Instance.Trigger(EventTags.EVENT_MATCH_RESULT, result);
 
