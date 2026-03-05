@@ -34,6 +34,9 @@ namespace States.EnemyStates
 
         public void LogicUpdate()
         {
+             if (m_enemy.IsDead)
+                return;
+
             if (!m_enemy.HasTarget)
             {
                 m_enemy.SM.ChangeState(m_enemy.IdleState);
