@@ -54,6 +54,15 @@ namespace Firat0667.WesternRoyaleLib.Game
             }
 
             SummonMinion summon = pool.Retrieve();
+
+            Vector3 dir = (target.position - position);
+            dir.y = 0f;
+
+            if (dir.sqrMagnitude > 0.001f)
+            {
+                summon.transform.rotation = Quaternion.LookRotation(dir);
+            }
+
             summon.transform.position = position;
 
             summon.Init(

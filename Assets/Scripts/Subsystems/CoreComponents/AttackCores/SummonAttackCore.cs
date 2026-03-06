@@ -39,7 +39,7 @@ namespace Subsystems.CoreComponents.AttackCores
 
                 Vector3 spawnPos =
                     context.OwnerTransform.position +
-                    forward * 1f +
+                    forward * 2f +
                     randomOffset;
 
                 m_summonSpawner.Spawn(

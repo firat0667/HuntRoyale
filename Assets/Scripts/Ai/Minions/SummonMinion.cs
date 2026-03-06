@@ -94,7 +94,9 @@ namespace Combat
 
             CancelInvoke();
             m_isReturning = false;
-
+            m_aiPath.canMove = false;
+            m_destinationSetter.target = null;
+            m_aiPath.SetPath(null);
             if (m_owner != null)
             {
                 var perception = m_owner.GetComponentInParent<CombatPerception>();
@@ -193,7 +195,7 @@ namespace Combat
         protected override void OnDied()
         {
             base.OnDied();
-            Explode(); 
+            Explode();
         }
 
         #endregion
