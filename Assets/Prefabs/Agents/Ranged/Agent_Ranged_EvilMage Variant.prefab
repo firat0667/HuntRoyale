@@ -43,6 +43,10 @@ PrefabInstance:
       propertyPath: m_baseStats
       value: 
       objectReference: {fileID: 11400000, guid: 9cb47eab3a1a910488e932fd7c95b49e, type: 2}
+    - target: {fileID: 2257690937814043583, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
+      propertyPath: m_profile
+      value: 
+      objectReference: {fileID: 11400000, guid: e9fc3b6c524e60d4cb0d3887f58b9d54, type: 2}
     - target: {fileID: 3301865255620900661, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
       propertyPath: m_Name
       value: Agent_Ranged_EvilMage Variant

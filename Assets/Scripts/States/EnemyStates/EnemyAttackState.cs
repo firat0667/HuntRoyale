@@ -13,6 +13,7 @@ namespace States.EnemyStates
         private readonly AINavigationSubsystem m_navigation;
         private readonly AttackSubsystem m_attack;
         private readonly MovementSubsystem m_movement;
+        private readonly CharacterAudio m_characterAudio;
 
         public EnemyAttackState(Enemy enemy)
         {
@@ -20,6 +21,7 @@ namespace States.EnemyStates
             m_navigation = enemy.Navigation;
             m_movement=enemy.Movement;
             m_attack = enemy.Attack;
+            m_characterAudio = enemy.CharacterAudio;
         }
         public void Enter()
         {
@@ -51,7 +53,11 @@ namespace States.EnemyStates
 
 
             if (m_attack.TryAttack())
+            {
                 m_enemy.AnimatorBridge.TriggerAttack();
+                m_characterAudio.PlayAttack();
+            }
+                
 
             Transform target = m_attack.CurrentTarget;
             Vector3 dir = target.position - m_enemy.transform.position;

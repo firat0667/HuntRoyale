@@ -64,6 +64,12 @@ namespace AI.Agents
         private AIDestinationSetter m_destinationSetter;
         #endregion
 
+        #region SFX
+        private CharacterAudio m_characterAudio;
+        public CharacterAudio CharacterAudio => m_characterAudio;
+        #endregion
+
+
         protected override void Awake()
         {
             base.Awake();
@@ -80,6 +86,7 @@ namespace AI.Agents
             m_experience = GetSubsystem<ExperienceSubsystem>();
             m_upgrade= GetSubsystem<UpgradeSubsystem>();
             m_aiPath = GetComponent<AIPath>();
+            m_characterAudio = GetComponentInChildren<CharacterAudio>();
    
         }
         protected override void Start()
@@ -161,7 +168,9 @@ namespace AI.Agents
         IEnumerator IwaitAfterDead(float timer)
         {
             yield return new WaitForSeconds(timer);
+            m_characterAudio.PlayDeath();
             Destroy(gameObject);
+
         }
         protected override IState GetEntryState()
         {

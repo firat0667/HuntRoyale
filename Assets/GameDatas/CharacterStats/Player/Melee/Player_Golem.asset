@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_Golem
   m_EditorClassIdentifier: 
   attackType: 0
-  maxHP: 250
+  maxHP: 500
   attackStartRange: 4
   attackHitRange: 6
   attackDamage: 25
@@ -25,5 +25,6 @@ MonoBehaviour:
   moveSpeed: 4
   moveAttackSpeedMult: 0.7
   rotationSpeed: 8
-  onHitEffects: []
+  onHitEffects:
+  - {fileID: 11400000, guid: 95f8407e67a8db346b65fe31368c8abf, type: 2}
   selfEffects: []

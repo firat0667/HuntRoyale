@@ -12,6 +12,7 @@ namespace Combat.ScriptableObjects
         [Header("Movement")]
         public float speed;
         public float range;
+        public float lifeTime;
 
         [Header("Hit")]
         public int maxTargets;

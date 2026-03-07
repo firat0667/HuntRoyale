@@ -67,7 +67,8 @@ namespace Subsystems.CoreComponents.AttackCores
                 finalTargets,
                 context.OwnerTransform,
                 stats.ProjectileSpeed,
-                context       
+                context,
+                stats.LifeTime
             );
         }
 

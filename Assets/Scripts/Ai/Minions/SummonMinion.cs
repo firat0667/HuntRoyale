@@ -60,6 +60,10 @@ namespace Combat
         [SerializeField] private EventKey m_deathVFXKey;
         #endregion
 
+        #region SFX
+        private CharacterAudio m_characterAudio;
+        #endregion
+
         #region Unity
 
         protected override void Awake()
@@ -72,8 +76,9 @@ namespace Combat
             m_aiPath = GetComponent<AIPath>();
             m_destinationSetter = GetComponent<AIDestinationSetter>();
             m_animatorBridge = GetComponent<AnimatorBridge>();
-        }
+            m_characterAudio = GetComponentInChildren<CharacterAudio>();
 
+        }
         protected override void Update()
         {
             base.Update();
@@ -129,9 +134,8 @@ namespace Combat
             m_ownerPool = pool;
             m_context = context;
             m_ownerEntity = owner.GetComponentInParent<BaseEntity>();
-
             m_isReturning = false;
-
+            m_characterAudio.PlaySpawn();
 
             if (m_owner != null)
             {
@@ -213,6 +217,7 @@ namespace Combat
         private void ReturnToPoolInternal()
         {
             CancelInvoke();
+            m_characterAudio.PlayDeath();
             m_ownerPool.Return(this);
         }
 

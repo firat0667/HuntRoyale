@@ -90,6 +90,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1243050507551754748, guid: 5f729705f5dbfc645a4945d60dfb7c56, type: 3}
+      propertyPath: layer
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243050507551754748, guid: 5f729705f5dbfc645a4945d60dfb7c56, type: 3}
+      propertyPath: collidesWith
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715572026919999418, guid: 5f729705f5dbfc645a4945d60dfb7c56, type: 3}
+      propertyPath: m_profile
+      value: 
+      objectReference: {fileID: 11400000, guid: 84a7ff7beafbe9340817c2a3273760b9, type: 2}
     - target: {fileID: 6547156809145806242, guid: 5f729705f5dbfc645a4945d60dfb7c56, type: 3}
       propertyPath: m_Name
       value: Minion_Slime Variant

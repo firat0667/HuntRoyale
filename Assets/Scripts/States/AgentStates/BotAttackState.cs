@@ -12,12 +12,14 @@ namespace States.AgentStates
         private readonly AINavigationSubsystem m_navigation;
         private readonly AttackSubsystem m_attack;
         private readonly MovementSubsystem m_movement;
+        private readonly CharacterAudio m_characterAuido;
         public BotAttackState(Agent agent)
         {
             m_agent = agent;
             m_navigation = agent.Navigation;
             m_attack = agent.Attack;
             m_movement = agent.Movement;
+            m_characterAuido = agent.CharacterAudio;
         }
         public void Enter()
         {
@@ -56,7 +58,11 @@ namespace States.AgentStates
             }
 
             if (m_attack.TryAttack())
+            {
                 m_agent.AnimatorBridge.TriggerAttack();
+                m_characterAuido.PlayAttack();
+            }
+            
 
             Vector3 dir = target.position - m_agent.transform.position;
             dir.y = 0f;

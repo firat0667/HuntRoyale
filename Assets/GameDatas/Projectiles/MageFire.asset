@@ -15,4 +15,5 @@ MonoBehaviour:
   projectileID: 0
   speed: 30
   range: 25
+  lifeTime: 3
   maxTargets: 2

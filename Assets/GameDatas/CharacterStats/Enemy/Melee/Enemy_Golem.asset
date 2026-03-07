@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: Enemy_Golem
   m_EditorClassIdentifier: 
   attackType: 0
-  maxHP: 250
+  maxHP: 225
   attackStartRange: 4
   attackHitRange: 6
   attackDamage: 15
   attackRate: 0.5
-  attackAngle: 90
+  attackAngle: 60
   detectionRange: 15
   projectileStats: {fileID: 0}
   summonStats: {fileID: 0}
   moveSpeed: 3.7
   moveAttackSpeedMult: 0.7
   rotationSpeed: 270
-  onHitEffects: []
+  onHitEffects:
+  - {fileID: 11400000, guid: 95f8407e67a8db346b65fe31368c8abf, type: 2}
   selfEffects: []

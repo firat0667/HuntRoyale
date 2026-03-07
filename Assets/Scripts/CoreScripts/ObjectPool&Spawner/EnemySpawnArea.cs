@@ -64,6 +64,8 @@ namespace CoreScripts.ObjectPool.Spawner
         }
         private IEnumerator SpawnLoop()
         {
+            bool firstSpawn = true;
+
             while (gameObject.activeInHierarchy)
             {
                 if (GameStateManager.Instance.GetCurrentState() != GameState.Playing)
@@ -72,17 +74,19 @@ namespace CoreScripts.ObjectPool.Spawner
                     continue;
                 }
 
+                TrySpawn(firstSpawn);
+
+                firstSpawn = false;
+
                 float wait = Random.Range(
                     m_spawnIntervalRange.x,
                     m_spawnIntervalRange.y
                 );
 
                 yield return new WaitForSeconds(wait);
-                TrySpawn();
             }
         }
-
-        private void TrySpawn()
+        private void TrySpawn(bool instant)
         {
             if (m_aliveCount >= m_maxAliveEnemies)
                 return;
@@ -94,9 +98,34 @@ namespace CoreScripts.ObjectPool.Spawner
             if (!TryFindValidSpawnPoint(out Vector3 spawnPos))
                 return;
 
-            StartCoroutine(SpawnWithWarning(entry, spawnPos));
+            if (instant)
+            {
+                SpawnEnemy(entry, spawnPos);
+            }
+            else
+            {
+                StartCoroutine(SpawnWithWarning(entry, spawnPos));
+            }
         }
+        private void SpawnEnemy(EnemySpawnEntry entry, Vector3 spawnPos)
+        {
+            Enemy enemy = entry.Pool.Retrieve();
 
+            EventManager.Instance.Subscribe(EventTags.EVENT_MATCH_RESULT, enemy.OnForceDied);
+
+            enemy.ResetForSpawn(entry.Pool);
+            EnemyManager.Instance.EnemySpawnedSignal.Emit(enemy);
+
+            enemy.transform.SetPositionAndRotation(
+                spawnPos,
+                Quaternion.identity
+            );
+
+            m_aliveCount++;
+
+            enemy.OnDeath.Disconnect(HandleEnemyDeath);
+            enemy.OnDeath.Connect(HandleEnemyDeath);
+        }
         private IEnumerator SpawnWithWarning(
             EnemySpawnEntry entry,
             Vector3 spawnPos

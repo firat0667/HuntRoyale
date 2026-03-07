@@ -50,6 +50,10 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
 
     #endregion
 
+    #region SFX
+    private CharacterAudio m_characterAudio;
+    public CharacterAudio CharacterAudio => m_characterAudio;
+    #endregion
     protected override void Awake()
     {
         base.Awake();
@@ -62,6 +66,8 @@ public class Player : BaseEntity, IMovableEntity,IUpgradeable
 
         m_experience = GetSubsystem<ExperienceSubsystem>();
         m_upgradeSubsystem = GetSubsystem<UpgradeSubsystem>();
+
+        m_characterAudio=GetComponentInChildren<CharacterAudio>();
     }
 
     protected override void Start()

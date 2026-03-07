@@ -48,7 +48,8 @@ namespace Firat0667.WesternRoyaleLib.Game
             List<Transform> targets,
             Transform source,
             float speed,
-            IAttackContext context
+            IAttackContext context,
+            float lifetime
         )
         {
             if (!_poolMap.TryGetValue(projectileId, out var pool))
@@ -61,7 +62,7 @@ namespace Firat0667.WesternRoyaleLib.Game
 
             projectile.transform.position = spawnPoint.position;
 
-            projectile.Init(damage, targets, source, speed,pool, context);
+            projectile.Init(damage, targets, source, speed,pool, context, lifetime);
         }
     }
 }

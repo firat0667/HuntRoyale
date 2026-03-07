@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_Bat
   m_EditorClassIdentifier: 
   attackType: 0
-  maxHP: 75
+  maxHP: 250
   attackStartRange: 4
   attackHitRange: 6
   attackDamage: 15

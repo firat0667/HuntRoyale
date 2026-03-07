@@ -40,17 +40,18 @@ public class GameLoopController : MonoBehaviour
     {
         // save game loop controller reference
         GameRegistry.Instance.Register(KeyTags.KEY_GAME_LOOP_CONTROLLER, this);
-        m_agentSpawner=FindAnyObjectByType<AgentSpawner>();
-        m_agentSpawner.gameObject.SetActive(false);
-        // add all spawners in the scene to the list
+
+        m_agentSpawner = FindObjectOfType<AgentSpawner>(true);
+        if (m_agentSpawner != null)
+        {
+            m_agentSpawner.gameObject.SetActive(false);
+        }
         m_spawners.AddRange(FindObjectsOfType<EnemySpawnArea>(true));
 
         m_matchDefaultDuration = m_matchDuration;
 
-        //when player dead trigger game over
         EventManager.Instance.Subscribe(EventTags.EVENT_PLAYER_DIED, OnPlayerDied);
 
-        // game start state
         GameStateManager.Instance.SetState(GameState.MainMenu);
     }
 
@@ -88,7 +89,6 @@ public class GameLoopController : MonoBehaviour
         ActiveSpawners();
 
         m_isMatchActive = true;
-        // TODO: HudManager cant be accessed here because of circular dependency, need to find a way to decouple them
         HUDManager.Instance.GameTimer.StartTimer(m_matchDuration);
         EventManager.Instance.Trigger(EventTags.EVENT_GAME_STARTED);
 

@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_baseStats
       value: 
       objectReference: {fileID: 11400000, guid: 742ab6cad2ab0fd49a3c0422b26f950f, type: 2}
+    - target: {fileID: 4111727544340344065, guid: 0369799584d98bf419a66e689c1accad, type: 3}
+      propertyPath: m_profile
+      value: 
+      objectReference: {fileID: 11400000, guid: 92a4a3e7893f27a4db96dd105f1087c7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8591475059806926367, guid: 0369799584d98bf419a66e689c1accad, type: 3}

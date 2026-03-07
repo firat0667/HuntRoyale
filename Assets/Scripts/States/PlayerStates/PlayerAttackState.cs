@@ -11,6 +11,7 @@ namespace States.PlayerStates
         private readonly MovementSubsystem m_movement;
         private readonly PlayerInputSubsystem m_playerInput;
         private readonly float m_attackMoveMultiply;
+        private readonly CharacterAudio m_characterAudio;
 
         public PlayerAttackState(Player player)
         {
@@ -19,6 +20,7 @@ namespace States.PlayerStates
             m_movement = player.GetSubsystem<MovementSubsystem>();
             m_playerInput = player.GetSubsystem<PlayerInputSubsystem>();
             m_attackMoveMultiply = m_movement.MoveAttackSpeedMult;
+            m_characterAudio=player.CharacterAudio;
         }
 
         public void Enter()
@@ -62,7 +64,11 @@ namespace States.PlayerStates
             if (!hasInput || m_player.AllowWalkAttack)
             {
                 if (m_attack.TryAttack())
+                {
                     m_player.AnimatorBridge.TriggerAttack();
+                    m_characterAudio.PlayAttack();
+                }
+                   
             }
 
             if (!m_player.IsInCombat)

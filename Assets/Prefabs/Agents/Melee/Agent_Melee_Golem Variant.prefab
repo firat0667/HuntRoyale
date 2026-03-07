@@ -12,9 +12,21 @@ PrefabInstance:
       propertyPath: m_baseStats
       value: 
       objectReference: {fileID: 11400000, guid: a6672e53ad1abb043a4b7456fb7cdb0f, type: 2}
+    - target: {fileID: 2257690937814043583, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
+      propertyPath: m_profile
+      value: 
+      objectReference: {fileID: 11400000, guid: 99574ded9ac46684996f1a916b3e25ce, type: 2}
+    - target: {fileID: 3267727979461021474, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
+      propertyPath: m_characterAudio
+      value: 
+      objectReference: {fileID: 6866346801460210252}
     - target: {fileID: 3301865255620900661, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
       propertyPath: m_Name
       value: Agent_Melee_Golem Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625947236142689936, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9087675072740153390, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -69,6 +81,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7615841374584618663, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
   m_PrefabInstance: {fileID: 4620350150402548211}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6866346801460210252 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2257690937814043583, guid: ab58f92bc73cf604491beb963a57e56e, type: 3}
+  m_PrefabInstance: {fileID: 4620350150402548211}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3430074429bea45439af27325c7bf370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7784573442273501752
 PrefabInstance:
   m_ObjectHideFlags: 0

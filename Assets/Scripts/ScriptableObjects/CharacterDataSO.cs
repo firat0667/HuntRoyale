@@ -16,5 +16,5 @@ public class CharacterDataSO : ScriptableObject
 
     [Header("Unlock")]
     public int unlockCost;
-    public bool isDefaultUnlocked; 
+    public bool isDefaultUnlocked;
 }

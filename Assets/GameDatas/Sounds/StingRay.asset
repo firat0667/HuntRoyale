@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e560358885238d4685f6e9b5e79984d, type: 3}
+  m_Name: StingRay
+  m_EditorClassIdentifier: 
+  Attack:
+    Clip: {fileID: 0}
+    Volume: 1
+    PitchMin: 0.9
+    PitchMax: 1.1
+  Death:
+    Clip: {fileID: 8300000, guid: 0e987cb263466e641bce76b37d43b497, type: 3}
+    Volume: 1
+    PitchMin: 0.9
+    PitchMax: 1.1
+  Spawn:
+    Clip: {fileID: 8300000, guid: 4bee2fb3e38810e4f8fd8487e62a3944, type: 3}
+    Volume: 1
+    PitchMin: 0.9
+    PitchMax: 1.1
+  AudioType: 3

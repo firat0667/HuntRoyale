@@ -36,6 +36,9 @@ public class StatsComponent : MonoBehaviour
 
     #region Projectile Stats
     public float ProjectileSpeed => m_baseStats.projectileStats.speed;
+
+    public float LifeTime => m_baseStats.projectileStats.lifeTime;
+
     public int ProjectilePierce =>
     Mathf.RoundToInt(GetStat(StatType.ProjectileMaxTargets,
         m_baseStats.projectileStats.maxTargets));

@@ -77,6 +77,11 @@ namespace AI.Enemies
         [SerializeField] private EventKey m_deathVFXKey;
         #endregion
 
+        #region SFX
+        private CharacterAudio m_characterAudio;
+        public  CharacterAudio CharacterAudio => m_characterAudio;
+        #endregion
+
         #region Signal Handlers
 
         public BasicSignal<Enemy> OnDeath { get; private set; }
@@ -104,6 +109,7 @@ namespace AI.Enemies
             m_collider = GetComponent<Collider>();
 
             m_perception = GetComponent<CombatPerception>();
+            m_characterAudio = GetComponentInChildren<CharacterAudio>();
 
         }
         protected override void Start()
@@ -153,6 +159,7 @@ namespace AI.Enemies
             yield return new WaitForSeconds(delay);
             VFXManager.Instance.Play(m_deathVFXKey, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(0.3f);
+            m_characterAudio.PlayDeath();
             Despawn();
 
         }
