@@ -54,7 +54,35 @@ namespace Managers.Audio
                 source.Play();
             }
         }
+        public void PlayOneShot3D(
+         AudioClip clip,
+         Vector3 position,
+         float volume = 1f,
+         float pitchMin = 1f,
+         float pitchMax = 1f)
+        {
+            if (clip == null) return;
 
+            GameObject obj = new GameObject("3DAudio");
+            obj.transform.position = position;
+
+            AudioSource source = obj.AddComponent<AudioSource>();
+
+            source.clip = clip;
+            source.volume = volume;
+            source.pitch = UnityEngine.Random.Range(pitchMin, pitchMax);
+
+            source.spatialBlend = 1f;
+            source.rolloffMode = AudioRolloffMode.Logarithmic;
+            source.dopplerLevel = 0f;
+
+            source.minDistance = 3f;
+            source.maxDistance = 25f;
+
+            source.Play();
+
+            Destroy(obj, clip.length);
+        }
         /// Stops playing a sound.
         public void StopSound(AudioType type)
         {

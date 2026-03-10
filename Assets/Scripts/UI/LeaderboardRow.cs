@@ -24,6 +24,7 @@ namespace UI.Leaderboard
             m_nameOriginalColor = m_nameText.color;
             m_scoreOriginalColor = m_scoreText.color;
             if (m_background != null) m_bgOriginalColor = m_background.color;
+
         }
 
         public void Init(string name)

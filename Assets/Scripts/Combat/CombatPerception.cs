@@ -73,6 +73,14 @@ namespace Combat
                 Scan();
             }
         }
+        private void LateUpdate()
+        {
+            if (CurrentTarget != null)
+            {
+                CurrentTargetSqrDistance =
+                    (CurrentTarget.position - transform.position).sqrMagnitude;
+            }
+        }
         public void SetCurrentTarget(Transform target)
         {
             if (target == null)
@@ -164,18 +172,18 @@ namespace Combat
             // TODO: Change it later to make it more robust. For example,
             // if the recent attacker is still valid but not the best target,
             // it should still be the current target instead of switching to the best target.
-  
-            if (m_scanOnStart)
+
+            if (!m_scanOnStart)
+                return;
+
+            if (bestTarget != CurrentTarget)
             {
-                if (bestTarget != null && bestTarget != CurrentTarget)
-                {
-                    CurrentTarget = bestTarget;
-                    OnTargetChanged.Emit(CurrentTarget);
-                }
-                else
-                {
-                    CurrentTarget = bestTarget;
-                }
+                CurrentTarget = bestTarget;
+                OnTargetChanged.Emit(CurrentTarget);
+            }
+            else
+            {
+                CurrentTarget = bestTarget;
             }
             CurrentTargetSqrDistance = bestTarget != null
              ? (bestTarget.position - transform.position).sqrMagnitude

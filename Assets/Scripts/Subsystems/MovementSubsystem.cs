@@ -29,7 +29,7 @@ namespace Subsystems
         {
             get
             {
-                float max = Mathf.Max(StatsComponent.MoveSpeed, 0.01f);
+                float max = Mathf.Max(CurrentSpeed, 0.01f);
                 return Mathf.Clamp01(Velocity.magnitude / max);
             }
         }

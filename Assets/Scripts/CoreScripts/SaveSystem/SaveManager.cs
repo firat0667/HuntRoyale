@@ -100,12 +100,26 @@ public class SaveManager : FoundationSingleton<SaveManager>, IFoundationSingleto
     /// </summary>
     private SaveData LoadAllData()
     {
-        if (!File.Exists(savePath)) return new SaveData();
-        string json = File.ReadAllText(savePath);
-        if (string.IsNullOrWhiteSpace(json)) return new SaveData();
+#if UNITY_WEBGL && !UNITY_EDITOR
 
-        var data = JsonUtility.FromJson<SaveData>(json);
-        return data ?? new SaveData();
+    if (!PlayerPrefs.HasKey("SAVE_DATA"))
+        return new SaveData();
+
+    string json = PlayerPrefs.GetString("SAVE_DATA");
+
+#else
+
+        if (!File.Exists(savePath))
+            return new SaveData();
+
+        string json = File.ReadAllText(savePath);
+
+#endif
+
+        if (string.IsNullOrWhiteSpace(json))
+            return new SaveData();
+
+        return JsonUtility.FromJson<SaveData>(json) ?? new SaveData();
     }
 
 
@@ -115,20 +129,30 @@ public class SaveManager : FoundationSingleton<SaveManager>, IFoundationSingleto
     private void SaveToFile(SaveData saveData)
     {
         string json = JsonUtility.ToJson(saveData, true);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+    PlayerPrefs.SetString("SAVE_DATA", json);
+    PlayerPrefs.Save();
+#else
         File.WriteAllText(savePath, json);
+#endif
+
         Debug.Log("[SaveManager] Data saved successfully!");
     }
-
     /// <summary>
     /// Deletes all saved data.
     /// </summary>
     public void DeleteAllData()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+    PlayerPrefs.DeleteKey("SAVE_DATA");
+    PlayerPrefs.Save();
+#else
         if (File.Exists(savePath))
-        {
             File.Delete(savePath);
-            Debug.Log("[SaveManager] All data deleted!");
-        }
+#endif
+
+        Debug.Log("[SaveManager] All data deleted!");
     }
 }
 

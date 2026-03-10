@@ -17,16 +17,15 @@ namespace Managers.Game
         private string KEY_GOLD => PlayerPrefsTag.Gold_Prefs;
 
         public BasicSignal<int> GoldChanged { get; private set; }
-
+  
 
         private void Awake()
         {
+            GoldChanged = new BasicSignal<int>();
+
             GameObject zone = GameObject.FindGameObjectWithTag(Tags.HealZone_Tag);
             if (zone != null)
                 HealZone = zone.transform;
-
-            GoldChanged = new BasicSignal<int>();
-
         }
         private void Start()
         {
@@ -59,8 +58,8 @@ namespace Managers.Game
 
         public void SaveGold()
         {
-            GoldChanged.Emit(m_currentGold);
             SaveManager.Instance.Save(KEY_GOLD, m_currentGold);
+            GoldChanged.Emit(m_currentGold);
         }
 
         public void LoadGold()

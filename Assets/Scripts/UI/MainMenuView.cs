@@ -18,19 +18,30 @@ namespace MainMenu.UI
 
         [SerializeField] private CharacterSelectionManager m_characterSelection;
         private GameLoopController m_gameLoopController;
-        private void Start()
-        {
-        
 
-            m_playButton.onClick.AddListener(OnPlayButton);
-            m_exitButton.onClick.AddListener(OnExitButton);
-            m_gameLoopController = FindObjectOfType<GameLoopController>();
-            GameManager.Instance.GoldChanged.Connect(GoldChanged);
+
+        private void OnEnable()
+        {
+            if (GameManager.Instance == null)
+                return;
+            GoldChanged(GameManager.Instance.CurrentGold);
         }
+
         private void OnDisable()
         {
-            GameManager.Instance.GoldChanged.Disconnect(GoldChanged);
+            if (GameManager.Instance != null)
+                GameManager.Instance.GoldChanged.Disconnect(GoldChanged);
         }
+        private void Start()
+        {
+            m_playButton.onClick.AddListener(OnPlayButton);
+            m_exitButton.onClick.AddListener(OnExitButton);
+            GameManager.Instance.GoldChanged.Connect(GoldChanged);
+            GoldChanged(GameManager.Instance.CurrentGold);
+            m_gameLoopController = FindObjectOfType<GameLoopController>();
+        }
+     
+
         public void GoldChanged(int currentGold)
         {
             m_goldText.text = currentGold.ToString();

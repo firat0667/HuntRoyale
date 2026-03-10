@@ -41,6 +41,7 @@ namespace States.AgentStates
                 m_agent.SM.ChangeState(m_agent.IdleState);
                 return;
             }
+
         }
 
         public void PhysicsUpdate()
